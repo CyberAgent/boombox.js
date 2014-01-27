@@ -2,6 +2,8 @@ boombox
 =======
 
 [HTMLVideo](http://www.w3.org/TR/2009/WD-html5-20090825/video.html), [HTMLAudio](http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element), [WebAudio](http://www.w3.org/TR/webaudio/)を包括したブラウザ向け音声ライブラリです。
+
+
 Audio系APIを統一したインターフェースで提供し、ラジカセ([_boombox_](http://en.wikipedia.org/wiki/Boombox))のようなシンプルな操作で利用する事が可能です。
 
 ### Why you should use boombox?
@@ -72,13 +74,27 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 ## Install
 
-* `boombox.js`または`boombox.min.js`を`scriptタグ` でロードしてください。
+`boombox.js`または`boombox.min.js`を`scriptタグ` でロードしてください。
+
+### HTML
 
 ```html
 <script type="text/javascript" src="boombox.js"></script>
 ```
 
 > require.js サポート
+
+### npm
+
+```sh
+$ npm install boombox.js
+```
+
+### bower
+
+```sh
+$ bower install boombox.js
+```
 
 
 ## Build
