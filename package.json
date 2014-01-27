@@ -1,5 +1,5 @@
 {
-  "name": "boombox",
+  "name": "boombox.js",
   "version": "0.6.3",
   "description": "Browser sound library which blended HTMLVideo and HTMLAudio and WebAudio",
   "keywords": [
