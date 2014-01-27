@@ -1,13 +1,13 @@
 (function () {
 
     var project = {
-        name: 'boombox'
+        name: 'boombox.js'
     };
 
     module.exports = function (grunt) {
 
         // enviroment
-        project.dir = grunt.file.findup(project.name);
+        project.dir = grunt.file.findup('../' + project.name);
         grunt.log.ok('[environment] project name:', project.name);
         grunt.log.ok('[environment] project directory:', project.dir);
 

@@ -6,8 +6,7 @@
                 "compress": true,
                 "port": 1109,
                 "header": {
-                },
-                "include": {}
+                }
             },
             "mock": {
                 "use": true,
@@ -16,8 +15,7 @@
                 "header": {
                 },
                 "include": {
-                    "path": "./mockdata",
-                    "from": null
+                    "path": "./mockdata"
                 }
             },
             "operation": [
