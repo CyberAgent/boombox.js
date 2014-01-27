@@ -1,0 +1,66 @@
+{
+  "name": "boombox",
+  "version": "0.6.3",
+  "description": "Browser sound library which blended HTMLVideo and HTMLAudio and WebAudio",
+  "keywords": [
+    "webaudio",
+    "htmlaudio",
+    "htmlvideo",
+    "sound",
+    "mobile",
+    "javascript",
+    "library"
+  ],
+  "homepage": "https://github.com/CyberAgent/boombox.js",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/CyberAgent/boombox.js/master/LICENSE"
+    }
+  ],
+  "bugs": {
+    "email": "funagayama_kei@cyberagent.co.jp",
+    "url": "https://github.com/CyberAgent/beez/issues"
+  },
+  "author": {
+    "name": "CyberAgent, Inc",
+    "email": "npm@cyberagent.co.jp",
+    "url": "http://www.cyberagent.co.jp/"
+  },
+  "contributors": [
+    {
+      "name": "Kei Funagayama",
+      "email": "funagayama_kei@cyberagent.co.jp",
+      "url": "https://github.com/fkei"
+    },
+    {
+      "name": "HIRAKI Satoru",
+      "email": "hiraki_satoru@cyberagnet.co.jp",
+      "url": "https://github.com/Layzie"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CyberAgent/boombox.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-mkdir": "~0.1.1",
+    "grunt-jsdoc": "~0.4.1",
+    "grunt-exec": "~0.4.2",
+    "grunt-contrib-uglify": "~0.2.0",
+    "matchdep": "~0.1.1",
+    "mocha": "~1.14.0",
+    "chai": "~1.8.0",
+    "jshint": "~2.3.0",
+    "plato": "~0.6.1",
+    "jsdoc": "~3.2.2"
+  },
+  "engines": {
+    "node": "~0.10.1",
+    "npm": "~1.1.0"
+  }
+}

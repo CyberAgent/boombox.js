@@ -1,0 +1,37 @@
+{
+  "name": "boombox",
+  "version": "0.6.3",
+  "keywords": [
+    "webaudio",
+    "htmlaudio",
+    "htmlvideo",
+    "sound",
+    "mobile",
+    "javascript",
+    "library"
+  ],
+ "readmeFilename": "README.md",
+  "main": [
+    "boombox.js",
+    "LICENSE",
+    "README.md",
+    "boombox.min.js",
+    "boombox.min.map"
+  ],
+  "ignore": [
+    "**/.*",
+    "spec"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CyberAgent/boombox.js"
+  },
+  "homepage": "https://github.com/CyberAgent/boombox.js",
+  "authors": [
+    "CyberAgent, Inc <npm@cyberagent.co.jp>",
+    "Kei Funagayama <funagayama_kei@cyberagent.co.jp>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+  }
+}
