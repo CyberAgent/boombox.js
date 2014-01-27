@@ -20,7 +20,7 @@
   ],
   "bugs": {
     "email": "funagayama_kei@cyberagent.co.jp",
-    "url": "https://github.com/CyberAgent/beez/issues"
+    "url": "https://github.com/CyberAgent/boombox.js/issues"
   },
   "author": {
     "name": "CyberAgent, Inc",
@@ -41,7 +41,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CyberAgent/boombox.git"
+    "url": "https://github.com/CyberAgent/boombox.js.git"
   },
   "dependencies": {},
   "devDependencies": {
