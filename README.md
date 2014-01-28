@@ -17,6 +17,11 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 しかし、これらの高度な機能へのアクセスは阻害しませんので、`boombox`を拡張することは可能です。
 
+
+## Demo
+
+[**Single Sound**](http://cyberagent.github.io/boombox.js/demo/single.html)
+
 ## Features
 
 - Play(再生)
