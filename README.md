@@ -22,6 +22,8 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 [**Single Sound**](http://cyberagent.github.io/boombox.js/demo/single.html)
 
+![QR Code](http://cyberagent.github.io/boombox.js/images/qrcode.gif)
+
 ## Features
 
 - Play(再生)
