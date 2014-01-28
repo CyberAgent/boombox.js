@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>Single Sound - boombox.js</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.css">
+  <style type="text/css">
+   #w {
+     margin: 20px
+   }
+   #debug {
+     overflow-y: scroll;
+     height: 200px;
+   }
+  </style>
+</head>
+
+<body>
+  <div id="w">
+    <button id="play" class="btn btn-success">Play</button>
+    <button id="stop" class="btn btn-success">Stop</button>
+    <button id="pause" class="btn btn-success">Pause</button>
+    <button id="resume" class="btn btn-success">Resume</button>
+    <button id="replay" class="btn btn-success">Replay</button>
+    <br>
+    <br>
+    <span class="glyphicon glyphicon glyphicon-volume-off"></span>
+    <input id="volume" type="range" min="0" max="1" step="0.1" />
+    <span class="glyphicon glyphicon-volume-up"></span>
+
+    <h2>Debug</h2>
+    <pre id="debug"></pre>
+
+    <div id="info">
+      <h2>Infomation</h2>
+    </div>
+
+  </div>
+
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.2/zepto.min.js"></script>
+  <script src="vendor/boombox-0.6.5.js"></script>
+  <script>
+
+   // short-cut dom
+   $info = $("#info");
+   $debug = $("#debug");
+   // log
+   var debug = function (msg) {
+     $debug.append(msg + '\n');
+     //peroZone.scrollTop = peroZone.scrollHeight;
+     $debug.scrollTop($debug[0].scrollHeight)
+   }
+
+   // Events
+   $("#play").click(function (e) {
+     boombox.get('single').play();
+     debug('## play');
+   });
+   $("#stop").click(function (e) {
+     boombox.get('single').stop();
+     debug('## stop');
+   });
+   $("#pause").click(function (e) {
+     boombox.get('single').pause();
+     debug('## pause');
+   });
+   $("#resume").click(function (e) {
+     boombox.get('single').resume();
+     debug('## resume');
+   });
+   $("#replay").click(function (e) {
+     boombox.get('single').replay();
+     debug('## replay');
+   });
+   $("#volume").change(function (e) {
+     var volume = e.currentTarget.value;
+     debug('## volume: ' + volume);
+     boombox.get('single').volume(volume);
+   });
+
+   //setInterval(function () { debug(JSON.stringify(boombox.pool.single.state)); }, 1000)
+
+
+   // boombox running
+   boombox.setup({
+     webaudio: {
+       //use: false // force override
+     },
+     htmlaudio: {
+       //use: true // force override
+     },
+     htmlvideo: {
+       //use: true // force override
+     }
+   });
+   var bgm = ["bgm", "./media/sound.m4a"];
+   var options = {
+     src: [
+       {
+         media: 'audio/mp4',
+         path: './media/sound.m4a'
+       }
+     ]
+   };
+
+   boombox.load('single', options, function (err, htmlaudio) {
+     $info.append(htmlaudio.$el);
+     debug("## sound loaded. used: " + boombox.pool.single.constructor.name);
+   });
+
+   $info.append('Browser Support<br />');
+   $info.append('webaudio: ' + boombox.support.webaudio.use + '<br />');
+   $info.append('htmlaudio: ' + boombox.support.htmlaudio.use + '<br />');
+   $info.append('htmlvideo: ' + boombox.support.htmlvideo.use + '<br />');
+
+  </script>
+</body>
+</html>
