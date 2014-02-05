@@ -132,9 +132,9 @@ $ grunt foundation # ローカルサーバ起動
 
 **ブラウザでアクセスしてください。**
 
-> script タグ : [http://0.0.0.0:1109/m/boombox/spec/global.html](http://0.0.0.0:1109/m/boombox/spec/global.html)
+> script タグ : [http://0.0.0.0:1109/m/boombox/spec/global.html](http://0.0.0.0:1109/m/boombox.js/spec/global.html)
 >
-> require.js : [http://0.0.0.0:1109/m/boombox/spec/requirejs.html](http://0.0.0.0:1109/m/boombox/spec/requirejs.html#)
+> require.js : [http://0.0.0.0:1109/m/boombox/spec/requirejs.html](http://0.0.0.0:1109/m/boombox.js/spec/requirejs.html#)
 
 ## Usage
 
