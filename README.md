@@ -8,7 +8,7 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 ### Why you should use boombox?
 
-ブラウザでサウンドを鳴らすには、`HTMLAudio`・`WebAudio`・`HTMLVideo` が一般的に使われますが、APIの呼び出し方法やブラウザサポートなどがまちまちです。
+ブラウザでサウンドを鳴らすには、`HTMLAudio`/`WebAudio`/`HTMLVideo` が一般的に使われますが、APIの呼び出し方法やブラウザサポートなどがまちまちです。
 
 `boombox`は上記のような環境差異を吸収し一貫したAPIを提供しています。
 また、ブラウザが非アクティブ時には音を停止したり、複数のサウンドを同時に利用するといった、スマートフォン特有の要件も想定して作成されています。
@@ -297,6 +297,7 @@ var options = {
 // loadの第3引数にtrueを渡す
 boombox.load('sound', options, true, function (err, audio) {
     // サウンドファイルのロード
+    // audioがHTMLVideoの場合は、DOMへ追加が必要です。
 });
 ```
 
@@ -332,23 +333,23 @@ boombox.load('sound', options, true, function (err, audio) {
 
 ##### onVisibilityChange(e)
 
-`visibilityChange`イベントの発生に合わせて実行されます
+`visibilityChange`イベントの発生に合わせて実行されます。
 
 ##### onFocus(e)
 
-`window.onFocus`イベントの発生に合わせて実行されます
+`window.onFocus`イベントの発生に合わせて実行されます。
 
 ##### onBlur(e)
 
-`window.onBlur`イベントの発生に合わせて実行されます
+`window.onBlur`イベントの発生に合わせて実行されます。
 
 ##### onPageShow(e)
 
-`window.onpageshow`イベントの発生に合わせて実行されます
+`window.onpageshow`イベントの発生に合わせて実行されます。
 
 ##### onPageHide(e)
 
-`window.onpagehide`イベントの発生に合わせて実行されます
+`window.onpagehide`イベントの発生に合わせて実行されます。
 
 ##### onEnded(e)
 
