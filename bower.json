@@ -13,13 +13,17 @@
  "readmeFilename": "README.md",
   "main": [
     "boombox.js",
-    "LICENSE",
-    "README.md",
     "boombox.min.js",
     "boombox.min.map"
   ],
   "ignore": [
     "**/.*",
+    "Gruntfile.js",
+    "LICENSE",
+    "README.md",
+    "bower.json",
+    "node_modules",
+    "package.json",
     "spec"
   ],
   "repository": {
