@@ -1,0 +1,28 @@
+{
+  "name": "boombox.js",
+  "repo": "CyberAgent/boombox.js",
+  "description": "Browser sound library which blended HTMLVideo and HTMLAudio and WebAudio",
+  "version": "0.6.6",
+  "keywords": [
+    "webaudio",
+    "htmlaudio",
+    "htmlvideo",
+    "sound",
+    "mobile",
+    "javascript",
+    "library"
+  ],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+ "main": [
+    "boombox.js",
+    "boombox.min.js",
+    "boombox.min.map"
+  ],
+  "scripts": [
+    "boombox.js",
+    "boombox.min.js",
+    "boombox.min.map"
+  ]
+}
