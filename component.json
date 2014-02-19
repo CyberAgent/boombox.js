@@ -15,7 +15,7 @@
   "dependencies": {},
   "development": {},
   "license": "MIT",
- "main": [
+  "main": [
     "boombox.js",
     "boombox.min.js",
     "boombox.min.map"
