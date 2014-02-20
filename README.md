@@ -395,6 +395,7 @@ boombox.onFocus = function () {
 ## TODO
 
 - AudioSprite: 音源を１ファイルにまとめる
+    - Check develop branch
 - localStorage: Audioのキャッシュ
 
 ====
