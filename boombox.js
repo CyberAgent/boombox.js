@@ -2338,12 +2338,21 @@
 
             }
 
-            this.logger.debug(type, this.name);
+            this.logger.debug(type, this.name, 'offset:', start);
+
             fn();
+
             if (this.source.start) {
+                this.logger.debug('use source.start()', this.name);
                 this.source.start(0, start);
             } else {
-                this.source.noteOn(0, start);
+                if (this.isSprite()) { // iOS 6 Safari support
+                    this.logger.debug('use source.noteGrainOn()', this.name);
+                    this.source.noteGrainOn(0, start, self.sprite.current.term);
+                } else {
+                    this.logger.debug('use source.noteOn()', this.name);
+                    this.source.noteOn(0, start);
+                }
             }
 
             return this;
@@ -2370,8 +2379,10 @@
 
             if (this.source) {
                 if (this.source.stop) {
+                    this.logger.debug('use source.stop()', this.name);
                     this.source.stop(0);
                 } else {
+                    this.logger.debug('use source.noteOff()', this.name);
                     this.source.noteOff(0);
                 }
             }
