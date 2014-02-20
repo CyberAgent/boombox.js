@@ -1,6 +1,10 @@
 boombox
 =======
 
+**English documents is [this](https://github.com/CyberAgent/boombox.js/blob/master/README_en.md)**
+
+---
+
 [HTMLVideo](http://www.w3.org/TR/2009/WD-html5-20090825/video.html), [HTMLAudio](http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element), [WebAudio](http://www.w3.org/TR/webaudio/)を包括したブラウザ向け音声ライブラリです。
 
 
