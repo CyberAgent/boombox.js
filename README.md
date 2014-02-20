@@ -85,15 +85,12 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 ## Install
 
-`boombox.js`または`boombox.min.js`を`scriptタグ` でロードしてください。
+### Download
 
-### HTML
+`boombox.js`または`boombox.min.js`をダウンロードしてください。
 
-```html
-<script type="text/javascript" src="boombox.js"></script>
-```
-
-> require.js サポート
+- [boombox.js](https://raw2.github.com/CyberAgent/boombox.js/master/boombox.js)
+- [boombox.min.js](https://raw2.github.com/CyberAgent/boombox.js/master/boombox.min.js)
 
 ### npm
 
@@ -101,12 +98,28 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 $ npm install boombox.js
 ```
 
-### bower
+### Bower
 
 ```sh
 $ bower install boombox.js
 ```
 
+### component
+
+```sh
+$ component install CyberAgent/boombox.js
+```
+
+### HTML
+
+上記のいずれかの方法でダウンロードした後、`script`タグでロードしてください。
+
+```html
+<script type="text/javascript" src="YOUR/PATH/TO/boombox.js"></script><!-- for development -->
+<script type="text/javascript" src="YOUR/PATH/TO/boombox.min.js"></script><!-- for product -->
+```
+
+> require.js サポート
 
 ## Build
 
