@@ -27,7 +27,7 @@
     });
 
     var suite = function () {
-        describe('boombox', function(){
+        describe('boombox sprite webaudio', function(){
             before(function () {
                 // DOM
                 $("#w").children().each(function (idx, el) {
@@ -40,15 +40,15 @@
 
                     _.each(['play', 'stop', 'pause', 'resume', 'replay', 'loop', 'power'], function (type) {
                         if (type === 'loop') {
-                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'setLoop(2); $(\'#loop\').attr(\'value\', \'native\')">' + 'loop on(native)' + '</button>'));
-                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'setLoop(1); $(\'#loop\').attr(\'value\', \'original\')">' + 'loop on(original)' + '</button>'));
-                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'setLoop(0); $(\'#loop\').attr(\'value\', \'off\')">' + 'loop off' + '</button>'));
-                            $("#w").append($('<input id="loop" size="1" type=text disable value="off">'));
+                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'setLoop(2); $(\'#loop-' + name + '\').attr(\'value\', \'native\')">' + 'loop native' + '</button>'));
+                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'setLoop(1); $(\'#loop-' + name + '\').attr(\'value\', \'original\')">' + 'loop original' + '</button>'));
+                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'setLoop(0); $(\'#loop-' + name + '\').attr(\'value\', \'off\')">' + 'loop off' + '</button>'));
+                            $("#w").append($('<input id="loop-' + name + '" size="5" type=text disable value="off">'));
                             return;
                         }
                         if (type === 'power') {
-                            $("#w").append($('<button onclick="boombox.power(boombox.POWER_ON)">Power ON</button>'));
-                            $("#w").append($('<button onclick="boombox.power(boombox.POWER_OFF)">Power OFF</button>'));
+                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'power(boombox.POWER_ON)">Power ON</button>'));
+                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'power(boombox.POWER_OFF)">Power OFF</button>'));
                             return;
                         }
 
@@ -67,13 +67,13 @@
             it('setup()', function() {
                 boombox.setup({
                     webaudio: {
-                        use: false // force override
+                        use: true // force override
                     },
                     htmlaudio: {
-                        //use: true // force override
+                        use: false // force override
                     },
                     htmlvideo: {
-                        //use: true // force override
+                        use: false // force override
                     },
                     loglevel: 1 // trace
                 });

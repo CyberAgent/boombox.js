@@ -579,7 +579,6 @@
          * @return {boombox}
          */
         BoomBox.prototype.setPool = function (name, obj, Obj) {
-
             if (obj.isParentSprite()) {
                 for (var r in this.pool) {
                     if (!!~r.indexOf(name + SPRITE_SEPARATOR)) {
@@ -710,7 +709,7 @@
          */
         BoomBox.prototype.power = function (p) {
             var self = this;
-            this.logger.trace('change power', p);
+            this.logger.trace('power:', this.name, 'flag:', p);
 
             for (var name in this.pool) {
                 var audio = this.pool[name];
@@ -731,7 +730,7 @@
          */
         BoomBox.prototype.volume = function (v) {
             var self = this;
-            this.logger.trace('volume');
+            this.logger.trace('volume:', this.name, 'volume:', v);
 
             for (var name in this.pool) {
                 var audio = this.pool[name];
@@ -740,7 +739,7 @@
         };
 
         /**
-         * VisibilityChange イベントの発生に合わせて実行される
+         * Firing in the occurrence of events VisibilityChange
          *
          * @memberof boombox
          * @name onVisibilityChange
@@ -756,7 +755,7 @@
         };
 
         /**
-         * window.onfocus イベントの発生に合わせて実行される
+         * Firing in the occurrence of events window.onfocus
          *
          * @memberof boombox
          * @name onFocus
@@ -768,7 +767,7 @@
         };
 
         /**
-         * window.onblur イベントの発生に合わせて実行される
+         * Firing in the occurrence of events window.onblur
          *
          * @memberof boombox
          * @name onBlur
@@ -780,7 +779,7 @@
         };
 
         /**
-         * window.onpageshow イベントの発生に合わせて実行される
+         * Firing in the occurrence of events window.onpageshow
          *
          * @memberof boombox
          * @name onPageShow
@@ -792,7 +791,7 @@
         };
 
         /**
-         * window.onpagehide イベントの発生に合わせて実行される
+         * Firing in the occurrence of events window.onpagehide
          *
          * @memberof boombox
          * @name onPageHide
@@ -971,7 +970,7 @@
          */
         HTMLAudio.prototype.load = function (options, callback) {
 
-            var cb = callback || function () {};
+            var cb = callback || none;
 
             if (this.parent) {
                 cb(null, this);
@@ -1106,11 +1105,7 @@
                 return false;
             }
 
-            if (!this.state.loaded) {
-                return false;
-            }
-
-            if (typeof this.state.error !== 'undefined') {
+            if (!this.state.loaded || typeof this.state.error !== 'undefined') {
                 return false;
             }
 
@@ -1183,7 +1178,7 @@
         HTMLAudio.prototype.clearTimer = function (name) {
             var id = this._timer[name];
             if (id) {
-                this.logger.debug('Remove setTimetout:', id);
+                this.logger.debug('remove setTimetout:', id);
                 clearTimeout(id);
                 delete this._timer[name];
             }
@@ -1223,33 +1218,31 @@
             var type = 'play';
             var fn = none;
 
+            this.state.time.playback = Date.now();
+
             if (resume && this.state.time.pause) {
                 // resume
                 this.setCurrentTime(this.state.time.pause);
 
-                var _pause = this.state.time.pause;
                 if (this.isSprite()) {
                     fn = function () {
                         self.setTimer('play', setTimeout(function () {
                             self.stop();
                             self._onEnded(); // fire onended evnet
-                        }, (self.sprite.current.end - _pause) * 1000));
+                        }, (self.sprite.current.end - this.state.time.pause) * 1000));
                     };
                 }
                 this.state.time.pause = undefined;
-                this.state.time.playback = Date.now();
 
                 type = 'resume:';
 
             } else {
                 // zero-play
                 this.setCurrentTime(0);
-                this.state.time.playback = Date.now();
 
                 if (this.isSprite()) {
                     var start = this.sprite.current.start;
                     this.setCurrentTime(start);
-                    this.state.time.playback = Date.now();
 
                     fn = function () {
                         self.setTimer('play', setTimeout(function () {
@@ -1277,7 +1270,7 @@
          * @return {boombox.HTMLAudio}
          */
         HTMLAudio.prototype.stop = function () {
-            if (!this.isUse()) {
+            if (!this.state.loaded || typeof this.state.error !== 'undefined') {
                 this.logger.debug('skip stop:', this.name, 'state can not be used');
                 return this;
             } // skip!!
@@ -1364,7 +1357,7 @@
          * @return {boombox.HTMLAudio}
          */
         HTMLAudio.prototype.volume = function (v) {
-            this.logger.debug('volume:', v);
+            this.logger.trace('volume:', this.name, 'volume:', v);
             this.$el.volume = v;
         };
 
@@ -1442,6 +1435,7 @@
          * @return {boombox.HTMLAudio}
          */
         HTMLAudio.prototype.power = function (p) {
+            this.logger.trace('power:', this.name, 'flag:', p);
             if (p === boombox.POWER_OFF) {
                 this.stop(); // force pause
             }
@@ -1478,6 +1472,7 @@
          * @name dispose
          */
         HTMLAudio.prototype.dispose = function () {
+
             delete this.name;
             delete this.state.time.playback;
             delete this.state.time.pause;
@@ -1489,6 +1484,13 @@
             delete this.state;
             this.$el.src = undefined;
             delete this.$el;
+
+            this.clearTimerAll();
+            delete this._timer;
+
+            delete this.parent;
+            delete this.parent
+            delete this.sprite;
         };
 
         return HTMLAudio;
@@ -1669,11 +1671,7 @@
                 return false;
             }
 
-            if (!this.state.loaded) {
-                return false;
-            }
-
-            if (typeof this.state.error !== 'undefined') {
+            if (!this.state.loaded || typeof this.state.error !== 'undefined') {
                 return false;
             }
 
@@ -1769,7 +1767,10 @@
          * @return {boombox.HTMLVideo}
          */
         HTMLVideo.prototype.stop = function () {
-            if (!this.isUse()) { return this; } // skip!!
+            if (!this.state.loaded || typeof this.state.error !== 'undefined') {
+                this.logger.debug('skip stop:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
 
             this.$el.pause();
             this.setCurrentTime(0);
@@ -1838,7 +1839,7 @@
          * @return {boombox.HTMLVideo}
          */
         HTMLVideo.prototype.volume = function (v) {
-            this.logger.trace('set volume:', v);
+            this.logger.trace('volume:', this.name, 'volume:', v);
             this.$el.volume = v;
         };
 
@@ -1912,6 +1913,7 @@
          * @return {boombox.HTMLVideo}
          */
         HTMLVideo.prototype.power = function (p) {
+            this.logger.trace('power:', this.name, 'flag:', p);
             if (p === boombox.POWER_OFF) {
                 this.stop(); // force pause
             }
@@ -1967,8 +1969,24 @@
     // HTMLVideo Class
 
     var WebAudio = (function () {
-        function WebAudio(name) {
-            this.logger = new Logger('WebAudio ');
+        function WebAudio(name, parent) {
+            this.logger = new Logger('WebAudio');
+
+            /**
+             * Audio name
+             *
+             * @memberof WebAudio
+             * @name name
+             * @type {String}
+             */
+            this.name = name;
+
+
+            this._timer = {};
+
+
+            this.sprite = undefined;
+
 
             /**
              * AudioBuffer in use
@@ -1988,33 +2006,7 @@
              */
             this.source = undefined;
 
-            /**
-             * State of Audio
-             *
-             * @memberof WebAudio
-             * @name state
-             * @type {Object}
-             */
-            this.state = {
-                time: {
-                    playback: undefined, // Playback start time (unixtime)
-                    pause: undefined, // Seek time paused
-                    progress: 0 // Sound progress time
-                },
-                loop: boombox.LOOP_NOT, // Loop playback flags
-                power: boombox.POWER_ON, // power flag
-                loaded: false, // Audio file is loaded
-                error: undefined // error state
-            };
 
-            /**
-             * Audio name
-             *
-             * @memberof WebAudio
-             * @name name
-             * @type {String}
-             */
-            this.name = name;
 
 
             /**
@@ -2028,6 +2020,40 @@
             this.ctx = boombox.WEB_AUDIO_CONTEXT;
 
             this.gainNode = this.ctx.createGain();
+
+
+            /**
+             * State of Audio
+             *
+             * @memberof WebAudio
+             * @name state
+             * @type {Object}
+             */
+            if (parent) {
+                var sprite_n = getSpriteName(name);
+
+                // change Sprite
+                var current = parent.sprite.options[sprite_n.suffix];
+
+                this.parent = parent; // ref
+                this.state = this.parent.state; // ref
+                //this.$el = this.parent.$el; // ref
+                //this.onEnded = this.parent.onEnded; // TODO: ref
+                this.sprite = new Sprite(undefined, current); // new
+
+            } else {
+                this.state = {
+                    time: {
+                        playback: undefined, // Playback start time (unixtime)
+                        pause: undefined, // Seek time paused
+                        progress: 0 // Sound progress time
+                    },
+                    loop: boombox.LOOP_NOT, // Loop playback flags
+                    power: boombox.POWER_ON, // power flag
+                    loaded: false, // Audio file is loaded
+                    error: undefined // error state
+                };
+            }
         }
 
         //////
@@ -2051,7 +2077,19 @@
             var self = this;
             options = options || {};
 
-            var cb = callback || function () {};
+            var cb = callback || none;
+
+            if (this.parent) {
+                //this.buffer = this.parent.buffer; // ref
+                cb(null, this);
+                return this;
+            }
+
+            if (options.spritemap) { // Sprite ON
+                this.sprite = new Sprite(options.spritemap);
+                delete options.spritemap;
+            }
+
 
             var http = new XMLHttpRequest();
             http.onload = function (e) {
@@ -2068,6 +2106,15 @@
 
                             self.state.loaded = true;
                             //self.play();
+
+                            if (self.isParentSprite()) { // ref buffer
+                                for (var k in boombox.pool) {
+                                    if (!!~k.indexOf(self.name + SPRITE_SEPARATOR)) {
+                                        boombox.pool[k].buffer = buffer;
+                                    }
+                                }
+                            }
+
 
                             return cb(null, self);
                         },
@@ -2087,7 +2134,7 @@
                 if (http.readyState !== 4) {
                     http.abort();
                     cb(new Error('load of web audio file has timed out. timeout:' + timeout), self);
-                    cb = function () {};
+                    cb = none;
                 }
             }, timeout);
 
@@ -2117,11 +2164,7 @@
                 return false;
             }
 
-            if (!this.state.loaded) {
-                return false;
-            }
-
-            if (typeof this.state.error !== 'undefined') {
+            if (!this.state.loaded || typeof this.state.error !== 'undefined') {
                 return false;
             }
 
@@ -2176,6 +2219,38 @@
             return (0 < this.state.loop);
         };
 
+        WebAudio.prototype.isParentSprite = function () {
+            return !!(!this.parent && this.sprite && !this.sprite.current);
+        };
+
+
+        WebAudio.prototype.isSprite = function () {
+            return !!(this.parent && this.sprite && this.sprite.current);
+        };
+
+
+        WebAudio.prototype.clearTimerAll = function () {
+            for (var k in this._timer) {
+                var id = this._timer[k];
+                this.clearTimer(k);
+            };
+        };
+        WebAudio.prototype.clearTimer = function (name) {
+            var id = this._timer[name];
+            if (id) {
+                this.logger.debug('remove setTimetout:', id);
+                clearTimeout(id);
+                delete this._timer[name];
+            }
+        };
+        WebAudio.prototype.setTimer = function (name, id) {
+            if (this._timer[name]) {
+                this.logger.warn('Access that is not expected:', name, id);
+            }
+            this._timer[name] = id;
+        };
+
+
         //////////
 
         /**
@@ -2189,11 +2264,16 @@
         WebAudio.prototype.play = function (resume) {
             var self = this;
 
-            if (!this.isUse()) { return this; } // skip!!
+            if (!this.isUse()) {
+                this.logger.debug('skip play:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
 
             if (this.isPlayback()) {
+                this.logger.debug('skip play:', this.name, 'is playing');
                 return this;
             }
+
             if (!resume) {
                 this.sourceDispose();
             }
@@ -2213,26 +2293,57 @@
             this.source.connect(this.gainNode);
             this.gainNode.connect(this.ctx.destination);
 
+            var type = 'play';
+            var fn = none;
+            var start;
 
             this.state.time.playback = Date.now(); // Playback start time (ms)
 
             if (resume && this.state.time.pause) {
                 // resume
-                var offset = this.state.time.pause / 1000; // Start position (min)
-                this.logger.trace('offset:', offset);
-                if (this.source.start) {
-                    this.source.start(0, offset);
-                } else {
-                    this.source.noteOn(offset);
+                var pause_sec = this.state.time.pause / 1000; // (sec)
+                start = this.sprite.current.start + pause_sec; // Start position (sec)
+                var interval = Math.ceil((self.sprite.current.term - pause_sec) * 1000); // (ms)
+
+                //this.logger.trace('start:', start);
+                //this.logger.warn('interval:', interval);
+
+                if (this.isSprite()) {
+                    fn = function () {
+                        self.setTimer('play', setTimeout(function () {
+                            self.stop();
+                            self._onEnded(); // fire onended evnet
+                        }, interval));
+
+                    };
                 }
+
+
                 this.state.time.pause = undefined;
 
             } else { // zero
-                if (this.source.start) {
-                    this.source.start(0);
-                } else {
-                    this.source.noteOn(0);
+
+                if (this.isSprite()) {
+                    start = this.sprite.current.start;
+
+                    fn = function () {
+                        self.setTimer('play', setTimeout(function () {
+                            self.stop();
+                            self._onEnded(); // fire onended evnet
+                        }, self.sprite.current.term * 1000));
+                    };
+
                 }
+
+
+            }
+
+            this.logger.debug(type, this.name);
+            fn();
+            if (this.source.start) {
+                this.source.start(0, start);
+            } else {
+                this.source.noteOn(0, start);
             }
 
             return this;
@@ -2247,7 +2358,15 @@
          * @return {boombox.WebAudio}
          */
         WebAudio.prototype.stop = function () {
-            if (!this.isUse()) { return this; } // skip!!
+
+            if (!this.state.loaded || typeof this.state.error !== 'undefined') {
+                this.logger.debug('skip stop:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
+
+            this.logger.debug('stop:', this.name);
+
+            this.clearTimer('play');
 
             if (this.source) {
                 if (this.source.stop) {
@@ -2271,14 +2390,17 @@
          * @return {boombox.WebAudio}
          */
         WebAudio.prototype.pause = function () {
-            if (!this.isUse()) { return this; } // skip!!
+            if (!this.isUse()) {
+                this.logger.debug('skip pause:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
 
             if (!this.source) {
-                this.logger.warn('Skip pause, Not playing.');
+                this.logger.debug('skip pause, Not playing.');
                 return this;
             }
             if (this.state.time.pause) {
-                this.logger.warn('Skip pause, It is already paused.');
+                this.logger.debug('skip pause, It is already paused.');
                 return this;
             }
 
@@ -2287,6 +2409,10 @@
             this.state.time.pause = this.state.time.progress + offset; // Pause time(ms)
             this.state.time.progress += offset;
             this.logger.trace('state.time.pause:', this.state.time.pause, 'now:', now, 'state.time.playback', this.state.time.playback);
+
+            this.logger.debug('pause:', this.name);
+            this.clearTimer('play');
+
             this.source.noteOff(0);
 
             return this;
@@ -2301,7 +2427,10 @@
          * @return {boombox.WebAudio}
          */
         WebAudio.prototype.resume = function () {
-            if (!this.isUse()) { return this; } // skip!!
+            if (!this.isUse()) {
+                this.logger.debug('skip resume:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
 
             if (this.state.time.pause) {
                 this.play(true);
@@ -2318,7 +2447,13 @@
          * @return {boombox.WebAudio}
          */
         WebAudio.prototype.replay = function () {
-            if (!this.isUse()) { return this; } // skip!!
+            if (!this.isUse()) {
+                this.logger.debug('skip replay:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
+
+            this.logger.debug('replay:', this.name);
+            this.clearTimer('play');
 
             this.sourceDispose();
             this.play();
@@ -2334,7 +2469,7 @@
          * @return {boombox.WebAudio}
          */
         WebAudio.prototype.volume = function (v) {
-            this.logger.trace('change volume name:', this.name, 'volume:', v);
+            this.logger.trace('volume:', this.name, 'volume:', v);
             this.gainNode.gain.value = v;
         };
 
@@ -2349,12 +2484,15 @@
          * @param {Event} e event
          */
         WebAudio.prototype._onEnded = function (e) {
+            this.logger.trace('onended fire!', this.name);
+
             var now = Date.now();
-            // Skip if sounds is not ended
+            // skip if sounds is not ended
             if (this.source && Math.abs(((now - this.state.time.playback + this.state.time.progress) / 1000) - this.source.buffer.duration) >= 0.01) {
+                this.logger.debug('skip if sounds is not ended', this.name);
                 return;
             }
-            this.logger.trace('onended fire!', this.state.time);
+
             this.state.time.playback = undefined;
 
             this.onEnded(e); // fire user ended event!!
@@ -2400,8 +2538,7 @@
                 }
 
             } else if (loop === boombox.LOOP_ORIGINAL) {
-                // pass
-
+                this.logger.warn('Please use the loop native.'); // pass
             } else if (loop === boombox.LOOP_NATIVE) {
                 if (this.source) {
                     this.source.loop = loop;
@@ -2421,6 +2558,8 @@
          * @return {boombox.WebAudio}
          */
         WebAudio.prototype.power = function (p) {
+            this.logger.trace('power:', this.name, 'flag:', p);
+
             if (p === boombox.POWER_OFF) {
                 this.stop(); // force pause
             }
@@ -2439,7 +2578,7 @@
          * @name sourceDispose
          */
         WebAudio.prototype.sourceDispose = function () {
-            this.logger.trace('WebAudio source dispose', this.name);
+            this.logger.trace('source dispose', this.name);
             this.source && this.source.disconnect();
             this.source = undefined;
             this.state.time.playback = undefined;
@@ -2464,12 +2603,19 @@
             //delete this.source;
 
             this.sourceDispose();
+            this.clearTimerAll();
+            delete this._timer;
+
             delete this.state.time;
             delete this.state.loop;
             delete this.state.power;
             delete this.state.loaded;
             delete this.state.error;
             delete this.state;
+
+            this.parent = null;
+            delete this.parent
+            delete this.sprite;
 
             delete this.name;
             this.gainNode && this.gainNode.disconnect && delete this.gainNode;
