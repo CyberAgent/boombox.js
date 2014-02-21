@@ -27,7 +27,7 @@
     });
 
     var suite = function () {
-        describe('boombox sprite htmlaudio', function(){
+        describe('boombox sprite htmlvideo', function(){
             before(function () {
                 // DOM
                 $("#w").children().each(function (idx, el) {
