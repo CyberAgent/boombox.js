@@ -972,7 +972,7 @@
 
             var cb = callback || none;
 
-            if (this.parent) {
+            if (this.parent) { // skip audiosprite children
                 cb(null, this);
                 return this;
             }
@@ -1437,7 +1437,7 @@
                 this.$el.loop = boombox.LOOP_NOT;
 
             } else if (loop === boombox.LOOP_ORIGINAL) {
-
+                // pass
             } else if (loop === boombox.LOOP_NATIVE) {
                 if (this.isSprite()) {
                     this.logger.warn('audiosprite does not support the native.');
@@ -1528,23 +1528,41 @@
     // HTMLVideo Class
 
     var HTMLVideo = (function () {
-        function HTMLVideo(name) {
+        function HTMLVideo(name, parent) {
 
             this.logger = new Logger('HTMLVideo');
             this.name = name;
+            this._timer = {}; // setTimeout#id
 
-            this.state = {
-                time: {
-                    playback: undefined, // Playback start time (unixtime)
-                    pause: undefined // // Seek time paused
-                },
-                loop: boombox.LOOP_NOT, // Loop playback flags
-                power: boombox.POWER_ON, // Power flag
-                loaded: false, // Video file is loaded
-                error: undefined // error state
-            };
+            // sprite store
+            this.sprite = undefined;
+            if (parent) {
+                var sprite_n = getSpriteName(name);
 
-            this.$el = document.createElement('video');
+                // change Sprite
+                var current = parent.sprite.options[sprite_n.suffix];
+
+                this.parent = parent; // ref
+                this.state = this.parent.state; // ref
+                this.$el = this.parent.$el; // ref
+                //this.onEnded = this.parent.onEnded; // TODO: ref
+                this.sprite = new Sprite(undefined, current); // new
+
+            } else {
+                this.state = {
+                    time: {
+                        playback: undefined, // Playback start time (unixtime)
+                        pause: undefined // // Seek time paused
+                    },
+                    loop: boombox.LOOP_NOT, // Loop playback flags
+                    power: boombox.POWER_ON, // Power flag
+                    loaded: false, // Video file is loaded
+                    error: undefined // error state
+                };
+                this.$el = document.createElement('video');
+
+            }
+
         }
 
         ///////
@@ -1575,6 +1593,14 @@
          */
         HTMLVideo.prototype.load = function (options, callback) {
             var self = this;
+
+            var cb = callback || none;
+
+            if (this.parent) { // skip audiosprite children
+                cb(null, this);
+                return this;
+            }
+
             options = options || {
                 //src: '',
                 //type: '',
@@ -1590,7 +1616,10 @@
             var timeout = options.timeout || 15 * 1000;
             delete options.timeout;
 
-            var cb = callback || function () {};
+            if (options.spritemap) { // Sprite ON
+                this.sprite = new Sprite(options.spritemap);
+                delete options.spritemap;
+            }
 
             for (var k in options) {
                 var v = options[k];
@@ -1633,9 +1662,9 @@
             var ua_ios = window.navigator.userAgent.match(/(iPhone\sOS)\s([\d_]+)/);
             if (ua_ios && 0 < ua_ios.length) { // IOS Safari
                 hookEventName = 'suspend';
-            } else if (!!window.navigator.userAgent.match(/(Android)\s+(4)([\d.]+)/)) { // Android 4
+            } else if (!!window.navigator.userAgent.match(/(Android)\s+(4)([\d.]+)/)) { // Android 4 basic
                 hookEventName = 'loadeddata';
-            } else if (!!window.navigator.userAgent.match(/(Android)\s+(2)([\d.]+)/)) { // Android 2
+            } else if (!!window.navigator.userAgent.match(/(Android)\s+(2)([\d.]+)/)) { // Android 2 basic
                 hookEventName = 'stalled';
             }
 
@@ -1754,6 +1783,49 @@
             return (0 < this.state.loop);
         };
 
+        /**
+         * Loop flag
+         *
+         * @memberof HTMLVideo
+         * @method
+         * @name isLoop
+         * @return {int}
+         */
+        HTMLVideo.prototype.isLoop = function () {
+            return (0 < this.state.loop);
+        };
+
+        HTMLVideo.prototype.isParentSprite = function () {
+            return !!(!this.parent && this.sprite && !this.sprite.current);
+        };
+
+        HTMLVideo.prototype.isSprite = function () {
+            return !!(this.parent && this.sprite && this.sprite.current);
+        };
+
+
+        HTMLVideo.prototype.clearTimerAll = function () {
+            for (var k in this._timer) {
+                var id = this._timer[k];
+                this.clearTimer(k);
+            };
+        };
+        HTMLVideo.prototype.clearTimer = function (name) {
+            var id = this._timer[name];
+            if (id) {
+                this.logger.debug('remove setTimetout:', id);
+                clearTimeout(id);
+                delete this._timer[name];
+            }
+        };
+        HTMLVideo.prototype.setTimer = function (name, id) {
+            if (this._timer[name]) {
+                this.logger.warn('Access that is not expected:', name, id);
+            }
+            this._timer[name] = id;
+        };
+
+
         //////////
 
         /**
@@ -1765,25 +1837,70 @@
          * @return {boombox.HTMLVideo}
          */
         HTMLVideo.prototype.play = function (resume) {
-            if (!this.isUse()) { return this; } // skip!!
+            if (!this.isUse()) {
+                this.logger.debug('skip play:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
 
             if (this.isPlayback()) {
+                this.logger.debug('skip play:', this.name, 'is playing');
                 return this;
             }
+
+            var self = this;
+
+            var type = 'play';
+            var fn = none;
+
+            this.state.time.playback = Date.now();
+
 
             if (resume && this.state.time.pause) {
                 // resume
                 this.setCurrentTime(this.state.time.pause);
+
+                if (this.isSprite()) {
+                    var _pause = this.state.time.pause;
+                    fn = function () {
+                        var interval = Math.ceil((self.sprite.current.end - _pause) * 1000); // (ms)
+
+                        self.setTimer('play', setTimeout(function () {
+                            self.stop();
+                            self._onEnded(); // fire onended evnet
+                        }, interval));
+                    };
+                }
+
                 this.state.time.pause = undefined;
-                this.state.time.playback = Date.now();
-                this.$el.play();
+
+                type = 'resume:';
+
             } else {
                 // zero-play
                 this.setCurrentTime(0);
-                this.state.time.playback = Date.now();
-                this.$el.play();
+
+                if (this.isSprite()) {
+                    var start = this.sprite.current.start;
+                    this.setCurrentTime(start);
+
+                    fn = function () {
+                        var interval = Math.ceil(self.sprite.current.term * 1000); // (ms)
+                        self.setTimer('play', setTimeout(function () {
+                            self.stop();
+                            self._onEnded(); // fire onended evnet
+                        }, interval));
+                    };
+                }
+
             }
+
+            this.logger.debug(type, this.name);
+            fn();
+            this.state.time.name = this.name;
+            this.$el.play();
+
             return this;
+
         };
 
         /**
@@ -1800,9 +1917,17 @@
                 return this;
             } // skip!!
 
+            if (this.state.time.name && this.state.time.name !== this.name) {
+                this.logger.debug('skip stop: It is used in other sources', this.name, this.state.time.name);
+                return this;
+            } // skip!!
+
+            this.logger.debug('stop:', this.name);
+            this.clearTimer('play');
             this.$el.pause();
             this.setCurrentTime(0);
             this.state.time.playback = undefined;
+            this.state.time.name = undefined;
             return this;
         };
 
@@ -1815,12 +1940,23 @@
          * @return {boombox.HTMLVideo}
          */
         HTMLVideo.prototype.pause = function () {
-            if (!this.isUse()) { return this; } // skip!!
+            if (!this.isUse()) {
+                this.logger.debug('skip pause:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
 
+            if (this.state.time.name && this.state.time.name !== this.name) {
+                this.logger.debug('skip pause: It is used in other sources', this.name, this.state.time.name);
+                return this;
+            } // skip!!
+
+            this.logger.debug('pause:', this.name);
+            this.clearTimer('play');
             this.$el.pause();
-
             this.state.time.pause = this.$el.currentTime;
             this.state.time.playback = undefined;
+            //this.state.time.name = undefined;
+
             return this;
         };
 
@@ -1833,7 +1969,15 @@
          * @return {boombox.HTMLVideo}
          */
         HTMLVideo.prototype.resume = function () {
-            if (!this.isUse()) { return this; } // skip!!
+            if (!this.isUse()) {
+                this.logger.debug('skip resume:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
+
+            if (this.state.time.name && this.state.time.name !== this.name) {
+                this.logger.debug('skip resume: It is used in other sources', this.name, this.state.time.name);
+                return this;
+            } // skip!!
 
             if (this.state.time.pause) {
                 this.play(true);
@@ -1850,8 +1994,13 @@
          * @return {boombox.HTMLVideo}
          */
         HTMLVideo.prototype.replay = function () {
-            if (!this.isUse()) { return this; } // skip!!
+            if (!this.isUse()) {
+                this.logger.debug('skip replay:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
 
+            this.logger.debug('replay:', this.name);
+            this.clearTimer('play');
             this.pause();
             this.setCurrentTime(0);
             this.play();
@@ -1884,12 +2033,12 @@
         HTMLVideo.prototype._onEnded = function (e) {
             this.logger.trace('onended fire! name:', this.name);
             this.state.time.playback = undefined;
+            this.state.time.name = undefined;
 
             this.onEnded(e); // fire user ended event!!
 
             if (this.state.loop === boombox.LOOP_ORIGINAL && typeof this.state.time.pause === 'undefined') {
                 this.logger.trace('onended loop play. name:', this.name);
-
                 this.play();
             }
         };
@@ -1922,8 +2071,12 @@
                 this.$el.loop = boombox.LOOP_NOT;
 
             } else if (loop === boombox.LOOP_ORIGINAL) {
-
+                // pass
             } else if (loop === boombox.LOOP_NATIVE) {
+                if (this.isSprite()) {
+                    this.logger.warn('audiosprite does not support the native.');
+                    return this;
+                }
                 if (this.$el) {
                     this.$el.loop = loop;
                 }
@@ -1977,9 +2130,11 @@
          * @name dispose
          */
         HTMLVideo.prototype.dispose = function () {
+
             delete this.name;
             delete this.state.time.playback;
             delete this.state.time.pause;
+            delete this.state.time.name;
             delete this.state.time;
             delete this.state.loop;
             delete this.state.power;
@@ -1988,13 +2143,21 @@
             delete this.state;
             this.$el.src = undefined;
             delete this.$el;
+
+            this.clearTimerAll();
+            delete this._timer;
+
+            delete this.parent;
+            this.sprite.dispose && this.sprite.dispose();
+            delete this.sprite;
+
         };
 
         return HTMLVideo;
     })();
 
     //////////////////////////////////
-    // HTMLVideo Class
+    // WebAudio Class
 
     var WebAudio = (function () {
         function WebAudio(name, parent) {
