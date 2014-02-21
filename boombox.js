@@ -1173,7 +1173,7 @@
             for (var k in this._timer) {
                 var id = this._timer[k];
                 this.clearTimer(k);
-            };
+            }
         };
         HTMLAudio.prototype.clearTimer = function (name) {
             var id = this._timer[name];
@@ -1808,7 +1808,7 @@
             for (var k in this._timer) {
                 var id = this._timer[k];
                 this.clearTimer(k);
-            };
+            }
         };
         HTMLVideo.prototype.clearTimer = function (name) {
             var id = this._timer[name];
@@ -2430,7 +2430,7 @@
             for (var k in this._timer) {
                 var id = this._timer[k];
                 this.clearTimer(k);
-            };
+            }
         };
         WebAudio.prototype.clearTimer = function (name) {
             var id = this._timer[name];
