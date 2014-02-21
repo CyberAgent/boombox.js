@@ -1489,8 +1489,9 @@
             delete this._timer;
 
             delete this.parent;
-            delete this.parent
+            this.sprite.dispose && this.sprite.dispose();
             delete this.sprite;
+
         };
 
         return HTMLAudio;
@@ -2614,6 +2615,7 @@
             //delete this.source;
 
             this.sourceDispose();
+            delete this.source
             this.clearTimerAll();
             delete this._timer;
 
@@ -2625,12 +2627,15 @@
             delete this.state;
 
             this.parent = null;
-            delete this.parent
+            delete this.parent;
+
+            this.sprite.dispose && this.sprite.dispose();
             delete this.sprite;
 
             delete this.name;
             this.gainNode && this.gainNode.disconnect && delete this.gainNode;
             this.ctx = null;
+
         };
 
 
@@ -2655,7 +2660,9 @@
          * Dispose
          */
         Sprite.prototype.dispose = function () {
+            this.options = null;
             delete this.options;
+            delete this.current;
         };
 
         return Sprite;
