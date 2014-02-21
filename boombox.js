@@ -1225,13 +1225,17 @@
                 this.setCurrentTime(this.state.time.pause);
 
                 if (this.isSprite()) {
+                    var _pause = this.state.time.pause;
                     fn = function () {
+                        var interval = Math.ceil((self.sprite.current.end - _pause) * 1000); // (ms)
+
                         self.setTimer('play', setTimeout(function () {
                             self.stop();
                             self._onEnded(); // fire onended evnet
-                        }, (self.sprite.current.end - this.state.time.pause) * 1000));
+                        }, interval));
                     };
                 }
+
                 this.state.time.pause = undefined;
 
                 type = 'resume:';
@@ -1245,10 +1249,11 @@
                     this.setCurrentTime(start);
 
                     fn = function () {
+                        var interval = Math.ceil(self.sprite.current.term * 1000); // (ms)
                         self.setTimer('play', setTimeout(function () {
                             self.stop();
                             self._onEnded(); // fire onended evnet
-                        }, self.sprite.current.term * 1000));
+                        }, interval));
                     };
                 }
 
@@ -1256,6 +1261,7 @@
 
             this.logger.debug(type, this.name);
             fn();
+            this.state.time.name = this.name;
             this.$el.play();
 
             return this;
@@ -1275,11 +1281,17 @@
                 return this;
             } // skip!!
 
+            if (this.state.time.name && this.state.time.name !== this.name) {
+                this.logger.debug('skip stop: It is used in other sources', this.name, this.state.time.name);
+                return this;
+            } // skip!!
+
             this.logger.debug('stop:', this.name);
             this.clearTimer('play');
             this.$el.pause();
             this.setCurrentTime(0);
             this.state.time.playback = undefined;
+            this.state.time.name = undefined;
             return this;
         };
 
@@ -1297,11 +1309,19 @@
                 return this;
             } // skip!!
 
+            if (this.state.time.name && this.state.time.name !== this.name) {
+                this.logger.debug('skip pause: It is used in other sources', this.name, this.state.time.name);
+                return this;
+            } // skip!!
+
+
             this.logger.debug('pause:', this.name);
             this.clearTimer('play');
             this.$el.pause();
             this.state.time.pause = this.$el.currentTime;
             this.state.time.playback = undefined;
+            //this.state.time.name = undefined;
+
             return this;
         };
 
@@ -1316,6 +1336,11 @@
         HTMLAudio.prototype.resume = function () {
             if (!this.isUse()) {
                 this.logger.debug('skip resume:', this.name, 'state can not be used');
+                return this;
+            } // skip!!
+
+            if (this.state.time.name && this.state.time.name !== this.name) {
+                this.logger.debug('skip resume: It is used in other sources', this.name, this.state.time.name);
                 return this;
             } // skip!!
 
@@ -1374,6 +1399,7 @@
         HTMLAudio.prototype._onEnded = function (e) {
             this.logger.trace('onended fire! name:', this.name);
             this.state.time.playback = undefined;
+            this.state.time.name = undefined;
 
             this.onEnded(e); // fire user ended event!!
 
@@ -1476,6 +1502,7 @@
             delete this.name;
             delete this.state.time.playback;
             delete this.state.time.pause;
+            delete this.state.time.name;
             delete this.state.time;
             delete this.state.loop;
             delete this.state.power;
@@ -2030,30 +2057,34 @@
              * @name state
              * @type {Object}
              */
+            this.state = {
+                time: {
+                    playback: undefined, // Playback start time (unixtime)
+                    pause: undefined, // Seek time paused
+                    progress: 0 // Sound progress time
+                },
+                loop: boombox.LOOP_NOT, // Loop playback flags
+                power: boombox.POWER_ON, // power flag
+                loaded: false, // Audio file is loaded
+                error: undefined // error state
+            };
+
             if (parent) {
                 var sprite_n = getSpriteName(name);
 
-                // change Sprite
-                var current = parent.sprite.options[sprite_n.suffix];
 
                 this.parent = parent; // ref
-                this.state = this.parent.state; // ref
+                //this.state = this.parent.state; // ref
+                this.state.loaded = this.parent.state.loaded; // not ref copy
+                this.state.error = this.parent.state.error; // not ref copy
+
+
                 //this.$el = this.parent.$el; // ref
                 //this.onEnded = this.parent.onEnded; // TODO: ref
-                this.sprite = new Sprite(undefined, current); // new
 
-            } else {
-                this.state = {
-                    time: {
-                        playback: undefined, // Playback start time (unixtime)
-                        pause: undefined, // Seek time paused
-                        progress: 0 // Sound progress time
-                    },
-                    loop: boombox.LOOP_NOT, // Loop playback flags
-                    power: boombox.POWER_ON, // power flag
-                    loaded: false, // Audio file is loaded
-                    error: undefined // error state
-                };
+                // change Sprite
+                var current = parent.sprite.options[sprite_n.suffix];
+                this.sprite = new Sprite(undefined, current); // new
             }
         }
 
@@ -2106,12 +2137,14 @@
                             self.buffer = buffer;
 
                             self.state.loaded = true;
-                            //self.play();
 
-                            if (self.isParentSprite()) { // ref buffer
+                            /////
+                            // audiosprite propagation
+                            if (self.isParentSprite()) {
                                 for (var k in boombox.pool) {
                                     if (!!~k.indexOf(self.name + SPRITE_SEPARATOR)) {
-                                        boombox.pool[k].buffer = buffer;
+                                        boombox.pool[k].buffer = buffer; // ref buffer
+                                        boombox.pool[k].state.loaded = self.state.loaded;  // not ref copy
                                     }
                                 }
                             }
@@ -2302,14 +2335,14 @@
 
             if (resume && this.state.time.pause) {
                 // resume
-                var pause_sec = this.state.time.pause / 1000; // (sec)
-                start = this.sprite.current.start + pause_sec; // Start position (sec)
-                var interval = Math.ceil((self.sprite.current.term - pause_sec) * 1000); // (ms)
-
+                start = this.state.time.pause / 1000; // Start position (sec)
                 //this.logger.trace('start:', start);
                 //this.logger.warn('interval:', interval);
 
                 if (this.isSprite()) {
+                    var pause_sec = this.state.time.pause / 1000; // (sec)
+                    start = this.sprite.current.start + pause_sec; // Start position (sec)
+                    var interval = Math.ceil((self.sprite.current.term - pause_sec) * 1000); // (ms)
                     fn = function () {
                         self.setTimer('play', setTimeout(function () {
                             self.stop();
@@ -2328,10 +2361,12 @@
                     start = this.sprite.current.start;
 
                     fn = function () {
+                        var interval = Math.ceil(self.sprite.current.term * 1000);
+
                         self.setTimer('play', setTimeout(function () {
                             self.stop();
                             self._onEnded(); // fire onended evnet
-                        }, self.sprite.current.term * 1000));
+                        }, interval));
                     };
 
                 }
@@ -2615,7 +2650,7 @@
             //delete this.source;
 
             this.sourceDispose();
-            delete this.source
+            delete this.source;
             this.clearTimerAll();
             delete this._timer;
 
