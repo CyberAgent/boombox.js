@@ -49,7 +49,7 @@ However `boombox` doesn't restrict these features, you can extend `boombox` func
 ## Reference information
 
 
-|OS/Browser|audio load event|
+|OS/Browser|HTMLAudio or HTMLVideo load event|
 |:------------:|:------------:|
 |IOS 5: Safari|suspend|
 |IOS 6, 7: Safari|suspend|
