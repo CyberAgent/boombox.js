@@ -1,6 +1,10 @@
 boombox
 =======
 
+**English documents is [this](https://github.com/CyberAgent/boombox.js/blob/master/README_en.md)**
+
+---
+
 [HTMLVideo](http://www.w3.org/TR/2009/WD-html5-20090825/video.html), [HTMLAudio](http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element), [WebAudio](http://www.w3.org/TR/webaudio/)を包括したブラウザ向け音声ライブラリです。
 
 
@@ -48,7 +52,8 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 ## Reference information
 
 
-|OS/Browser|audio load event|
+|OS/Browser|HTMLAudio or HTMLVideo load event|
+
 |:------------:|:------------:|
 |IOS 5: Safari|suspend|
 |IOS 6, 7: Safari|suspend|
@@ -85,15 +90,12 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 ## Install
 
-`boombox.js`または`boombox.min.js`を`scriptタグ` でロードしてください。
+### Download
 
-### HTML
+`boombox.js`または`boombox.min.js`をダウンロードしてください。
 
-```html
-<script type="text/javascript" src="boombox.js"></script>
-```
-
-> require.js サポート
+- [boombox.js](https://raw2.github.com/CyberAgent/boombox.js/master/boombox.js)
+- [boombox.min.js](https://raw2.github.com/CyberAgent/boombox.js/master/boombox.min.js)
 
 ### npm
 
@@ -101,12 +103,28 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 $ npm install boombox.js
 ```
 
-### bower
+### Bower
 
 ```sh
 $ bower install boombox.js
 ```
 
+### component
+
+```sh
+$ component install CyberAgent/boombox.js
+```
+
+### HTML
+
+上記のいずれかの方法でダウンロードした後、`script`タグでロードしてください。
+
+```html
+<script type="text/javascript" src="YOUR/PATH/TO/boombox.js"></script><!-- for development -->
+<script type="text/javascript" src="YOUR/PATH/TO/boombox.min.js"></script><!-- for product -->
+```
+
+> require.js サポート
 
 ## Build
 
@@ -382,6 +400,7 @@ boombox.onFocus = function () {
 ## TODO
 
 - AudioSprite: 音源を１ファイルにまとめる
+    - Check develop branch
 - localStorage: Audioのキャッシュ
 
 ====
