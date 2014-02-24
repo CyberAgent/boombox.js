@@ -549,6 +549,7 @@
             }
 
             //////////////////////
+
             if (this.isWebAudio()) {
                 this.logger.debug("use web audio");
                 var webaudio = new boombox.WebAudio(name);
@@ -1906,15 +1907,6 @@
          */
         HTMLVideo.prototype.isUse = function () {
             return boombox.HTMLAudio.prototype.isUse.apply(this, arguments);
-//            if (this.state.power === boombox.POWER_OFF || boombox.state.power === boombox.POWER_OFF) {
-//                return false;
-//            }
-//
-//            if (!this.state.loaded || typeof this.state.error !== 'undefined') {
-//                return false;
-//            }
-//
-//            return true;
         };
 
         /**
@@ -1927,7 +1919,6 @@
          */
         HTMLVideo.prototype.isPlayback = function () {
             return boombox.HTMLAudio.prototype.isPlayback.apply(this, arguments);
-//            return !!this.state.time.playback;
         };
 
         /**
@@ -1940,7 +1931,6 @@
          */
         HTMLVideo.prototype.isStop = function () {
             return boombox.HTMLAudio.prototype.isStop.apply(this, arguments);
-//            return !this.state.time.playback;
         };
 
         /**
@@ -1953,7 +1943,6 @@
          */
         HTMLVideo.prototype.isPause = function () {
             return boombox.HTMLAudio.prototype.isPause.apply(this, arguments);
-//            return !!this.state.time.pause;
         };
 
         /**
@@ -1966,7 +1955,6 @@
          */
         HTMLVideo.prototype.isLoop = function () {
             return boombox.HTMLAudio.prototype.isLoop.apply(this, arguments);
-//            return (0 < this.state.loop);
         };
 
         /**
@@ -1979,7 +1967,6 @@
          */
         HTMLVideo.prototype.isParentSprite = function () {
             return boombox.HTMLAudio.prototype.isParentSprite.apply(this, arguments);
-//            return !!(!this.parent && this.sprite && !this.sprite.current);
         };
 
         /**
@@ -1992,7 +1979,6 @@
          */
         HTMLVideo.prototype.isSprite = function () {
             return boombox.HTMLAudio.prototype.isSprite.apply(this, arguments);
-//            return !!(this.parent && this.sprite && this.sprite.current);
         };
 
         /**
@@ -2005,10 +1991,6 @@
          */
         HTMLVideo.prototype.clearTimerAll = function () {
             return boombox.HTMLAudio.prototype.clearTimerAll.apply(this, arguments);
-//            for (var k in this._timer) {
-//                var id = this._timer[k];
-//                this.clearTimer(k);
-//            }
         };
 
         /**
@@ -2022,13 +2004,6 @@
          */
         HTMLVideo.prototype.clearTimer = function (name) {
             return boombox.HTMLAudio.prototype.clearTimer.apply(this, arguments);
-//            var id = this._timer[name];
-//            if (id) {
-//                this.logger.debug('remove setTimetout:', id);
-//                clearTimeout(id);
-//                delete this._timer[name];
-//            }
-//            return id;
         };
 
         /**
@@ -2043,11 +2018,6 @@
          */
         HTMLVideo.prototype.setTimer = function (name, id) {
             return boombox.HTMLAudio.prototype.setTimer.apply(this, arguments);
-//            if (this._timer[name]) {
-//                this.logger.warn('Access that is not expected:', name, id);
-//            }
-//            this._timer[name] = id;
-//            return this._timer[name];
         };
 
 
@@ -2138,23 +2108,6 @@
          */
         HTMLVideo.prototype.stop = function () {
             return boombox.HTMLAudio.prototype.stop.apply(this, arguments);
-//            if (!this.state.loaded || typeof this.state.error !== 'undefined') {
-//                this.logger.debug('skip stop:', this.name, 'state can not be used');
-//                return this;
-//            } // skip!!
-//
-//            if (this.state.time.name && this.state.time.name !== this.name) {
-//                this.logger.debug('skip stop: It is used in other sources', this.name, this.state.time.name);
-//                return this;
-//            } // skip!!
-//
-//            this.logger.debug('stop:', this.name);
-//            this.clearTimer('play');
-//            this.$el.pause();
-//            this.setCurrentTime(0);
-//            this.state.time.playback = undefined;
-//            this.state.time.name = undefined;
-//            return this;
         };
 
         /**
@@ -2167,24 +2120,6 @@
          */
         HTMLVideo.prototype.pause = function () {
             return boombox.HTMLAudio.prototype.pause.apply(this, arguments);
-//            if (!this.isUse()) {
-//                this.logger.debug('skip pause:', this.name, 'state can not be used');
-//                return this;
-//            } // skip!!
-//
-//            if (this.state.time.name && this.state.time.name !== this.name) {
-//                this.logger.debug('skip pause: It is used in other sources', this.name, this.state.time.name);
-//                return this;
-//            } // skip!!
-//
-//            this.logger.debug('pause:', this.name);
-//            this.clearTimer('play');
-//            this.$el.pause();
-//            this.state.time.pause = this.$el.currentTime;
-//            this.state.time.playback = undefined;
-//            //this.state.time.name = undefined;
-//
-//            return this;
         };
 
         /**
@@ -2197,20 +2132,6 @@
          */
         HTMLVideo.prototype.resume = function () {
             return boombox.HTMLAudio.prototype.resume.apply(this, arguments);
-//            if (!this.isUse()) {
-//                this.logger.debug('skip resume:', this.name, 'state can not be used');
-//                return this;
-//            } // skip!!
-//
-//            if (this.state.time.name && this.state.time.name !== this.name) {
-//                this.logger.debug('skip resume: It is used in other sources', this.name, this.state.time.name);
-//                return this;
-//            } // skip!!
-//
-//            if (this.state.time.pause) {
-//                this.play(true);
-//            }
-//            return this;
         };
 
         /**
@@ -2223,17 +2144,6 @@
          */
         HTMLVideo.prototype.replay = function () {
             return boombox.HTMLAudio.prototype.replay.apply(this, arguments);
-//            if (!this.isUse()) {
-//                this.logger.debug('skip replay:', this.name, 'state can not be used');
-//                return this;
-//            } // skip!!
-
-//            this.logger.debug('replay:', this.name);
-//            this.clearTimer('play');
-//            this.pause();
-//            this.setCurrentTime(0);
-//            this.play();
-//            return this;
         };
 
         /**
@@ -2246,8 +2156,6 @@
          */
         HTMLVideo.prototype.volume = function (v) {
             return boombox.HTMLAudio.prototype.volume.apply(this, arguments);
-//            this.logger.trace('volume:', this.name, 'volume:', v);
-//            this.$el.volume = v;
         };
 
         //////////
@@ -2262,16 +2170,6 @@
          */
         HTMLVideo.prototype._onEnded = function (e) {
             return boombox.HTMLAudio.prototype._onEnded.apply(this, arguments);
-//            this.logger.trace('onended fire! name:', this.name);
-//            this.state.time.playback = undefined;
-//            this.state.time.name = undefined;
-//
-//            this.onEnded(e); // fire user ended event!!
-//
-//            if (this.state.loop === boombox.LOOP_ORIGINAL && typeof this.state.time.pause === 'undefined') {
-//                this.logger.trace('onended loop play. name:', this.name);
-//                this.play();
-//            }
         };
 
         /**
@@ -2296,24 +2194,6 @@
          */
         HTMLVideo.prototype.setLoop = function (loop) {
             return boombox.HTMLAudio.prototype.setLoop.apply(this, arguments);
-//            if (!this.isUse()) { return this; } // skip!!
-//
-//            this.state.loop = loop;
-//            if (loop === boombox.LOOP_NOT) {
-//                this.$el.loop = boombox.LOOP_NOT;
-//
-//            } else if (loop === boombox.LOOP_ORIGINAL) {
-//                // pass
-//            } else if (loop === boombox.LOOP_NATIVE) {
-//                if (this.isSprite()) {
-//                    this.logger.warn('audiosprite does not support the native.');
-//                    return this;
-//                }
-//                if (this.$el) {
-//                    this.$el.loop = loop;
-//                }
-//            }
-//            return this;
         };
 
         /**
@@ -2327,12 +2207,6 @@
          */
         HTMLVideo.prototype.power = function (p) {
             return boombox.HTMLAudio.prototype.power.apply(this, arguments);
-//            this.logger.trace('power:', this.name, 'flag:', p);
-//            if (p === boombox.POWER_OFF) {
-//                this.stop(); // force pause
-//            }
-//            this.state.power = p;
-//            return this;
         };
 
         /**
@@ -2346,12 +2220,6 @@
          */
         HTMLVideo.prototype.setCurrentTime = function (t) {
             return boombox.HTMLAudio.prototype.setCurrentTime.apply(this, arguments);
-//            try {
-//                this.$el.currentTime = t;
-//            } catch (e) {
-//                this.logger.error('Set currentTime.', e.message);
-//            }
-//            return this;
         };
 
         //////////
@@ -2365,27 +2233,6 @@
          */
         HTMLVideo.prototype.dispose = function () {
             return boombox.HTMLAudio.prototype.dispose.apply(this, arguments);
-
-//            delete this.name;
-//            delete this.state.time.playback;
-//            delete this.state.time.pause;
-//            delete this.state.time.name;
-//            delete this.state.time;
-//            delete this.state.loop;
-//            delete this.state.power;
-//            delete this.state.loaded;
-//            delete this.state.error;
-//            delete this.state;
-//            this.$el.src = undefined;
-//            delete this.$el;
-//
-//            this.clearTimerAll();
-//            delete this._timer;
-//
-//            delete this.parent;
-//            this.sprite.dispose && this.sprite.dispose();
-//            delete this.sprite;
-//
         };
 
         return HTMLVideo;
@@ -2622,15 +2469,6 @@
          */
         WebAudio.prototype.isUse = function () {
             return boombox.HTMLAudio.prototype.isUse.apply(this, arguments);
-//            if (this.state.power === boombox.POWER_OFF || boombox.state.power === boombox.POWER_OFF) {
-//                return false;
-//            }
-//
-//            if (!this.state.loaded || typeof this.state.error !== 'undefined') {
-//                return false;
-//            }
-//
-//            return true;
         };
 
         /**
@@ -2667,7 +2505,6 @@
          */
         WebAudio.prototype.isPause = function () {
             return boombox.HTMLAudio.prototype.isPause.apply(this, arguments);
-//            return !!this.state.time.pause;
         };
 
         /**
@@ -2680,7 +2517,6 @@
          */
         WebAudio.prototype.isLoop = function () {
             return boombox.HTMLAudio.prototype.isLoop.apply(this, arguments);
-//            return (0 < this.state.loop);
         };
 
         /**
@@ -2693,7 +2529,6 @@
          */
         WebAudio.prototype.isParentSprite = function () {
             return boombox.HTMLAudio.prototype.isParentSprite.apply(this, arguments);
-//            return !!(!this.parent && this.sprite && !this.sprite.current);
         };
 
 
@@ -2707,7 +2542,6 @@
          */
         WebAudio.prototype.isSprite = function () {
             return boombox.HTMLAudio.prototype.isSprite.apply(this, arguments);
-//            return !!(this.parent && this.sprite && this.sprite.current);
         };
 
         /**
@@ -2720,10 +2554,6 @@
          */
         WebAudio.prototype.clearTimerAll = function () {
             return boombox.HTMLAudio.prototype.clearTimerAll.apply(this, arguments);
-//            for (var k in this._timer) {
-//                var id = this._timer[k];
-//                this.clearTimer(k);
-//            }
         };
 
         /**
@@ -2737,13 +2567,6 @@
          */
         WebAudio.prototype.clearTimer = function (name) {
             return boombox.HTMLAudio.prototype.clearTimer.apply(this, arguments);
-//            var id = this._timer[name];
-//            if (id) {
-//                this.logger.debug('remove setTimetout:', id);
-//                clearTimeout(id);
-//                delete this._timer[name];
-//            }
-//            return id;
         };
 
         /**
@@ -2758,10 +2581,6 @@
          */
         WebAudio.prototype.setTimer = function (name, id) {
             return boombox.HTMLAudio.prototype.setTimer.apply(this, arguments);
-//            if (this._timer[name]) {
-//                this.logger.warn('Access that is not expected:', name, id);
-//            }
-//            this._timer[name] = id;
         };
 
 
@@ -3084,12 +2903,6 @@
          */
         WebAudio.prototype.power = function (p) {
             return boombox.HTMLAudio.prototype.power.apply(this, arguments);
-//            this.logger.trace('power:', this.name, 'flag:', p);
-//            if (p === boombox.POWER_OFF) {
-//                this.stop(); // force pause
-//            }
-//            this.state.power = p;
-//            return this;
         };
 
 
