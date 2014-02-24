@@ -60,6 +60,33 @@
                     $("#w").append($('<button onclick="boombox.remove(\'' + name + '\')">remove</button>'));
 
                 });
+                // sound
+                _.each(options1.spritemap, function (data, suffix) {
+                    var name = bgm1[0] + '-' + suffix;
+                    $("#w").append('<h1>' + name + '</h1>');
+
+                    _.each(['play', 'stop', 'pause', 'resume', 'replay', 'loop', 'power'], function (type) {
+                        if (type === 'loop') {
+                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'setLoop(2); $(\'#loop-' + name + '\').attr(\'value\', \'native\')">' + 'loop native' + '</button>'));
+                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'setLoop(1); $(\'#loop-' + name + '\').attr(\'value\', \'original\')">' + 'loop original' + '</button>'));
+                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'setLoop(0); $(\'#loop-' + name + '\').attr(\'value\', \'off\')">' + 'loop off' + '</button>'));
+                            $("#w").append($('<input id="loop-' + name + '" size="5" type=text disable value="off">'));
+                            return;
+                        }
+                        if (type === 'power') {
+                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'power(boombox.POWER_ON)">Power ON</button>'));
+                            $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'power(boombox.POWER_OFF)">Power OFF</button>'));
+                            return;
+                        }
+
+                        $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + type + '()">' + type + '</button>'));
+                    });
+                    $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'volume(0);">volume 0</button>'));
+                    $("#w").append($('<button onclick="boombox.get(\'' + name + '\').' + 'volume(1);">volume 1</button>'));
+
+                    $("#w").append($('<button onclick="boombox.remove(\'' + name + '\')">remove</button>'));
+
+                });
 
                 $("#w").append($('<button onclick="boombox.dispose()">dispose</button>'));
             });
@@ -83,7 +110,13 @@
                 boombox.load(bgm[0], options, function (err, htmlaudio) {
                     $("#info").append(htmlaudio.$el);
                     expect(err).not.be.ok;
-                    done();
+
+                    boombox.load(bgm1[0], options1, function (err1, htmlaudio1) {
+                        debugger;
+                        $("#info").append(htmlaudio1.$el);
+                        expect(err1).not.be.ok;
+                        done();
+                    });
                 });
             });
 
@@ -108,7 +141,7 @@
 
 
     // index.js
-    var bgm = ["bgm", "./media/sprite/a/spritea.m4a"];
+    var bgm = ["bgma", "./media/sprite/a/spritea.m4a"];
     var options = {
         src: [
             {
@@ -143,6 +176,50 @@
                 "loop": false
             },
             "c7a": {
+                "start": 35,
+                "end": 40.99077097505669,
+                "loop": false
+            }
+        }
+    };
+
+
+    var bgm1 = ["bgmb", "./media/sprite/b/spriteb.m4a"];
+    var options1 = {
+        src: [
+            {
+                media: 'audio/mp4',
+                path: bgm1[1]
+            }
+        ],
+
+        "spritemap": {
+            "c2b": {
+                "start": 0,
+                "end": 5.990770975056689,
+                "loop": false
+            },
+            "c3b": {
+                "start": 7,
+                "end": 12.990770975056689,
+                "loop": false
+            },
+            "c4b": {
+                "start": 14,
+                "end": 19.99077097505669,
+                "loop": false
+            },
+            "c5b": {
+                "start": 21,
+                "end": 26.99077097505669,
+                "loop": false
+            },
+            "c6b": {
+                "start": 28,
+                "end": 33.99077097505669,
+                "loop": false
+            },
+            "c7b": {
                 "start": 35,
                 "end": 40.99077097505669,
                 "loop": false

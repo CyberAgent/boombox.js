@@ -108,7 +108,7 @@
 
 
     // index.js
-    var bgm = ["bgm", "./media/sprite/sprite.m4a"];
+    var bgm = ["bgm", "./media/sprite/a/spritea.m4a"];
     var options = {
         src: [
             {
@@ -117,33 +117,37 @@
             }
         ],
         "spritemap": {
-            "c2": {
+            "c2a": {
                 "start": 0,
-                "end": 5.990770975056689
+                "end": 5.990770975056689,
+                "loop": false
             },
-            "c3": {
+            "c3a": {
                 "start": 7,
-                "end": 12.990770975056689
+                "end": 12.990770975056689,
+                "loop": false
             },
-            "c4": {
+            "c4a": {
                 "start": 14,
-                "end": 19.99077097505669
+                "end": 19.99077097505669,
+                "loop": false
             },
-            "c5": {
+            "c5a": {
                 "start": 21,
-                "end": 26.99077097505669
+                "end": 26.99077097505669,
+                "loop": false
             },
-            "c6": {
+            "c6a": {
                 "start": 28,
-                "end": 33.99077097505669
+                "end": 33.99077097505669,
+                "loop": false
             },
-            "c7": {
+            "c7a": {
                 "start": 35,
-                "end": 40.99077097505669
+                "end": 40.99077097505669,
+                "loop": false
             }
         }
     };
-
-
 
 })(this);
