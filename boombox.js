@@ -61,26 +61,55 @@
             this.prefix = '[' + this.prefix + ']';
         }
 
+        /**
+         * Log output (trace)
+         * @memberof Logger
+         * @name trace
+         */
         Logger.prototype.trace = function () {
             if (LOG_LEVEL <= 1) {
                 console.debug('[TRACE]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
             }
         };
+
+        /**
+         * Log output (debug)
+         * @memberof Logger
+         * @name debug
+         */
         Logger.prototype.debug = function () {
             if (LOG_LEVEL <= 2) {
                 console.debug('[DEBUG]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
             }
         };
+
+        /**
+         * Log output (info)
+         * @memberof Logger
+         * @name info
+         */
         Logger.prototype.info = function () {
             if (LOG_LEVEL <= 3) {
                 console.info('[INFO ]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
             }
         };
+
+        /**
+         * Log output (warn)
+         * @memberof Logger
+         * @name warn
+         */
         Logger.prototype.warn = function () {
             if (LOG_LEVEL <= 4) {
                 console.warn('[WARN ]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
             }
         };
+
+        /**
+         * Log output (error)
+         * @memberof Logger
+         * @name error
+         */
         Logger.prototype.error = function () {
             if (LOG_LEVEL <= 5) {
                 console.error('[ERROR]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
@@ -100,7 +129,7 @@
 
             /**
              * Version
-             * @memberof boombox
+             * @memberof Boombox
              * @name VERSION
              */
             this.VERSION = '0.6.6';
@@ -109,10 +138,10 @@
             /**
              * Loop off
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name LOOP_NOT
              * @constant
-             * @type {int}
+             * @type {Interger}
              */
             this.LOOP_NOT = 0;
 
@@ -120,10 +149,10 @@
             /**
              * orignal loop
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name LOOP_ORIGINAL
              * @constant
-             * @type {int}
+             * @type {Interger}
              */
             this.LOOP_ORIGINAL = 1;
 
@@ -131,65 +160,67 @@
             /**
              * Native loop
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name LOOP_NATIVE
              * @constant
-             * @type {int}
+             * @type {Interger}
              */
             this.LOOP_NATIVE = 2;
 
             /**
              * Turn off the power.
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name POWER_OFF
              * @constant
-             * @type {boolean}
+             * @type {Boolean}
              */
             this.POWER_OFF = false;
 
             /**
              * Turn on the power.
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name POWER_ON
              * @constant
-             * @type {boolean}
+             * @type {Boolean}
              */
             this.POWER_ON = true;
 
             /**
              * It does not support the media type.
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name ERROR_MEDIA_TYPE
              * @constant
-             * @type {int}
+             * @type {Interger}
              */
             this.ERROR_MEDIA_TYPE = 0;
 
             /**
              * Hit the filter
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name ERROR_HIT_FILTER
              * @constant
-             * @type {int}
+             * @type {Interger}
              */
             this.ERROR_HIT_FILTER = 1;
 
             /**
              * flag setup
-             * @memberof boombox
+             * @memberof Boombox
              * @name setuped
+             * @type {Boolean}
              */
             this.setuped = false;
 
             /**
              * Environmental support information
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name support
+             * @type {Object}
              */
             this.support = {
                 mimes: [],
@@ -208,7 +239,7 @@
                 /**
                  * WebAudioContext instance (singleton)
                  *
-                 * @memberof boombox
+                 * @memberof Boombox
                  * @name WEB_AUDIO_CONTEXT
                  * @type {AudioContext}
                  */
@@ -222,8 +253,9 @@
             try {
                 /**
                  * Test local HTMLAudio
-                 * @memberof boombox
+                 * @memberof Boombox
                  * @name _audio
+                 * @type {HTMLAudioElement}
                  */
                 this._audio = new w.Audio();
                 if (this._audio.canPlayType) {
@@ -239,8 +271,9 @@
             try {
                 /**
                  * Test local HTMLVideo
-                 * @memberof boombox
+                 * @memberof Boombox
                  * @name _video
+                 * @type {HTMLVideoElement}
                  */
                 this._video = document.createElement('video');
                 if (this._video.canPlayType) {
@@ -255,7 +288,7 @@
             /**
              * Audio instance pool
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name pool
              */
             this.pool = {};
@@ -263,7 +296,7 @@
             /**
              * Audio instance of waiting
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name waits
              */
             this.waits = [];
@@ -271,7 +304,7 @@
             /**
              * Visibility of browser
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name visibility
              */
             this.visibility = {
@@ -282,7 +315,7 @@
             /**
              * State of boombox
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name state
              * @type {Object}
              */
@@ -290,11 +323,10 @@
                 power: this.POWER_ON
             };
 
-
             /**
              * Filtering function
              *
-             * @memberof boombox
+             * @memberof Boombox
              * @name filter
              * @type {Object}
              */
@@ -307,9 +339,9 @@
         /**
          * The availability of the WebLAudio
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name isWebAudio
-         * @return {boolean}
+         * @return {Boolean}
          */
         BoomBox.prototype.isWebAudio = function () {
             return this.support.webaudio.use;
@@ -318,9 +350,9 @@
         /**
          * The availability of the HTMLAudio
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name isHTMLAudio
-         * @return {boolean}
+         * @return {Boolean}
          */
         BoomBox.prototype.isHTMLAudio = function () {
             return this.support.htmlaudio.use;
@@ -329,9 +361,9 @@
         /**
          * The availability of the HTMLVideo
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name isHTMLVideo
-         * @return {boolean}
+         * @return {Boolean}
          */
         BoomBox.prototype.isHTMLVideo = function () {
             return this.support.htmlvideo.use;
@@ -340,9 +372,9 @@
         /**
          * boombox to manage, Audio is playing
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name isPlayback
-         * @return {boolean}
+         * @return {Boolean}
          */
         BoomBox.prototype.isPlayback = function () {
             var self = this;
@@ -360,8 +392,10 @@
         /**
          * Setup processing
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name setup
+         * @param {Object} options
+         * @return {Boombox}
          * @example
          * var options = {
          *     webaudio: {use: Boolean},
@@ -443,7 +477,7 @@
         /**
          * Get Audio instance
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name get
          * @param {String} name audio name
          * @return {WebAudio|HTMLAudio|HTMLVideo}
@@ -455,13 +489,13 @@
         /**
          * Loading audio
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name load
          * @param {String} name audio name
          * @param {Object} options Audio options
          * @param {Boolean} useHTMLVideo forced use HTMLVideo
-         * @param {function} callback
-         * @return {boombox}
+         * @param {Function} callback
+         * @return {Boombox}
          * @example
          * var options = {
          *     src: [
@@ -555,10 +589,10 @@
         /**
          * remove audio
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name remove
          * @param {String} name
-         * @return {boombox}
+         * @return {Boombox}
          */
         BoomBox.prototype.remove = function (name) {
             if (this.pool[name]) { // change object
@@ -573,11 +607,12 @@
         /**
          * Set pool
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name setPool
          * @param {String} name
-         * @param {WebAudio|HTMLAudio|HTMLVideo} obj
-         * @return {boombox}
+         * @param {AudioContext|HTMLAudioElement|HTMLVideoElement} obj Browser audio instance
+         * @param {WebAudio|HTMLAudio|HTMLVideo} Obj Boombox audio class
+         * @return {Boombox}
          */
         BoomBox.prototype.setPool = function (name, obj, Obj) {
             if (obj.isParentSprite()) {
@@ -603,11 +638,11 @@
         /**
          * Run filter
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name runfilter
-         * @param {WebAudio|HTMLAudio|HTMLVideo} audio
+         * @param {WebAudio|HTMLAudio|HTMLVideo} audio Boombox audio instance
          * @param {Object} options
-         * @return {boolean}
+         * @return {Boolean}
          */
         BoomBox.prototype.runfilter = function (audio, options) {
             var hit;
@@ -643,7 +678,7 @@
         /**
          * check support media type
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name useMediaType
          * @param {Array} src audio file data
          * @return {Object|undefined}
@@ -664,7 +699,7 @@
         /**
          * pause sound playback in managing boombox
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name pause
          * @return {boombox}
          */
@@ -684,9 +719,9 @@
         /**
          * resume the paused, to manage the boombox
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name resume
-         * @return {boombox}
+         * @return {Boombox}
          */
         BoomBox.prototype.resume = function () {
             this.logger.trace('resume');
@@ -703,10 +738,10 @@
         /**
          * Change all audio power on/off
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name power
-         * @param {boolean} p power on/off. boombox.(POWER_ON|POWER_OFF)
-         * @return {boombox}
+         * @param {Boolean} p power on/off. boombox.(POWER_ON|POWER_OFF)
+         * @return {Boombox}
          */
         BoomBox.prototype.power = function (p) {
             var self = this;
@@ -724,10 +759,11 @@
         /**
          * audio change volume.
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @method
          * @name volume
-         * @return {boombox}
+         * @param {Interger} v volume
+         * @return {Boombox}
          */
         BoomBox.prototype.volume = function (v) {
             var self = this;
@@ -737,12 +773,14 @@
                 var audio = this.pool[name];
                 audio.volume(v);
             }
+
+            return this;
         };
 
         /**
          * Firing in the occurrence of events VisibilityChange
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name onVisibilityChange
          * @param {Event} e event
          */
@@ -758,7 +796,7 @@
         /**
          * Firing in the occurrence of events window.onfocus
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name onFocus
          * @param {Event} e event
          */
@@ -770,7 +808,7 @@
         /**
          * Firing in the occurrence of events window.onblur
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name onBlur
          * @param {Event} e event
          */
@@ -782,7 +820,7 @@
         /**
          * Firing in the occurrence of events window.onpageshow
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name onPageShow
          * @param {Event} e event
          */
@@ -794,7 +832,7 @@
         /**
          * Firing in the occurrence of events window.onpagehide
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name onPageHide
          * @param {Event} e event
          */
@@ -806,9 +844,9 @@
         /**
          * Scan browser differences
          *
-         * @memberof boombox
+         * @memberof Boombox
          * @name _browserControl
-         * @return {boombox}
+         * @return {Boombox}
          */
         BoomBox.prototype._browserControl = function () {
             var self = this;
@@ -862,10 +900,26 @@
             return this;
         };
 
+        /**
+         * Adding filtering
+         *
+         * @memberof Boombox
+         * @name addFilter
+         * @param {String} filter name
+         * @param {Function} filter function
+         * @return {Boombox}
+         */
         BoomBox.prototype.addFilter = function (name, fn) {
             this.filter[name] = fn;
+            return this;
         };
 
+        /**
+         * dispose
+         *
+         * @memberof Boombox
+         * @name dispose
+         */
         BoomBox.prototype.dispose = function () {
             for (var name in this.pool) {
                 var audio = this.pool[name];
@@ -899,6 +953,7 @@
         return BoomBox;
     })();
 
+
     //////////////////////////////////
     // New!!!!
     var boombox = new BoomBox();
@@ -909,11 +964,32 @@
 
     var HTMLAudio = (function () {
         function HTMLAudio(name, parent) {
+            /**
+             * logger
+             * @memberof HTMLAudio
+             * @name logger
+             */
             this.logger = new Logger('HTMLAudio');
+
+            /**
+             * unique name
+             * @memberof HTMLAudio
+             * @name name
+             */
             this.name = name;
+
+            /**
+             * SetTimeout#id pool running
+             * @memberof HTMLAudio
+             * @name _timer
+             */
             this._timer = {}; // setTimeout#id
 
-            // sprite store
+            /**
+             * AudioSprite option data
+             * @memberof HTMLAudio
+             * @name sprite
+             */
             this.sprite = undefined;
             if (parent) {
                 var sprite_n = getSpriteName(name);
@@ -921,8 +997,24 @@
                 // change Sprite
                 var current = parent.sprite.options[sprite_n.suffix];
 
+                /**
+                 * Reference of the parent instance HTMLAudio
+                 * @memberof HTMLAudio
+                 * @name parent
+                 */
                 this.parent = parent; // ref
+
+                /**
+                 * Reference of the parent state instance HTMLAudio
+                 * @memberof HTMLAudio
+                 * @name state
+                 */
                 this.state = this.parent.state; // ref
+                /**
+                 * Reference of the parent HTMLAudioElement instance HTMLAudio
+                 * @memberof HTMLAudio
+                 * @name state
+                 */
                 this.$el = this.parent.$el; // ref
                 //this.onEnded = this.parent.onEnded; // TODO: ref
                 this.sprite = new Sprite(undefined, current); // new
@@ -952,7 +1044,8 @@
          * @name load
          * @method
          * @param {Object} options
-         * @param {function} callback
+         * @param {Function} callback
+         * @return {HTMLAudio}
          * @example
          * .load({
          *     src: '', // required
@@ -1063,6 +1156,7 @@
                 },
                 false);
 
+            // communication time-out
             setTimeout(function () {
                 if (self.$el.readyState !== 4) {
                     self.$el.src = '';
@@ -1073,23 +1167,21 @@
 
             this.$el.load();
 
-            //setInterval(function () { console.error(self.name, 'playback', self.isPlayback(), 'stop:', self.isStop(), 'pause:', self.isPause(), 'power:', self.state.power     ); }, 100);
+//            setInterval(function () {
+//                console.error(self.name,
+//                              'playback:', self.isPlayback(),
+//                              'stop:', self.isStop(),
+//                              'pause:', self.isPause(),
+//                              'power:', self.state.power
+//                             );
+//            }, 100);
 
             return this;
 
-
         };
 
-        /**
-         HTMLAudio.prototype.addTextTrack = function () {
-            this.$el.addTextTrack();
-        };
-
-        HTMLAudio.prototype.canPlayType = function () {
-            this.$el.canPlayType();
-        };
-
-         */
+        //HTMLAudio.prototype.addTextTrack = function () { /**...*/ };
+        //HTMLAudio.prototype.canPlayType = function () { /**...*/ };
 
         //////////
 
@@ -1099,7 +1191,7 @@
          * @memberof HTMLAudio
          * @method
          * @name isUse
-         * @return {boolean}
+         * @return {Boolean}
          */
         HTMLAudio.prototype.isUse = function () {
             if (this.state.power === boombox.POWER_OFF || boombox.state.power === boombox.POWER_OFF) {
@@ -1119,7 +1211,7 @@
          * @memberof HTMLAudio
          * @method
          * @name isPlayback
-         * @return {boolean}
+         * @return {Boolean}
          */
         HTMLAudio.prototype.isPlayback = function () {
             return !!this.state.time.playback;
@@ -1131,7 +1223,7 @@
          * @memberof HTMLAudio
          * @method
          * @name isStop
-         * @return {boolean}
+         * @return {Boolean}
          */
         HTMLAudio.prototype.isStop = function () {
             return !this.state.time.playback;
@@ -1155,27 +1247,62 @@
          * @memberof HTMLAudio
          * @method
          * @name isLoop
-         * @return {int}
+         * @return {Interger}
          */
         HTMLAudio.prototype.isLoop = function () {
             return (0 < this.state.loop);
         };
 
+        /**
+         * Is sprite of the parent
+         *
+         * @memberof HTMLAudio
+         * @method
+         * @name isParentSprite
+         * @return {Boolean}
+         */
         HTMLAudio.prototype.isParentSprite = function () {
             return !!(!this.parent && this.sprite && !this.sprite.current);
         };
 
+        /**
+         * Is sprite
+         *
+         * @memberof HTMLAudio
+         * @method
+         * @name isSprite
+         * @return {Boolean}
+         */
         HTMLAudio.prototype.isSprite = function () {
             return !!(this.parent && this.sprite && this.sprite.current);
         };
 
 
+        /**
+         * Clear all the setTimeout
+         *
+         * @memberof HTMLAudio
+         * @method
+         * @name clearTimerAll
+         * @return {HTMLAudio}
+         */
         HTMLAudio.prototype.clearTimerAll = function () {
             for (var k in this._timer) {
                 var id = this._timer[k];
                 this.clearTimer(k);
             }
+            return this;
         };
+
+        /**
+         * Clear specified setTimeout
+         *
+         * @memberof HTMLAudio
+         * @method
+         * @name clearTimer
+         * @param {String} name
+         * @return {Interger}
+         */
         HTMLAudio.prototype.clearTimer = function (name) {
             var id = this._timer[name];
             if (id) {
@@ -1183,15 +1310,28 @@
                 clearTimeout(id);
                 delete this._timer[name];
             }
+
+            return id;
         };
+
+        /**
+         * Save the specified setTimeout
+         *
+         * @memberof HTMLAudio
+         * @method
+         * @name setTimer
+         * @param {String} name
+         * @param {Interger} id setTimeout#id
+         * @return {Interger}
+         */
         HTMLAudio.prototype.setTimer = function (name, id) {
             if (this._timer[name]) {
                 this.logger.warn('Access that is not expected:', name, id);
             }
             this._timer[name] = id;
+
+            return this._timer[name];
         };
-
-
 
         //////////
 
@@ -1201,7 +1341,8 @@
          * @memberof HTMLAudio
          * @method
          * @name play
-         * @return {boombox.HTMLAudio}
+         * @param {Boolean} resume resume flag
+         * @return {HTMLAudio}
          */
         HTMLAudio.prototype.play = function (resume) {
             if (!this.isUse()) {
@@ -1274,7 +1415,7 @@
          * @memberof HTMLAudio
          * @method
          * @name stop
-         * @return {boombox.HTMLAudio}
+         * @return {HTMLAudio}
          */
         HTMLAudio.prototype.stop = function () {
             if (!this.state.loaded || typeof this.state.error !== 'undefined') {
@@ -1302,7 +1443,7 @@
          * @memberof HTMLAudio
          * @method
          * @name pause
-         * @return {boombox.HTMLAudio}
+         * @return {HTMLAudio}
          */
         HTMLAudio.prototype.pause = function () {
             if (!this.isUse()) {
@@ -1332,7 +1473,7 @@
          * @memberof HTMLAudio
          * @method
          * @name resume
-         * @return {boombox.HTMLAudio}
+         * @return {HTMLAudio}
          */
         HTMLAudio.prototype.resume = function () {
             if (!this.isUse()) {
@@ -1357,7 +1498,7 @@
          * @memberof HTMLAudio
          * @method
          * @name replay
-         * @return {boombox.HTMLAudio}
+         * @return {HTMLAudio}
          */
         HTMLAudio.prototype.replay = function () {
             if (!this.isUse()) {
@@ -1380,7 +1521,8 @@
          * @memberof HTMLAudio
          * @method
          * @name volume
-         * @return {boombox.HTMLAudio}
+         * @param {Interger} v volume
+         * @return {HTMLAudio}
          */
         HTMLAudio.prototype.volume = function (v) {
             this.logger.trace('volume:', this.name, 'volume:', v);
@@ -1390,7 +1532,7 @@
         //////////
 
         /**
-         * Audio.ended イベントの発生に合わせて実行される
+         * Audio.ended events
          *
          * @memberof HTMLAudio
          * @method
@@ -1411,7 +1553,7 @@
         };
 
         /**
-         * Audio.ended イベントハンドラが終了した後に実行される
+         * Override Audio.ended events
          *
          * @memberof HTMLAudio
          * @method
@@ -1426,8 +1568,8 @@
          * @memberof HTMLAudio
          * @method
          * @name setLoop
-         * @param {int} loop loop flag (boombox.LOOP_XXX)
-         * @return {boombox.HTMLAudio}
+         * @param {Interger} loop loop flag (Boombox.LOOP_XXX)
+         * @return {HTMLAudio}
          */
         HTMLAudio.prototype.setLoop = function (loop) {
             if (!this.isUse()) { return this; } // skip!!
@@ -1456,8 +1598,8 @@
          * @memberof HTMLAudio
          * @method
          * @name power
-         * @param {boolean} p power on/off. boombox.(POWER_ON|POWER_OFF)
-         * @return {boombox.HTMLAudio}
+         * @param {Boolean} p power on/off. Boombox.(POWER_ON|POWER_OFF)
+         * @return {HTMLAudio}
          */
         HTMLAudio.prototype.power = function (p) {
             this.logger.trace('power:', this.name, 'flag:', p);
@@ -1475,8 +1617,8 @@
          * @memberof HTMLAudio
          * @method
          * @name setCurrentTime
-         * @param {int} t set value(Audio.currentTime)
-         * @return {boombox.HTMLAudio}
+         * @param {Interger} t set value(HTMLAudioElement.currentTime)
+         * @return {HTMLAudio}
          */
         HTMLAudio.prototype.setCurrentTime = function (t) {
             try {
@@ -1529,11 +1671,32 @@
     var HTMLVideo = (function () {
         function HTMLVideo(name, parent) {
 
+            /**
+             * logger
+             * @memberof HTMLVideo
+             * @name logger
+             */
             this.logger = new Logger('HTMLVideo');
+
+            /**
+             * unique name
+             * @memberof HTMLVideo
+             * @name name
+             */
             this.name = name;
+
+            /**
+             * SetTimeout#id pool running
+             * @memberof HTMLVideo
+             * @name _timer
+             */
             this._timer = {}; // setTimeout#id
 
-            // sprite store
+            /**
+             * AudioSprite option data
+             * @memberof HTMLVideo
+             * @name sprite
+             */
             this.sprite = undefined;
             if (parent) {
                 var sprite_n = getSpriteName(name);
@@ -1541,8 +1704,25 @@
                 // change Sprite
                 var current = parent.sprite.options[sprite_n.suffix];
 
+                /**
+                 * Reference of the parent instance HTMLVideo
+                 * @memberof HTMLVideo
+                 * @name parent
+                 */
                 this.parent = parent; // ref
+
+                /**
+                 * Reference of the parent state instance HTMLVideo
+                 * @memberof HTMLVideo
+                 * @name state
+                 */
                 this.state = this.parent.state; // ref
+
+                /**
+                 * Reference of the parent HTMLVideoElement instance HTMLVideo
+                 * @memberof HTMLAudio
+                 * @name state
+                 */
                 this.$el = this.parent.$el; // ref
                 //this.onEnded = this.parent.onEnded; // TODO: ref
                 this.sprite = new Sprite(undefined, current); // new
@@ -1573,7 +1753,8 @@
          * @name load
          * @method
          * @param {Object} options
-         * @param {function} callback
+         * @param {Function} callback
+         * @return {HTMLVideo}
          * @example
          * .load({
          *     src: '', // required
@@ -1686,6 +1867,7 @@
                 },
                 false);
 
+            // communication time-out
             setTimeout(function () {
                 if (self.$el && self.$el.readyState !== 4) {
                     self.$el.src = '';
@@ -1696,31 +1878,31 @@
 
             this.$el.load();
 
-            //setInterval(function () { console.error(self.name, 'playback', self.isPlayback(), 'stop:', self.isStop(), 'pause:', self.isPause(), 'power:', self.state.power     ); }, 100);
+//            setInterval(function () {
+//                console.error(self.name,
+//                              'playback:', self.isPlayback(),
+//                              'stop:', self.isStop(),
+//                              'pause:', self.isPause(),
+//                              'power:', self.state.power
+//                             );
+//            }, 100);
 
             return this;
 
-
         };
 
-        /**
-        HTMLVideo.prototype.addTextTrack = function () {
-            this.$el.addTextTrack();
-        };
-        HTMLVideo.prototype.canPlayType = function () {
-            this.$el.canPlayType();
-        };
-         */
+        //HTMLVideo.prototype.addTextTrack = function () { /**...*/ };
+        //HTMLVideo.prototype.canPlayType = function () { /**...*/ };
 
         //////////
 
         /**
-         * Is use.
+         * Is use. (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name isUse
-         * @return {boolean}
+         * @return {Boolean}
          */
         HTMLVideo.prototype.isUse = function () {
             return boombox.HTMLAudio.prototype.isUse.apply(this, arguments);
@@ -1736,12 +1918,12 @@
         };
 
         /**
-         * Is playing.
+         * Is playing. (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name isPlayback
-         * @return {boolean}
+         * @return {Boolean}
          */
         HTMLVideo.prototype.isPlayback = function () {
             return boombox.HTMLAudio.prototype.isPlayback.apply(this, arguments);
@@ -1751,10 +1933,10 @@
         /**
          * Is stoped.
          *
-         * @memberof HTMLVideo
+         * @memberof HTMLVideo (apply HTMLAudio)
          * @method
          * @name isStop
-         * @return {boolean}
+         * @return {Boolean}
          */
         HTMLVideo.prototype.isStop = function () {
             return boombox.HTMLAudio.prototype.isStop.apply(this, arguments);
@@ -1764,10 +1946,10 @@
         /**
          * Is paused.
          *
-         * @memberof HTMLVideo
+         * @memberof HTMLVideo (apply HTMLAudio)
          * @method
          * @name isPause
-         * @return {boolean}
+         * @return {Boolean}
          */
         HTMLVideo.prototype.isPause = function () {
             return boombox.HTMLAudio.prototype.isPause.apply(this, arguments);
@@ -1775,29 +1957,52 @@
         };
 
         /**
-         * Loop flag
+         * Loop flag (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name isLoop
-         * @return {int}
+         * @return {Interger}
          */
         HTMLVideo.prototype.isLoop = function () {
             return boombox.HTMLAudio.prototype.isLoop.apply(this, arguments);
 //            return (0 < this.state.loop);
         };
 
+        /**
+         * Is sprite of the parent (apply HTMLAudio)
+         *
+         * @memberof HTMLVideo
+         * @method
+         * @name isParentSprite
+         * @return {Boolean}
+         */
         HTMLVideo.prototype.isParentSprite = function () {
             return boombox.HTMLAudio.prototype.isParentSprite.apply(this, arguments);
 //            return !!(!this.parent && this.sprite && !this.sprite.current);
         };
 
+        /**
+         * Is sprite (apply HTMLAudio)
+         *
+         * @memberof HTMLVideo
+         * @method
+         * @name isSprite
+         * @return {Boolean}
+         */
         HTMLVideo.prototype.isSprite = function () {
             return boombox.HTMLAudio.prototype.isSprite.apply(this, arguments);
 //            return !!(this.parent && this.sprite && this.sprite.current);
         };
 
-
+        /**
+         * Clear all the setTimeout (apply HTMLAudio)
+         *
+         * @memberof HTMLVideo
+         * @method
+         * @name clearTimerAll
+         * @return {HTMLAudio}
+         */
         HTMLVideo.prototype.clearTimerAll = function () {
             return boombox.HTMLAudio.prototype.clearTimerAll.apply(this, arguments);
 //            for (var k in this._timer) {
@@ -1805,6 +2010,16 @@
 //                this.clearTimer(k);
 //            }
         };
+
+        /**
+         * Clear specified setTimeout (apply HTMLAudio)
+         *
+         * @memberof HTMLVideo
+         * @method
+         * @name clearTimer
+         * @param {String} name
+         * @return {Interger}
+         */
         HTMLVideo.prototype.clearTimer = function (name) {
             return boombox.HTMLAudio.prototype.clearTimer.apply(this, arguments);
 //            var id = this._timer[name];
@@ -1813,13 +2028,26 @@
 //                clearTimeout(id);
 //                delete this._timer[name];
 //            }
+//            return id;
         };
+
+        /**
+         * Save the specified setTimeout (apply HTMLAudio)
+         *
+         * @memberof HTMLVideo
+         * @method
+         * @name setTimer
+         * @param {String} name
+         * @param {Interger} id setTimeout#id
+         * @return {Interger}
+         */
         HTMLVideo.prototype.setTimer = function (name, id) {
             return boombox.HTMLAudio.prototype.setTimer.apply(this, arguments);
 //            if (this._timer[name]) {
 //                this.logger.warn('Access that is not expected:', name, id);
 //            }
 //            this._timer[name] = id;
+//            return this._timer[name];
         };
 
 
@@ -1831,7 +2059,8 @@
          * @memberof HTMLVideo
          * @method
          * @name play
-         * @return {boombox.HTMLVideo}
+         * @param {Boolean} resume resume flag
+         * @return {HTMLVideo}
          */
         HTMLVideo.prototype.play = function (resume) {
             if (!this.isUse()) {
@@ -1850,7 +2079,6 @@
             var fn = none;
 
             this.state.time.playback = Date.now();
-
 
             if (resume && this.state.time.pause) {
                 // resume
@@ -1901,12 +2129,12 @@
         };
 
         /**
-         * video stop.
+         * video stop. (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name stop
-         * @return {boombox.HTMLVideo}
+         * @return {HTMLVideo}
          */
         HTMLVideo.prototype.stop = function () {
             return boombox.HTMLAudio.prototype.stop.apply(this, arguments);
@@ -1930,12 +2158,12 @@
         };
 
         /**
-         * video pause.
+         * video pause. (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name pause
-         * @return {boombox.HTMLVideo}
+         * @return {HTMLVideo}
          */
         HTMLVideo.prototype.pause = function () {
             return boombox.HTMLAudio.prototype.pause.apply(this, arguments);
@@ -1960,12 +2188,12 @@
         };
 
         /**
-         * video resume.
+         * video resume. (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name resume
-         * @return {boombox.HTMLVideo}
+         * @return {HTMLVideo}
          */
         HTMLVideo.prototype.resume = function () {
             return boombox.HTMLAudio.prototype.resume.apply(this, arguments);
@@ -1986,12 +2214,12 @@
         };
 
         /**
-         * video re-play.
+         * video re-play. (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name replay
-         * @return {boombox.HTMLVideo}
+         * @return {HTMLVideo}
          */
         HTMLVideo.prototype.replay = function () {
             return boombox.HTMLAudio.prototype.replay.apply(this, arguments);
@@ -2009,12 +2237,12 @@
         };
 
         /**
-         * audio change volume.
+         * audio change volume. (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name volume
-         * @return {boombox.HTMLVideo}
+         * @return {HTMLVideo}
          */
         HTMLVideo.prototype.volume = function (v) {
             return boombox.HTMLAudio.prototype.volume.apply(this, arguments);
@@ -2025,7 +2253,7 @@
         //////////
 
         /**
-         * Video.ended イベントの発生に合わせて実行される
+         * Video.ended events (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
@@ -2047,7 +2275,7 @@
         };
 
         /**
-         * Video.ended イベントハンドラが終了した後に実行される
+         * Override Video.ended events (apply HTMLAudio)
          *
          * @OVERRIDE ME
          * @memberof HTMLVideo
@@ -2058,13 +2286,13 @@
         HTMLVideo.prototype.onEnded = none;
 
         /**
-         * Set loop flag
+         * Set loop flag (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name setLoop
-         * @param {int} loop loop flag (boombox.LOOP_XXX)
-         * @return {boombox.HTMLVideo}
+         * @param {Interger} loop loop flag (Boombox.LOOP_XXX)
+         * @return {HTMLVideo}
          */
         HTMLVideo.prototype.setLoop = function (loop) {
             return boombox.HTMLAudio.prototype.setLoop.apply(this, arguments);
@@ -2089,13 +2317,13 @@
         };
 
         /**
-         * Change power on/off
+         * Change power on/off (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name power
-         * @param {boolean} p power on/off. boombox.(POWER_ON|POWER_OFF)
-         * @return {boombox.HTMLVideo}
+         * @param {Boolean} p power on/off. boombox.(POWER_ON|POWER_OFF)
+         * @return {HTMLVideo}
          */
         HTMLVideo.prototype.power = function (p) {
             return boombox.HTMLAudio.prototype.power.apply(this, arguments);
@@ -2108,13 +2336,13 @@
         };
 
         /**
-         * Set video.currentTime
+         * Set video.currentTime (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
          * @name setCurrentTime
-         * @param {int} t set value(Video.currentTime)
-         * @return {boombox.HTMLVideo}
+         * @param {Interger} t set value(Video.currentTime)
+         * @return {HTMLVideo}
          */
         HTMLVideo.prototype.setCurrentTime = function (t) {
             return boombox.HTMLAudio.prototype.setCurrentTime.apply(this, arguments);
@@ -2129,7 +2357,7 @@
         //////////
 
         /**
-         * Dispose
+         * Dispose (apply HTMLAudio)
          *
          * @memberof HTMLVideo
          * @method
@@ -2168,6 +2396,11 @@
 
     var WebAudio = (function () {
         function WebAudio(name, parent) {
+            /**
+             * logger
+             * @memberof WebAudio
+             * @name logger
+             */
             this.logger = new Logger('WebAudio');
 
             /**
@@ -2179,12 +2412,19 @@
              */
             this.name = name;
 
-
+            /**
+             * SetTimeout#id pool running
+             * @memberof WebAudio
+             * @name _timer
+             */
             this._timer = {};
 
-
+            /**
+             * AudioSprite option data
+             * @memberof WebAudio
+             * @name sprite
+             */
             this.sprite = undefined;
-
 
             /**
              * AudioBuffer in use
@@ -2204,9 +2444,6 @@
              */
             this.source = undefined;
 
-
-
-
             /**
              * WebAudioContext in use
              *   shortcut: boombox.WEB_AUDIO_CONTEXT
@@ -2217,6 +2454,12 @@
              */
             this.ctx = boombox.WEB_AUDIO_CONTEXT;
 
+            /**
+             * WebAudioContext.GainNode instance
+             * @memberof WebAudio
+             * @name gainNode
+             * @type {GainNode}
+             */
             this.gainNode = this.ctx.createGain();
 
 
@@ -2267,7 +2510,8 @@
          * @name load
          * @method
          * @param {Object} options
-         * @param {function} callback
+         * @param {Function} callback
+         * @return {WebAudio}
          * @example
          * .load({
          *     src: 'http://example.com/audio.m4a',
@@ -2334,6 +2578,8 @@
 
             //http.timeout = 1;
             var timeout = options.timeout || 15 * 1000;
+
+            // communication time-out
             setTimeout(function () {
                 if (http.readyState !== 4) {
                     http.abort();
@@ -2347,7 +2593,18 @@
 
             http.responseType = 'arraybuffer';
 
-            //setInterval(function () {console.error(self.name, 'playback', self.isPlayback(), 'stop:', self.isStop(), 'pause:', self.isPause(), 'power:', self.state.power   ); }, 100);
+//            setInterval(function () {
+//                console.error(self.name,
+//                              'playback', self.isPlayback(),
+//                              'stop:', self.isStop(),
+//                              'pause:', self.isPause(),
+//                              'power:', self.state.power
+//                             );
+//            }, 100);
+
+
+            /////////////////////
+            /// XHR send!!
             http.send();
 
             return this;
@@ -2356,12 +2613,12 @@
         //////////
 
         /**
-         * Is use.
+         * Is use. (apply HTMLAudio)
          *
          * @memberof WebAudio
          * @method
          * @name isUse
-         * @return {boolean}
+         * @return {Boolean}
          */
         WebAudio.prototype.isUse = function () {
             return boombox.HTMLAudio.prototype.isUse.apply(this, arguments);
@@ -2377,36 +2634,36 @@
         };
 
         /**
-         * Is playing.
+         * Is playing. (apply HTMLAudio)
          *
          * @memberof WebAudio
          * @method
          * @name isPlayback
-         * @return {boolean}
+         * @return {Boolean}
          */
         WebAudio.prototype.isPlayback = function () {
             return !!this.source && !!this.state.time.playback && !this.state.time.pause && (this.source.playbackState === 1 || this.source.playbackState === 2);
         };
 
         /**
-         * Is stoped.
+         * Is stoped. (apply HTMLAudio)
          *
          * @memberof WebAudio
          * @method
          * @name isStop
-         * @return {boolean}
+         * @return {Boolean}
          */
         WebAudio.prototype.isStop = function () {
             return !this.source;
         };
 
         /**
-         * Is paused.
+         * Is paused. (apply HTMLAudio)
          *
          * @memberof WebAudio
          * @method
          * @name isPause
-         * @return {boolean}
+         * @return {Boolean}
          */
         WebAudio.prototype.isPause = function () {
             return boombox.HTMLAudio.prototype.isPause.apply(this, arguments);
@@ -2414,30 +2671,53 @@
         };
 
         /**
-         * Loop flag
+         * Loop flag (apply HTMLAudio)
          *
          * @memberof WebAudio
          * @method
          * @name isLoop
-         * @return {int}
+         * @return {Interger}
          */
         WebAudio.prototype.isLoop = function () {
             return boombox.HTMLAudio.prototype.isLoop.apply(this, arguments);
 //            return (0 < this.state.loop);
         };
 
+        /**
+         * Is sprite of the parent (apply HTMLAudio)
+         *
+         * @memberof WebAudio
+         * @method
+         * @name isParentSprite
+         * @return {Boolean}
+         */
         WebAudio.prototype.isParentSprite = function () {
             return boombox.HTMLAudio.prototype.isParentSprite.apply(this, arguments);
 //            return !!(!this.parent && this.sprite && !this.sprite.current);
         };
 
 
+        /**
+         * Is sprite (apply HTMLAudio)
+         *
+         * @memberof WebAudio
+         * @method
+         * @name isSprite
+         * @return {Boolean}
+         */
         WebAudio.prototype.isSprite = function () {
             return boombox.HTMLAudio.prototype.isSprite.apply(this, arguments);
 //            return !!(this.parent && this.sprite && this.sprite.current);
         };
 
-
+        /**
+         * Clear all the setTimeout (apply HTMLAudio)
+         *
+         * @memberof WebAudio
+         * @method
+         * @name clearTimerAll
+         * @return {WebAudio}
+         */
         WebAudio.prototype.clearTimerAll = function () {
             return boombox.HTMLAudio.prototype.clearTimerAll.apply(this, arguments);
 //            for (var k in this._timer) {
@@ -2445,6 +2725,16 @@
 //                this.clearTimer(k);
 //            }
         };
+
+        /**
+         * Clear specified setTimeout (apply HTMLAudio)
+         *
+         * @memberof WebAudio
+         * @method
+         * @name clearTimer
+         * @param {String} name
+         * @return {Interger}
+         */
         WebAudio.prototype.clearTimer = function (name) {
             return boombox.HTMLAudio.prototype.clearTimer.apply(this, arguments);
 //            var id = this._timer[name];
@@ -2453,7 +2743,19 @@
 //                clearTimeout(id);
 //                delete this._timer[name];
 //            }
+//            return id;
         };
+
+        /**
+         * Save the specified setTimeout (apply HTMLAudio)
+         *
+         * @memberof WebAudio
+         * @method
+         * @name setTimer
+         * @param {String} name
+         * @param {Interger} id setTimeout#id
+         * @return {Interger}
+         */
         WebAudio.prototype.setTimer = function (name, id) {
             return boombox.HTMLAudio.prototype.setTimer.apply(this, arguments);
 //            if (this._timer[name]) {
@@ -2471,7 +2773,7 @@
          * @memberof WebAudio
          * @method
          * @name play
-         * @return {boombox.WebAudio}
+         * @return {WebAudio}
          */
         WebAudio.prototype.play = function (resume) {
             var self = this;
@@ -2578,7 +2880,7 @@
          * @memberof WebAudio
          * @method
          * @name stop
-         * @return {boombox.WebAudio}
+         * @return {WebAudio}
          */
         WebAudio.prototype.stop = function () {
 
@@ -2612,7 +2914,7 @@
          * @memberof WebAudio
          * @method
          * @name pause
-         * @return {boombox.WebAudio}
+         * @return {WebAudio}
          */
         WebAudio.prototype.pause = function () {
             if (!this.isUse()) {
@@ -2649,7 +2951,7 @@
          * @memberof WebAudio
          * @method
          * @name resume
-         * @return {boombox.WebAudio}
+         * @return {WebAudio}
          */
         WebAudio.prototype.resume = function () {
             if (!this.isUse()) {
@@ -2669,7 +2971,7 @@
          * @memberof WebAudio
          * @method
          * @name replay
-         * @return {boombox.WebAudio}
+         * @return {WebAudio}
          */
         WebAudio.prototype.replay = function () {
             if (!this.isUse()) {
@@ -2691,7 +2993,7 @@
          * @memberof WebAudio
          * @method
          * @name volume
-         * @return {boombox.WebAudio}
+         * @return {WebAudio}
          */
         WebAudio.prototype.volume = function (v) {
             this.logger.trace('volume:', this.name, 'volume:', v);
@@ -2701,7 +3003,7 @@
         //////////
 
         /**
-         * AudioBufferSourceNode.onended イベントの発生に合わせて実行される
+         * Audio.ended events
          *
          * @memberof WebAudio
          * @method
@@ -2731,10 +3033,9 @@
         };
 
         /**
-         * AudioBufferSourceNode.ended イベントハンドラが終了した後に実行される
+         * Override Audio.ended events
          *
-         * @OVERRIDE ME
-         * @memberof HTMLVideo
+         * @memberof WebAudio
          * @method
          * @name onEnded
          * @param {Event} e event
@@ -2750,8 +3051,8 @@
          * @memberof WebAudio
          * @method
          * @name setLoop
-         * @param {int} loop loop flag (boombox.LOOP_XXX)
-         * @return {boombox.WebAudio}
+         * @param {Interger} loop loop flag (boombox.LOOP_XXX)
+         * @return {WebAudio}
          */
         WebAudio.prototype.setLoop = function (loop) {
             if (!this.isUse()) { return this; } // skip!!
@@ -2773,13 +3074,13 @@
         };
 
         /**
-         * Change power on/off
+         * Change power on/off (apply HTMLAudio)
          *
          * @memberof WebAudio
          * @method
          * @name power
-         * @param {boolean} p power on/off. boombox.(POWER_ON|POWER_OFF)
-         * @return {boombox.WebAudio}
+         * @param {Boolean} p power on/off. boombox.(POWER_ON|POWER_OFF)
+         * @return {WebAudio}
          */
         WebAudio.prototype.power = function (p) {
             return boombox.HTMLAudio.prototype.power.apply(this, arguments);
@@ -2856,8 +3157,26 @@
 
     var Sprite = (function () {
         function Sprite(options, current) {
+            /**
+             * logger
+             * @memberof Sprite
+             * @type {Logger}
+             * @name logger
+             */
             this.logger = new Logger('Sprite   ');
+            /**
+             * current options
+             * @memberof Sprite
+             * @type {Object}
+             * @name current
+             */
             this.current = current; // target sprite
+            /**
+             * options
+             * @memberof Sprite
+             * @name options
+             * @type {Object}
+             */
             this.options = options;
             if (!current) { // parent
                 for (var k in this.options) {
@@ -2870,6 +3189,9 @@
 
         /**
          * Dispose
+         * @memberof Sprite
+         * @method
+         * @name dispose
          */
         Sprite.prototype.dispose = function () {
             this.options = null;
