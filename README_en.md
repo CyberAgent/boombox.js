@@ -12,12 +12,12 @@ This library has simple API, like [_boombox_](http://en.wikipedia.org/wiki/Boomb
 ### Why you should use boombox?
 
 Web browseres have `HTMLAudio` / `WebAudio` / `HTMLVideo` API for playing audio. However these API have diffrent way to use and browser have no compatibility.
-`boombox` provides unified API and solves diffrence enviroment between web browser.
+`boombox.js` provides unified API and solves diffrence enviroment between web browser.
 
 In addition to this library has function for mobile web browser support, eg: stop to play sound when a web browser is inactive, handle multiple audio source.
 
-`WebAudio` API has advanced feature like "Mixing sound" but `boombox` doesn't extend these feature. Because the library suppose basic usage.
-However `boombox` doesn't restrict these features, you can extend `boombox` function.
+`WebAudio` API has advanced feature like "Mixing sound" but `boombox.js` doesn't extend these feature. Because the library suppose basic usage.
+However `boombox.js` doesn't restrict these features, you can extend `boombox.js` function.
 
 ## Demo
 
@@ -45,9 +45,9 @@ However `boombox` doesn't restrict these features, you can extend `boombox` func
     - `boombox.js` has several configurations to observe [CORS](https://developer.mozilla.org/ja/docs/HTTP_access_control) specifications.
 - Filterings
     - `boombox.js` divided out sound souces based on browser detection.
+- File size is small(6kb at gzipped).
 
 ## Reference information
-
 
 |OS/Browser|HTMLAudio or HTMLVideo load event|
 |:------------:|:------------:|
@@ -375,7 +375,6 @@ This event is fired this event by the occurrence of `window.onpagehide` event.
 This event is fired when a sound have been played to the end.
 It will not be fired when the sound stops on the way.
 
-
 ```javascript
 
 // Simple usage.
@@ -394,11 +393,142 @@ boombox.onFocus = function () {
 
 ```
 
-## TODO
+## AudioSprite
 
-- AudioSprite: put together audio sources in one file
-    - Check develop branch
-- localStorage: cache audio sources.
+`boombox.js` now supports `audiosprite`. (HTMLAudio/HTMLVideo/WebAudio)
+
+### HTMLAudio/HTMLVideo
+
+`boombox.js` can play with one note per one sound source.
+
+`boombox.js` creates instances of HTMLAudio/HTMLVideo as same as numberes of sprited sounds, but it refer the HTMLAudioElement/HTMLVideoElement as DOM element of the same.
+
+```javascript
+boombox.get("bgm-c2a") === boombox.get("bgm-c3a") // false
+
+boombox.get("bgm-c2a").$el === boombox.get("bgm-c3a").$el // true
+```
+
+### WebAudio
+
+`boombox.js` can play with multiple notes per one sound source.
+
+### Creating Audio Sprite
+
+You can create audio sprite with [boombox-audiosprite](https://github.com/tonistiigi/audiosprite), related project of `boombox.js`
+
+```
+$ npm install -g boombox-audiosprite
+$ cd {AUDIO_DIRECTORY}
+┗ $ tree .
+.
+├── c5a.wav
+├── c6a.wav
+└── c7a.wav
+
+# Please see options page of boombox-audiosprite.
+
+$ boombox-audiosprite -e ac3,caf,mp3,m4a ./*.wav
+
+┗ $ tree .
+.
+├── boombox-sprite.json
+├── c5a.wav
+├── c6a.wav
+├── c7a.wav
+├── sprite.ac3
+├── sprite.json
+├── sprite.m4a
+└── sprite.mp3
+
+# JSON data for boombox.js
+$ cat boombox-output.json
+{
+  "spritemap": {
+    "c5a": {
+      "start": 0,
+      "end": 5.990770975056689
+    },
+    "c6a": {
+      "start": 7,
+      "end": 12.990770975056689
+    },
+    "c7a": {
+      "start": 14,
+      "end": 19.99077097505669
+    }
+  },
+  "src": [
+    {
+      "media": "audio/ac3",
+      "path": "sprite.ac3"
+    },
+    {
+      "media": "audio/mpeg",
+      "path": "sprite.mp3"
+    },
+    {
+      "media": "audio/mp4",
+      "path": "sprite.m4a"
+    }
+  ]
+}
+```
+
+### Playing Audio Sprite
+
+```html
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+  <script src="boombox.js"></script>
+  <script>
+   var options = {
+     "spritemap": {
+       "c5a": {
+         "start": 0,
+         "end": 5.990770975056689
+       },
+       "c6a": {
+         "start": 7,
+         "end": 12.990770975056689
+       },
+       "c7a": {
+         "start": 14,
+         "end": 19.99077097505669
+       }
+     },
+     "src": [
+       {
+         "media": "audio/ac3",
+         "path": "spec/media/sprite/a/sprite.ac3"
+       },
+       {
+         "media": "audio/mpeg",
+         "path": "spec/media/sprite/a/sprite.mp3"
+       },
+       {
+         "media": "audio/mp4",
+         "path": "spec/media/sprite/a/sprite.m4a"
+       }
+     ]
+   };
+
+   boombox.setup();
+   boombox.load('bgm', options, function (err, audio) {
+     console.log(boombox.pool); // load sound data
+   });
+  </script>
+</head>
+<body>
+<button onclick="boombox.get('bgm-c7a').play();">bgm-c7a play</button>
+</body>
+</html>
+```
+
+> `boombox.get('bgm-' + sprite name)` method can get the individual sound source in audio sprite.
 
 ====
 
@@ -408,6 +538,21 @@ boombox.onFocus = function () {
 
 - `spec/media/sound.m4a`
 - `spec/media/sound.wav`
+- `spec/media/sprite/a/c5a.wav`
+- `spec/media/sprite/a/c6a.wav`
+- `spec/media/sprite/a/c7a.wav`
+- `spec/media/sprite/b/c5b.wav`
+- `spec/media/sprite/b/c6b.wav`
+- `spec/media/sprite/b/c7b.wav`
+- `spec/media/sprite/a/sprite.ac3`
+- `spec/media/sprite/a/sprite.m4a`
+- `spec/media/sprite/a/sprite.mp3`
+- `spec/media/sprite/b/sprite.ac3`
+- `spec/media/sprite/b/sprite.m4a`
+- `spec/media/sprite/b/sprite.mp3`
+- `spec/media/sprite/c/sprite.ac3`
+- `spec/media/sprite/c/sprite.m4a`
+- `spec/media/sprite/c/sprite.mp3`
 
 ### Creation software
 
@@ -446,4 +591,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/CyberAgent/boombox.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
