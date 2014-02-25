@@ -1,7 +1,7 @@
 boombox
 =======
 
-**日本語ドキュメントは[こちら](https://github.com/CyberAgent/boombox.js/blob/master/README.md)**
+**日本語ドキュメントは[こちら](https://github.com/CyberAgent/boombox.js/blob/master/README_ja.md)**
 
 ---
 
