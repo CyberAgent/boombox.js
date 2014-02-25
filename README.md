@@ -14,12 +14,12 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 ブラウザでサウンドを鳴らすには、`HTMLAudio`/`WebAudio`/`HTMLVideo` が一般的に使われますが、APIの呼び出し方法やブラウザサポートなどがまちまちです。
 
-`boombox`は上記のような環境差異を吸収し一貫したAPIを提供しています。
+`boombox.js`は上記のような環境差異を吸収し一貫したAPIを提供しています。
 また、ブラウザが非アクティブ時には音を停止したり、複数のサウンドを同時に利用するといった、スマートフォン特有の要件も想定して作成されています。
 
-`WebAudio` では、ミキシングといった高度な利用も想定したAPIになっていますが、`boombox` はこれらの機能は拡張していません。あくまで基本的なブラウザでの利用シーンを想定しています。
+`WebAudio` では、ミキシングといった高度な利用も想定したAPIになっていますが、`boombox.js` はこれらの機能は拡張していません。あくまで基本的なブラウザでの利用シーンを想定しています。
 
-しかし、これらの高度な機能へのアクセスは阻害しませんので、`boombox`を拡張することは可能です。
+しかし、これらの高度な機能へのアクセスは阻害しませんので、`boombox.js`を拡張することは可能です。
 
 
 ## Demo
@@ -52,7 +52,6 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 
 ## Reference information
-
 
 |OS/Browser|HTMLAudio or HTMLVideo load event|
 |:------------:|:------------:|
@@ -164,7 +163,7 @@ $ grunt foundation # ローカルサーバ起動
 
 ### Setup
 
-`boombox` を使うためのセットアップ
+`boombox.js` を使うためのセットアップ
 
 ```javascript
 boombox.setup();
@@ -333,7 +332,7 @@ boombox.load('sound', options, true, function (err, audio) {
 
 ### Priority
 
-`boombox`がデフォルトで使用するAPIの順番は以下の優先度になります。
+`boombox.js`がデフォルトで使用するAPIの順番は以下の優先度になります。
 
 `WebAudio` > `HTMLAudio` > `HTMLVideo`
 
@@ -342,8 +341,7 @@ boombox.load('sound', options, true, function (err, audio) {
 
 ### currentTime
 
-`HTMLAudio` `HTMLVide` のシーク設定(currentTime) が設定出来ないブラウザがある場合は
-、内部でcurrentTimeが設定されても無視されます。
+`HTMLAudio` `HTMLVide` のシーク設定(currentTime) が設定出来ないブラウザがある場合は、内部でcurrentTimeが設定されても無視されます。
 
 ### Inactive
 
@@ -357,28 +355,27 @@ boombox.load('sound', options, true, function (err, audio) {
 
 ##### onVisibilityChange(e)
 
-`visibilityChange`イベントの発生に合わせて実行されます。
+`visibilityChange`イベントの発生に合わせて発火します。
 
 ##### onFocus(e)
 
-`window.onFocus`イベントの発生に合わせて実行されます。
+`window.onFocus`イベントの発生に合わせて発火します。
 
 ##### onBlur(e)
 
-`window.onBlur`イベントの発生に合わせて実行されます。
+`window.onBlur`イベントの発生に合わせて発火します。
 
 ##### onPageShow(e)
 
-`window.onpageshow`イベントの発生に合わせて実行されます。
+`window.onpageshow`イベントの発生に合わせて発火します。
 
 ##### onPageHide(e)
 
-`window.onpagehide`イベントの発生に合わせて実行されます。
+`window.onpagehide`イベントの発生に合わせて発火します。
 
 ##### onEnded(e)
 
 サウンドが最後まで再生された時に実行されます。途中で停止された場合は発火しません。
-
 
 ```javascript
 
@@ -404,7 +401,7 @@ boombox.js は `audiosprite` をサポートします。 (HTMLAudio/HTMLVideo/We
 
 ### HTMLAudio/HTMLVideo
 
-一つのサウンドファイルで同時に１音再生可能です
+一つのサウンドファイルで同時に１音再生可能です。
 
 boombox.jsから利用するHTMLAudio/HTMLVideoは、スプライトした数分、インスタンスが生成されていますが、
 内部では同一のDOM要素として、HTMLAudioElement/HTMLVideoElementを参照しています。
@@ -419,11 +416,9 @@ boombox.get("bgm-c2a").$el === boombox.get("bgm-c3a").$el // true
 
 一つのサウンドファイルで同時に複数音再生可能です。
 
-
-
 ### Audio Sprite 作成
 
-関連プロジェクトの [boombox-audiosprite](https://github.com/tonistiigi/audiosprite) を利用します。
+関連プロジェクトの [boombox-audiosprite](https://github.com/tonistiigi/audiosprite) を利用して作成します。
 
 ```
 $ npm install -g boombox-audiosprite
@@ -485,9 +480,6 @@ $ cat boombox-output.json
 
 ### Audio Sprite 再生
 
-
-
-
 ```html
 <!DOCTYPE HTML>
 <html lang="en">
@@ -539,8 +531,7 @@ $ cat boombox-output.json
 </html>
 ```
 
-
-> 個別のスプライトへのアクセスは、`boombox.get('bgm' + '-' + sprite名)` で可能です。
+> 個別のスプライトへのアクセスは、`boombox.get('bgm-' + sprite名)` で可能です。
 
 ====
 
@@ -565,7 +556,6 @@ $ cat boombox-output.json
 - `spec/media/sprite/c/sprite.ac3`
 - `spec/media/sprite/c/sprite.m4a`
 - `spec/media/sprite/c/sprite.mp3`
-
 
 ### Creation software
 
