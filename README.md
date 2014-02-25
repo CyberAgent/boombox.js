@@ -580,6 +580,7 @@ Sound that was created in AudioSauna
 - Kei FUNAGAYAMA - [@fkei](https://twitter.com/fkei) [github](https://github.com/fkei)
 - Masaki Sueda - [github](htpts://github.com/masakisueda)
 - HIRAKI Satoru - [github](htpts://github.com/Layzie)
+- Kazuma MISHIMAGI - [@maginemu](https://twitter.com/maginemu) [github](https://github.com/maginemu) 
 
 ## Copyright
 
