@@ -35,7 +35,7 @@
                 });
                 // sound
                 _.each(options.spritemap, function (data, suffix) {
-                    var name = bgm[0] + '-' + suffix;
+                    var name = prefix + '-' + suffix;
                     $("#w").append('<h1>' + name + '</h1>');
 
                     _.each(['play', 'stop', 'pause', 'resume', 'replay', 'loop', 'power'], function (type) {
@@ -80,7 +80,7 @@
             });
 
             it('load()', function(done) {
-                boombox.load(bgm[0], options, true, function (err, htmlaudio) {
+                boombox.load(prefix, options, true, function (err, htmlaudio) {
                     $("#info").append(htmlaudio.$el);
                     expect(err).not.be.ok;
                     done();
@@ -108,46 +108,37 @@
 
 
     // index.js
-    var bgm = ["bgm", "./media/sprite/a/spritea.m4a"];
+    var prefix = "bgma";
+
     var options = {
-        src: [
-            {
-                media: 'audio/mp4',
-                path: bgm[1]
-            }
-        ],
         "spritemap": {
-            "c2a": {
-                "start": 0,
-                "end": 5.990770975056689,
-                "loop": false
-            },
-            "c3a": {
-                "start": 7,
-                "end": 12.990770975056689,
-                "loop": false
-            },
-            "c4a": {
-                "start": 14,
-                "end": 19.99077097505669,
-                "loop": false
-            },
             "c5a": {
-                "start": 21,
-                "end": 26.99077097505669,
-                "loop": false
+                "start": 0,
+                "end": 5.990770975056689
             },
             "c6a": {
-                "start": 28,
-                "end": 33.99077097505669,
-                "loop": false
+                "start": 7,
+                "end": 12.990770975056689
             },
             "c7a": {
-                "start": 35,
-                "end": 40.99077097505669,
-                "loop": false
+                "start": 14,
+                "end": 19.99077097505669
             }
-        }
+        },
+        "src": [
+            {
+                "media": "audio/ac3",
+                "path": "./media/sprite/a/sprite.ac3"
+            },
+            {
+                "media": "audio/mpeg",
+                "path": "./media/sprite/a/sprite.mp3"
+            },
+            {
+                "media": "audio/mp4",
+                "path": "./media/sprite/a/sprite.m4a"
+            }
+        ]
     };
 
 })(this);

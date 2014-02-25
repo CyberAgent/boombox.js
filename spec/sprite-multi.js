@@ -33,9 +33,9 @@
                 $("#w").children().each(function (idx, el) {
                     $(el).remove();
                 });
-                // sound
-                _.each(options.spritemap, function (data, suffix) {
-                    var name = bgm[0] + '-' + suffix;
+                // sound 1
+                _.each(options1.spritemap, function (data, suffix) {
+                    var name = prefix1 + '-' + suffix;
                     $("#w").append('<h1>' + name + '</h1>');
 
                     _.each(['play', 'stop', 'pause', 'resume', 'replay', 'loop', 'power'], function (type) {
@@ -60,9 +60,12 @@
                     $("#w").append($('<button onclick="boombox.remove(\'' + name + '\')">remove</button>'));
 
                 });
-                // sound
-                _.each(options1.spritemap, function (data, suffix) {
-                    var name = bgm1[0] + '-' + suffix;
+
+                $("#w").append('<hr>');
+
+                // sound 2
+                _.each(options2.spritemap, function (data, suffix) {
+                    var name = prefix2 + '-' + suffix;
                     $("#w").append('<h1>' + name + '</h1>');
 
                     _.each(['play', 'stop', 'pause', 'resume', 'replay', 'loop', 'power'], function (type) {
@@ -107,12 +110,11 @@
             });
 
             it('load()', function(done) {
-                boombox.load(bgm[0], options, function (err, htmlaudio) {
+                boombox.load(prefix1, options1, function (err, htmlaudio) {
                     $("#info").append(htmlaudio.$el);
                     expect(err).not.be.ok;
 
-                    boombox.load(bgm1[0], options1, function (err1, htmlaudio1) {
-                        debugger;
+                    boombox.load(prefix2, options2, function (err1, htmlaudio1) {
                         $("#info").append(htmlaudio1.$el);
                         expect(err1).not.be.ok;
                         done();
@@ -141,90 +143,70 @@
 
 
     // index.js
-    var bgm = ["bgma", "./media/sprite/a/spritea.m4a"];
-    var options = {
-        src: [
-            {
-                media: 'audio/mp4',
-                path: bgm[1]
-            }
-        ],
+    var prefix1 = "bgma";
+
+    var options1 = {
         "spritemap": {
-            "c2a": {
-                "start": 0,
-                "end": 5.990770975056689,
-                "loop": false
-            },
-            "c3a": {
-                "start": 7,
-                "end": 12.990770975056689,
-                "loop": false
-            },
-            "c4a": {
-                "start": 14,
-                "end": 19.99077097505669,
-                "loop": false
-            },
             "c5a": {
-                "start": 21,
-                "end": 26.99077097505669,
-                "loop": false
+                "start": 0,
+                "end": 5.990770975056689
             },
             "c6a": {
-                "start": 28,
-                "end": 33.99077097505669,
-                "loop": false
+                "start": 7,
+                "end": 12.990770975056689
             },
             "c7a": {
-                "start": 35,
-                "end": 40.99077097505669,
-                "loop": false
+                "start": 14,
+                "end": 19.99077097505669
             }
-        }
+        },
+        "src": [
+            {
+                "media": "audio/ac3",
+                "path": "./media/sprite/a/sprite.ac3"
+            },
+            {
+                "media": "audio/mpeg",
+                "path": "./media/sprite/a/sprite.mp3"
+            },
+            {
+                "media": "audio/mp4",
+                "path": "./media/sprite/a/sprite.m4a"
+            }
+        ]
     };
 
+    var prefix2 = "bgmb";
 
-    var bgm1 = ["bgmb", "./media/sprite/b/spriteb.m4a"];
-    var options1 = {
-        src: [
-            {
-                media: 'audio/mp4',
-                path: bgm1[1]
-            }
-        ],
-
+    var options2 = {
         "spritemap": {
-            "c2b": {
-                "start": 0,
-                "end": 5.990770975056689,
-                "loop": false
-            },
-            "c3b": {
-                "start": 7,
-                "end": 12.990770975056689,
-                "loop": false
-            },
-            "c4b": {
-                "start": 14,
-                "end": 19.99077097505669,
-                "loop": false
-            },
             "c5b": {
-                "start": 21,
-                "end": 26.99077097505669,
-                "loop": false
+                "start": 0,
+                "end": 5.990770975056689
             },
             "c6b": {
-                "start": 28,
-                "end": 33.99077097505669,
-                "loop": false
+                "start": 7,
+                "end": 12.990770975056689
             },
             "c7b": {
-                "start": 35,
-                "end": 40.99077097505669,
-                "loop": false
+                "start": 14,
+                "end": 19.99077097505669
             }
-        }
+        },
+        "src": [
+            {
+                "media": "audio/ac3",
+                "path": "./media/sprite/b/sprite.ac3"
+            },
+            {
+                "media": "audio/mpeg",
+                "path": "./media/sprite/b/sprite.mp3"
+            },
+            {
+                "media": "audio/mp4",
+                "path": "./media/sprite/b/sprite.m4a"
+            }
+        ]
     };
 
 })(this);

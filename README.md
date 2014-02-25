@@ -397,11 +397,149 @@ boombox.onFocus = function () {
 
 ```
 
-## TODO
+## AudioSprite
 
-- AudioSprite: 音源を１ファイルにまとめる
-    - Check develop branch
-- localStorage: Audioのキャッシュ
+boombox.js は `audiosprite` をサポートします。 (HTMLAudio/HTMLVideo/WebAudio)
+
+### HTMLAudio/HTMLVideo
+
+一つのサウンドファイルで同時に１音再生可能です
+
+boombox.jsから利用するHTMLAudio/HTMLVideoは、スプライトした数分、インスタンスが生成されていますが、
+内部では同一のDOM要素として、HTMLAudioElement/HTMLVideoElementを参照しています。
+
+```javascript
+boombox.get("bgm-c2a") === boombox.get("bgm-c3a") // false
+
+boombox.get("bgm-c2a").$el === boombox.get("bgm-c3a").$el // true
+```
+
+### WebAudio
+
+一つのサウンドファイルで同時に複数音再生可能です。
+
+
+
+### Audio Sprite 作成
+
+関連プロジェクトの [boombox-audiosprite](https://github.com/tonistiigi/audiosprite) を利用します。
+
+```
+$ npm install -g boombox-audiosprite
+$ cd {AUDIO_DIRECTORY}
+┗ $ tree .
+.
+├── c5a.wav
+├── c6a.wav
+└── c7a.wav
+
+# オプションは boombox-audiosprite を参照ください
+
+$ boombox-audiosprite -e ac3,caf,mp3,m4a ./*.wav
+
+┗ $ tree .
+.
+├── boombox-sprite.json
+├── c5a.wav
+├── c6a.wav
+├── c7a.wav
+├── sprite.ac3
+├── sprite.json
+├── sprite.m4a
+└── sprite.mp3
+
+# boombox.js json データ
+$ cat boombox-output.json
+{
+  "spritemap": {
+    "c5a": {
+      "start": 0,
+      "end": 5.990770975056689
+    },
+    "c6a": {
+      "start": 7,
+      "end": 12.990770975056689
+    },
+    "c7a": {
+      "start": 14,
+      "end": 19.99077097505669
+    }
+  },
+  "src": [
+    {
+      "media": "audio/ac3",
+      "path": "sprite.ac3"
+    },
+    {
+      "media": "audio/mpeg",
+      "path": "sprite.mp3"
+    },
+    {
+      "media": "audio/mp4",
+      "path": "sprite.m4a"
+    }
+  ]
+}
+```
+
+### Audio Sprite 再生
+
+
+
+
+```html
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+  <script src="boombox.js"></script>
+  <script>
+   var options = {
+     "spritemap": {
+       "c5a": {
+         "start": 0,
+         "end": 5.990770975056689
+       },
+       "c6a": {
+         "start": 7,
+         "end": 12.990770975056689
+       },
+       "c7a": {
+         "start": 14,
+         "end": 19.99077097505669
+       }
+     },
+     "src": [
+       {
+         "media": "audio/ac3",
+         "path": "spec/media/sprite/a/sprite.ac3"
+       },
+       {
+         "media": "audio/mpeg",
+         "path": "spec/media/sprite/a/sprite.mp3"
+       },
+       {
+         "media": "audio/mp4",
+         "path": "spec/media/sprite/a/sprite.m4a"
+       }
+     ]
+   };
+
+   boombox.setup();
+   boombox.load('bgm', options, function (err, audio) {
+     console.log(boombox.pool); // load sound data
+   });
+  </script>
+</head>
+<body>
+<button onclick="boombox.get('bgm-c7a').play();">bgm-c7a play</button>
+</body>
+</html>
+```
+
+
+> 個別のスプライトへのアクセスは、`boombox.get('bgm' + '-' + sprite名)` で可能です。
 
 ====
 
@@ -411,6 +549,22 @@ boombox.onFocus = function () {
 
 - `spec/media/sound.m4a`
 - `spec/media/sound.wav`
+- `spec/media/sprite/a/c5a.wav`
+- `spec/media/sprite/a/c6a.wav`
+- `spec/media/sprite/a/c7a.wav`
+- `spec/media/sprite/b/c5b.wav`
+- `spec/media/sprite/b/c6b.wav`
+- `spec/media/sprite/b/c7b.wav`
+- `spec/media/sprite/a/sprite.ac3`
+- `spec/media/sprite/a/sprite.m4a`
+- `spec/media/sprite/a/sprite.mp3`
+- `spec/media/sprite/b/sprite.ac3`
+- `spec/media/sprite/b/sprite.m4a`
+- `spec/media/sprite/b/sprite.mp3`
+- `spec/media/sprite/c/sprite.ac3`
+- `spec/media/sprite/c/sprite.m4a`
+- `spec/media/sprite/c/sprite.mp3`
+
 
 ### Creation software
 
@@ -448,4 +602,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/CyberAgent/boombox.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
