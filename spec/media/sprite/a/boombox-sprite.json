@@ -1,0 +1,30 @@
+{
+  "spritemap": {
+    "c5a": {
+      "start": 0,
+      "end": 5.990770975056689
+    },
+    "c6a": {
+      "start": 7,
+      "end": 12.990770975056689
+    },
+    "c7a": {
+      "start": 14,
+      "end": 19.99077097505669
+    }
+  },
+  "src": [
+    {
+      "media": "audio/ac3",
+      "path": "sprite.ac3"
+    },
+    {
+      "media": "audio/mpeg",
+      "path": "sprite.mp3"
+    },
+    {
+      "media": "audio/mp4",
+      "path": "sprite.m4a"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "boombox.js",
-  "version": "0.6.6",
+  "version": "0.8.1",
   "description": "Browser sound library which blended HTMLVideo and HTMLAudio and WebAudio",
   "keywords": [
     "webaudio",
@@ -9,7 +9,8 @@
     "sound",
     "mobile",
     "javascript",
-    "library"
+    "library",
+    "boombox.js"
   ],
   "homepage": "https://github.com/CyberAgent/boombox.js",
   "licenses": [

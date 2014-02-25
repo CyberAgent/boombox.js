@@ -1,0 +1,24 @@
+{
+  "resources": [
+    "sprite.ac3",
+    "sprite.mp3",
+    "sprite.m4a"
+  ],
+  "spritemap": {
+    "c5a": {
+      "start": 0,
+      "end": 5.990770975056689,
+      "loop": false
+    },
+    "c6a": {
+      "start": 7,
+      "end": 12.990770975056689,
+      "loop": false
+    },
+    "c7a": {
+      "start": 14,
+      "end": 19.99077097505669,
+      "loop": false
+    }
+  }
+}

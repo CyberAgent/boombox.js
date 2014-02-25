@@ -1,23 +1,26 @@
 boombox
 =======
 
-**日本語ドキュメントは[こちら](https://github.com/CyberAgent/boombox.js/blob/master/README.md)**
+**English documents is [this](https://github.com/CyberAgent/boombox.js/blob/master/README_en.md)**
 
 ---
 
-"boombox.js" provides unified audio API for browser, such as [HTMLVideo](http://www.w3.org/TR/2009/WD-html5-20090825/video.html) / [HTMLAudio](http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element) / [WebAudio](http://www.w3.org/TR/webaudio/).
+[HTMLVideo](http://www.w3.org/TR/2009/WD-html5-20090825/video.html), [HTMLAudio](http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element), [WebAudio](http://www.w3.org/TR/webaudio/)を包括したブラウザ向け音声ライブラリです。
 
-This library has simple API, like [_boombox_](http://en.wikipedia.org/wiki/Boombox).
+
+Audio系APIを統一したインターフェースで提供し、ラジカセ([_boombox_](http://en.wikipedia.org/wiki/Boombox))のようなシンプルな操作で利用する事が可能です。
 
 ### Why you should use boombox?
 
-Web browseres have `HTMLAudio` / `WebAudio` / `HTMLVideo` API for playing audio. However these API have diffrent way to use and browser have no compatibility.
-`boombox.js` provides unified API and solves diffrence enviroment between web browser.
+ブラウザでサウンドを鳴らすには、`HTMLAudio`/`WebAudio`/`HTMLVideo` が一般的に使われますが、APIの呼び出し方法やブラウザサポートなどがまちまちです。
 
-In addition to this library has function for mobile web browser support, eg: stop to play sound when a web browser is inactive, handle multiple audio source.
+`boombox.js`は上記のような環境差異を吸収し一貫したAPIを提供しています。
+また、ブラウザが非アクティブ時には音を停止したり、複数のサウンドを同時に利用するといった、スマートフォン特有の要件も想定して作成されています。
 
-`WebAudio` API has advanced feature like "Mixing sound" but `boombox.js` doesn't extend these feature. Because the library suppose basic usage.
-However `boombox.js` doesn't restrict these features, you can extend `boombox.js` function.
+`WebAudio` では、ミキシングといった高度な利用も想定したAPIになっていますが、`boombox.js` はこれらの機能は拡張していません。あくまで基本的なブラウザでの利用シーンを想定しています。
+
+しかし、これらの高度な機能へのアクセスは阻害しませんので、`boombox.js`を拡張することは可能です。
+
 
 ## Demo
 
@@ -35,21 +38,22 @@ However `boombox.js` doesn't restrict these features, you can extend `boombox.js
 
 ## Features
 
-- Play
-- Pause
-- Stop
-- Replay
-- Resume
-- PowerON/PowerOFF
-- Volume
-- LoopReproducing
-- Playing Multi Sound
-    - `boombox.js` supports this feature as far as possible but depends on web browser support.
+- Play(再生)
+- Pause(中断)
+- Stop(停止)
+- Replay(頭から再生)
+- Resume(途中から再生)
+- PowerON/PowerOFF(電源をON/OFF)
+- Volume (音量の変更)
+- LoopReproducing(ループ再生)
+- Multi Sound Playing(複数サウンド再生)
+    - ブラウザの対応状況に依存しますが、可能な限りサポート
 - CORS Settings
-    - `boombox.js` has several configurations to observe [CORS](https://developer.mozilla.org/ja/docs/HTTP_access_control) specifications.
+    - crossOrigin、サウンドファイル配信サーバー・ロードオプションを適切に設定すれば[CORS](https://developer.mozilla.org/ja/docs/HTTP_access_control)を回避可能です。
 - Filterings
-    - `boombox.js` divided out sound souces based on browser detection.
-- File size is small(6kb at gzipped).
+    - 環境ごとに音の出し分けを行うフィルタリングをサポート
+- gzipped 6kb filesize
+
 
 ## Reference information
 
@@ -71,10 +75,10 @@ However `boombox.js` doesn't restrict these features, you can extend `boombox.js
 |Android 4.0: basic|✔ \*2|✔|✔|
 |Mac OSX: Chrome|✔|✔|✔|
 
-> `*1`Can't support for starting another application.
+> `*1` 別アプリ 起動 : NG
 >
-> `*2` Some smart phones are supported.
-> *HTMLVideo* : *You should append DOM elements. In case for no visual element, it's good idea to put DOM in outside display area.
+> `*2` 一部機種 対応
+> *HTMLVideo* : *DOMにElement追加 必須* + *DOMは、映像がないものを利用する場合は、表示領域外に指定すると良い*
 
 ====
 
@@ -86,13 +90,13 @@ However `boombox.js` doesn't restrict these features, you can extend `boombox.js
 |Android 4.x: basic|✔|✔ \*1|-|
 |Mac OSX: Chrome|✔|✔|✔|
 
-> `*1` HTMLAudio/HTMLVideo are used in combination.
+> `*1` HTMLAudio/HTMLVideo 併用
 
 ## Install
 
 ### Download
 
-You can download `boombox.js` or `boombox.min.js` from following links.
+`boombox.js`または`boombox.min.js`をダウンロードしてください。
 
 - [boombox.js](https://raw2.github.com/CyberAgent/boombox.js/master/boombox.js)
 - [boombox.min.js](https://raw2.github.com/CyberAgent/boombox.js/master/boombox.min.js)
@@ -117,61 +121,61 @@ $ component install CyberAgent/boombox.js
 
 ### HTML
 
-Load `boombox.js` using `script` tag after download it.
+上記のいずれかの方法でダウンロードした後、`script`タグでロードしてください。
 
 ```html
 <script type="text/javascript" src="YOUR/PATH/TO/boombox.js"></script><!-- for development -->
 <script type="text/javascript" src="YOUR/PATH/TO/boombox.min.js"></script><!-- for product -->
 ```
 
-> `boombox.js` supports `require.js`
+> require.js サポート
 
 ## Build
 
-Use [Grunt](http://gruntjs.com/) for build.
+ビルドには[Grunt](http://gruntjs.com/)を使用します。
 
 ```sh
 $ git clone https://github.com/CyberAgent/boombox.js.git
 $ cd boombox
-$ npm install -g grunt-cli # If you haven't already installed grunt-cli.
-$ npm install . # If you haven't already installed local npm.
+$ npm install -g grunt-cli # 初回のみ
+$ npm install . # 初回のみ
 $ grunt
 ```
 
 ## Browser Test
 
-You can test `boombox.js` using [Grunt](http://gruntjs.com/) & [beez-foundation](https://npmjs.org/package/beez-foundation).
+テスト環境として[Grunt](http://gruntjs.com/)と[beez-foundation](https://npmjs.org/package/beez-foundation)を使用します。
 
 ```sh
-$ npm install -g beez-foundation # If you haven't already installed beez-foundation that is web server.
+$ npm install -g beez-foundation # テスト用のWebサーバをインストール(初回のみ)
 $ cd boombox
-$ npm install . # Once at first if you don't install local npm.
-$ grunt foundation # Starting local server.
+$ npm install . # 初回のみ
+$ grunt foundation # ローカルサーバ起動
 ```
 
 @see [beez](https://github.com/CyberAgent/beez)
 
 @see [beez-foundation](https://github.com/CyberAgent/beez-foundation)
 
-**Access in your favorite browser**
+**ブラウザでアクセスしてください。**
 
-> If you load `boombox.js` in script tag: [http://0.0.0.0:1109/m/boombox/spec/global.html](http://0.0.0.0:1109/m/boombox.js/spec/global.html)
+> script タグ : [http://0.0.0.0:1109/m/boombox/spec/global.html](http://0.0.0.0:1109/m/boombox.js/spec/global.html)
 >
-> If you load `boombox.js` using require.js : [http://0.0.0.0:1109/m/boombox/spec/requirejs.html](http://0.0.0.0:1109/m/boombox.js/spec/requirejs.html#)
+> require.js : [http://0.0.0.0:1109/m/boombox/spec/requirejs.html](http://0.0.0.0:1109/m/boombox.js/spec/requirejs.html#)
 
 ## Usage
 
-### Setup `boombox.js`
+### Setup
 
-Setup method for using `boombox.js`.
+`boombox.js` を使うためのセットアップ
 
 ```javascript
 boombox.setup();
 ```
 
-#### Use specify format of the sound sources forcibly
+#### Forced use options
 
-The option for forced use specify format of the sound sources.
+強制的に音源の形式を指定
 
 ```javascript
 {
@@ -187,9 +191,9 @@ The option for forced use specify format of the sound sources.
 }
 ```
 
-### Load sound sorces
+### Load sound file
 
-Load the sound sorce.
+サウンドファイルをロード
 
 ```javascript
 var options = {
@@ -201,38 +205,37 @@ var options = {
     ]
 };
 boombox.load('sound', options, function (err, audio) {
-    // callback function
+    // サウンドファイルのロード
 });
 
 ```
 
-> You can set multiple sound sources in `options.src`, `boombox.js` evaluate `options.src` from the beginning
-then load sources if available to use.
+> srcは、複数メディアタイプを指定可能です。先頭から順に評価していき、利用可能なメディアタイプをロードします。
 
-### Play sounds
 
-```javascript
-boombox.play() // All of loaded sounds.
-
-boombox.get('sound').play() // Play specify sound.
-```
-
-#### Restriction for using `boombox.js` in mobile web browser
-
-Many of mobile web browseres can't play sounds without user operation. (`MouseEvents` etc.)
-This restriction depends on web browseres specification, It is better to check the web browseres to be used.
-
-### Control of volume
+### Play
 
 ```javascript
-boombox.get.volume(0.5) // All sound . Argument takes between 0 to 1.
+boombox.play() // 全てのサウンド
 
-boombox.get('sound').volume(0.5) // Specified sound. Argument takes between 0 to 1.
+boombox.get('sound').play() // 特定のサウンド
+```
+#### Restriction
+
+スマートフォンでは、ユーザーの操作(MouseEventsなど)をトリガーとした場合のみサウンド再生が可能な端末が多数を占めます。
+これはブラウザの仕様になりますので、利用する端末で確認してください。
+
+### Volume control
+
+```javascript
+boombox.get.volume(0.5) // 全てのサウンド。 0 < 1の間で引数の指定
+
+boombox.get('sound').volume(0.5) // 特定のサウンド。 0 < 1の間で引数の指定
 ```
 
-### Turn off sounds
+### Cut off the power
 
-Turn off sounds whenever playing sound. (like actualy _boombox_ :p)
+サウンドがなっている場合でも、ラジカセで電源をOFFにしたように音が止まります。
 
 #### Specified sounds
 
@@ -246,12 +249,12 @@ boombox.get('sound').power(boombox.POWER_OFF);
 boombox.power(boombox.POWER_OFF);
 ```
 
-### Loop playback
+### Loop play
 
-There are two ways for loop playback.
+ループ再生には、２通りあります。
 
-- Native loop (This function uses the API supported in `HTMLAudio` / `WebAudio` / `HTMLVideo`)
-- Original loop (This function uses `onEnded` event for continuous playback loop)
+- ネイティブループ(`HTMLAudio` `WebAudio` `HTMLVideo` がサポートする機能)
+- オリジナルループ(`onEnded`イベントを使っての連続再生ループ)
 
 ```javascript
 boombox.get('sound').setLoop(boombox.LOOP_ORIGINAL);
@@ -264,27 +267,26 @@ boombox.get('sound').play();
 
 ### onEnded
 
-This event is called when a sound have been played to the end.
-
-You should override for using this.
+サウンドが最後まで再生された時に呼び出されます。
+オーバーライドして使用してください。
 
 ```javascript
 boombox.get('name').onEnded = function () {
-    // callback function
+    // コールバック処理
 }
 ```
 
 ### Use filter
 
-- You can choose which web broswers and smart phones to play sounds
-- You can specify multiple filters, but if any filter is NG, boombox quit evaluation immediately
+サウンドファイルをロードする前に、フィルタをいれて、端末やブラウザ毎に再生するサウンドを選ぶことができます。
+複数フィルタを設定することが出来ますが、一つでも **NG** であれば残りのフィルタは処理されません。
 
 ```javascript
 boombox.addFilter('chrome', function filter() {
     if (/Chrome/.test(window.navigator.userAgent)) {
         return false; // [ OK ] Chrome
     } else {
-        return true;  // [ NG ] Another browseres
+        return true;  // [ NG ] Chrome 以外
     }
 });
 var options = {
@@ -294,20 +296,21 @@ var options = {
             path: 'http://0.0.0.0:1109/m/spec/media/sound.m4a'
         }
     ],
-    filter: ["chrome"] // Assign the filters you want to use.
+    filter: ["chrome"] // 使用したいフィルタを指定
 };
 boombox.load('sound', options, true, function (err, audio) {
-    // load sound resources.
+    // サウンドファイルのロード
 });
 ```
 
-> You **should** control to play sounds individually because web browseres have large diffrence in audiio API support.
+> ブラウザのサウンドは、ブラウザにより対応がまちまちです。フィルタを使って必ず個別に制御する必要があります。
 
-### Use HTMLVideo forcibly
+### Forced use HTMLVideo
 
-You can utilize `HTMLVideo` when pass `true` to `boombox.load()`'s '3rd argument.
+`boombox.load()`の第3引数に`true`を渡すと強制的に`HTMLVideo`を利用します。
 
-> The case you may use this feature when `HTMLAudio` support only one note to play.
+> HTMLAudioが１音しかサポートしていない場合に利用します。
+
 
 ```javascript
 var options = {
@@ -318,75 +321,74 @@ var options = {
         }
     ]
 };
-// Pass `true` to 3rd argument in `boombox.load()`
+// loadの第3引数にtrueを渡す
 boombox.load('sound', options, true, function (err, audio) {
-    // load sound resources.
-    // You should append DOM elements. In case for no visual element, you put DOM in outside display area.
+    // サウンドファイルのロード
+    // audioがHTMLVideoの場合は、DOMへ追加が必要です。
 });
 ```
 
 ### Cache
 
-`boombox.pool` cache the sound source when loaded.
+一度ロードしたサウンドファイルは、`boombox.pool` にインスタンスとしてキャッシュされます。
 
-Web browseres have diffrent behaviour about cache, so this functioin is very effective especially in SPA.
+ブラウザによるキャッシュはそれぞれ挙動が異なるため、SPA(シングルページアプリケーション)であれば、boombox.poolのキャッシュは非常に有効です。
 
 ### Priority
 
-The priority order for using API by default are following.
+`boombox.js`がデフォルトで使用するAPIの順番は以下の優先度になります。
 
 `WebAudio` > `HTMLAudio` > `HTMLVideo`
 
-- If web browser has both `WebAudio` and `HTMLAudio` then `WebAudio` has priority.
-- `boombox.js` doesn't use `HTMLVideo` as long as it doesn't enable in option.
+- `WebAudio`と`HTMLAudio`両方が実装されてるブラウザの場合は`WebAudio`が優先されます。
+- `HTMLVideo`はオプションで有効にしない限りは使いません。
 
 ### currentTime
 
-`boombox.js` ignores `currentTime` when web browser can't set seek setting on `HTMLAudio` and `HTMLVideo`.:w
+`HTMLAudio` `HTMLVide` のシーク設定(currentTime) が設定出来ないブラウザがある場合は、内部でcurrentTimeが設定されても無視されます。
 
 ### Inactive
 
-`boombox.js` can judge state that the browser has become background using `window.onpageshow/onpagehide`, `window.onblur/onfocus` and `Event.onVisibilityChange`.
+ブラウザがバックグラウンドになった状態を、`window.onpageshow/onpagehide` `window.onblur/onfocus` `Event.onVisibilityChange` を利用して判定しています。
 
-> It is not obtainable on all browser, so you may avouch in your web browser.
+> すべての端末で取得可能ではないので、利用している環境で確認して下さい。
 
 ### Customize Events
 
-All customizable events are named by `onXXXX`, so you can override these events.
+カスタマイズ可能な関数はすべて、`onXXXX` の命名規則になっていますのでそのまま関数を上書きしてください。
 
 ##### onVisibilityChange(e)
 
-This event is fired this event by the occurrence of `visibilityChange` event.
+`visibilityChange`イベントの発生に合わせて発火します。
 
 ##### onFocus(e)
 
-This event is fired this event by the occurrence of `window.onFocus` event.
+`window.onFocus`イベントの発生に合わせて発火します。
 
 ##### onBlur(e)
 
-This event is fired this event by the occurrence of `window.onBlur` event.
+`window.onBlur`イベントの発生に合わせて発火します。
 
 ##### onPageShow(e)
 
-This event is fired this event by the occurrence of `window.onpageshow` event.
+`window.onpageshow`イベントの発生に合わせて発火します。
 
 ##### onPageHide(e)
 
-This event is fired this event by the occurrence of `window.onpagehide` event.
+`window.onpagehide`イベントの発生に合わせて発火します。
 
 ##### onEnded(e)
 
-This event is fired when a sound have been played to the end.
-It will not be fired when the sound stops on the way.
+サウンドが最後まで再生された時に実行されます。途中で停止された場合は発火しません。
 
 ```javascript
 
-// Simple usage.
+// シンプルな使用法
 boombox.onFocus = function (e) {
     logger.trace('onFocus');
 }
 
-// Override function.
+// 関数のオーバーライド
 
 var fn = boombox.onFocus;
 
@@ -399,13 +401,14 @@ boombox.onFocus = function () {
 
 ## AudioSprite
 
-`boombox.js` now supports `audiosprite`. (HTMLAudio/HTMLVideo/WebAudio)
+boombox.js は `audiosprite` をサポートします。 (HTMLAudio/HTMLVideo/WebAudio)
 
 ### HTMLAudio/HTMLVideo
 
-`boombox.js` can play with one note per one sound source.
+一つのサウンドファイルで同時に１音再生可能です。
 
-`boombox.js` creates instances of HTMLAudio/HTMLVideo as same as numberes of sprited sounds, but it refer the HTMLAudioElement/HTMLVideoElement as DOM element of the same.
+boombox.jsから利用するHTMLAudio/HTMLVideoは、スプライトした数分、インスタンスが生成されていますが、
+内部では同一のDOM要素として、HTMLAudioElement/HTMLVideoElementを参照しています。
 
 ```javascript
 boombox.get("bgm-c2a") === boombox.get("bgm-c3a") // false
@@ -415,11 +418,11 @@ boombox.get("bgm-c2a").$el === boombox.get("bgm-c3a").$el // true
 
 ### WebAudio
 
-`boombox.js` can play with multiple notes per one sound source.
+一つのサウンドファイルで同時に複数音再生可能です。
 
-### Creating Audio Sprite
+### Audio Sprite 作成
 
-You can create audio sprite with [boombox-audiosprite](https://github.com/tonistiigi/audiosprite), related project of `boombox.js`
+関連プロジェクトの [boombox-audiosprite](https://github.com/tonistiigi/audiosprite) を利用して作成します。
 
 ```
 $ npm install -g boombox-audiosprite
@@ -430,7 +433,7 @@ $ cd {AUDIO_DIRECTORY}
 ├── c6a.wav
 └── c7a.wav
 
-# Please see options page of boombox-audiosprite.
+# オプションは boombox-audiosprite を参照ください
 
 $ boombox-audiosprite -e ac3,caf,mp3,m4a ./*.wav
 
@@ -445,7 +448,7 @@ $ boombox-audiosprite -e ac3,caf,mp3,m4a ./*.wav
 ├── sprite.m4a
 └── sprite.mp3
 
-# JSON data for boombox.js
+# boombox.js json データ
 $ cat boombox-output.json
 {
   "spritemap": {
@@ -479,7 +482,7 @@ $ cat boombox-output.json
 }
 ```
 
-### Playing Audio Sprite
+### Audio Sprite 再生
 
 ```html
 <!DOCTYPE HTML>
@@ -532,7 +535,7 @@ $ cat boombox-output.json
 </html>
 ```
 
-> `boombox.get('bgm-' + sprite name)` method can get the individual sound source in audio sprite.
+> 個別のスプライトへのアクセスは、`boombox.get('bgm-' + sprite名)` で可能です。
 
 ====
 

@@ -52,7 +52,8 @@
             },
             uglify: {
                 options: {
-                    sourceMap: 'boombox.min.map'
+                    sourceMap: 'boombox.min.map',
+                    preserveComments: 'some'
                 },
                 default: {
                     files: {
