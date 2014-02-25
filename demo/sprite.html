@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>Single Sound - boombox.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.css">
+  <style type="text/css">
+   #w {
+     margin: 20px
+   }
+   #debug {
+     overflow-y: scroll;
+     height: 200px;
+   }
+   .volume {
+    margin-top: 15px;
+   }
+  </style>
+</head>
+
+<body>
+  <div id="w">
+    <h2>bgma-c6a</h2>
+    <div class="controls">
+      <div class="btn-group">
+        <button id="play1" class="btn btn-success btn-sm">Play</button>
+        <button id="stop1" class="btn btn-success btn-sm">Stop</button>
+        <button id="pause1" class="btn btn-success btn-sm">Pause</button>
+        <button id="resume1" class="btn btn-success btn-sm">Resume</button>
+        <button id="replay1" class="btn btn-success btn-sm">Replay</button>
+      </div>
+      <div class="volume">
+        <span class="glyphicon glyphicon glyphicon-volume-off"></span>
+        <input id="volume1" type="range" min="0" max="1" step="0.1" />
+        <span class="glyphicon glyphicon-volume-up"></span>
+      </div>
+    </div>
+
+    <h2>bgmb-c7b</h2>
+    <div class="controls">
+      <div class="btn-group">
+        <button id="play2" class="btn btn-success btn-sm">Play</button>
+        <button id="stop2" class="btn btn-success btn-sm">Stop</button>
+        <button id="pause2" class="btn btn-success btn-sm">Pause</button>
+        <button id="resume2" class="btn btn-success btn-sm">Resume</button>
+        <button id="replay2" class="btn btn-success btn-sm">Replay</button>
+      </div>
+      <div class="volume">
+        <span class="glyphicon glyphicon glyphicon-volume-off"></span>
+        <input id="volume2" type="range" min="0" max="1" step="0.1" />
+        <span class="glyphicon glyphicon-volume-up"></span>
+      </div>
+    </div>
+
+
+    <h2>Debug</h2>
+    <pre id="debug"></pre>
+
+    <div id="info">
+      <h2>Infomation</h2>
+    </div>
+
+  </div>
+
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.2/zepto.min.js"></script>
+  <script src="vendor/boombox.js"></script>
+  <script>
+
+   // short-cut dom
+   $info = $("#info");
+   $debug = $("#debug");
+   // log
+   var debug = function (msg) {
+     $debug.append(msg + '\n');
+     $debug.scrollTop($debug[0].scrollHeight)
+   }
+
+   // Events 1
+   $("#play1").click(function (e) {
+     boombox.get('bgma-c6a').play();
+     debug('## play bgma-c6a');
+   });
+   $("#stop1").click(function (e) {
+     boombox.get('bgma-c6a').stop();
+     debug('## stop bgma-c6a');
+   });
+   $("#pause1").click(function (e) {
+     boombox.get('bgma-c6a').pause();
+     debug('## pause bgma-c6a');
+   });
+   $("#resume1").click(function (e) {
+     boombox.get('bgma-c6a').resume();
+     debug('## resume bgma-c6a');
+   });
+   $("#replay1").click(function (e) {
+     boombox.get('bgma-c6a').replay();
+     debug('## replay bgma-c6a');
+   });
+   $("#volume1").change(function (e) {
+     var volume = e.currentTarget.value;
+     debug('## volume bgma-c6a: ' + volume);
+     boombox.get('bgma-c6a').volume(volume);
+   });
+
+
+   // Events 2
+   $("#play2").click(function (e) {
+     boombox.get('bgmb-c7b').play();
+     debug('## play bgmb-c7b');
+   });
+   $("#stop2").click(function (e) {
+     boombox.get('bgmb-c7b').stop();
+     debug('## stop bgmb-c7b');
+   });
+   $("#pause2").click(function (e) {
+     boombox.get('bgmb-c7b').pause();
+     debug('## pause bgmb-c7b');
+   });
+   $("#resume2").click(function (e) {
+     boombox.get('bgmb-c7b').resume();
+     debug('## resume bgmb-c7b');
+   });
+   $("#replay2").click(function (e) {
+     boombox.get('bgmb-c7b').replay();
+     debug('## replay bgmb-c7b');
+   });
+   $("#volume2").change(function (e) {
+     var volume = e.currentTarget.value;
+     debug('## volume bgmb-c7b: ' + volume);
+     boombox.get('bgmb-c7b').volume(volume);
+   });
+
+   //setInterval(function () { debug(JSON.stringify(boombox.pool['bgma-c6a'].state)); }, 1000)
+   //setInterval(function () { debug(JSON.stringify(boombox.pool['bgmb-c7b'].state)); }, 1000)
+
+
+   // boombox running
+   boombox.setup({
+     webaudio: {
+       //use: false // force override
+     },
+     htmlaudio: {
+       //use: true // force override
+     },
+     htmlvideo: {
+       //use: true // force override
+     },
+     //loglevel: 1 // trace
+   });
+
+    var prefix1 = "bgma";
+
+    var options1 = {
+        "spritemap": {
+            "c5a": {
+                "start": 0,
+                "end": 5.990770975056689
+            },
+            "c6a": {
+                "start": 7,
+                "end": 12.990770975056689
+            },
+            "c7a": {
+                "start": 14,
+                "end": 19.99077097505669
+            }
+        },
+        "src": [
+            {
+                "media": "audio/ac3",
+                "path": "./media/sprite/a/sprite.ac3"
+            },
+            {
+                "media": "audio/mpeg",
+                "path": "./media/sprite/a/sprite.mp3"
+            },
+            {
+                "media": "audio/mp4",
+                "path": "./media/sprite/a/sprite.m4a"
+            }
+        ]
+    };
+
+    var prefix2 = "bgmb";
+
+    var options2 = {
+        "spritemap": {
+            "c5b": {
+                "start": 0,
+                "end": 5.990770975056689
+            },
+            "c6b": {
+                "start": 7,
+                "end": 12.990770975056689
+            },
+            "c7b": {
+                "start": 14,
+                "end": 19.99077097505669
+            }
+        },
+        "src": [
+            {
+                "media": "audio/ac3",
+                "path": "./media/sprite/b/sprite.ac3"
+            },
+            {
+                "media": "audio/mpeg",
+                "path": "./media/sprite/b/sprite.mp3"
+            },
+            {
+                "media": "audio/mp4",
+                "path": "./media/sprite/b/sprite.m4a"
+            }
+        ]
+    };
+
+   boombox.load(prefix1, options1, function (err1, htmlaudio1) {
+     $info.append(htmlaudio1.$el);
+     debug("## sound loaded. used: " + boombox.pool['bgma-c6a'].constructor.name);
+
+     boombox.load(prefix2, options2, function (err2, htmlaudio2) {
+       $info.append(htmlaudio2.$el);
+       debug("## sound loaded. used: " + boombox.pool['bgmb-c7b'].constructor.name);
+     });
+   });
+
+   $info.append('Browser Support<br />');
+   $info.append('webaudio: ' + boombox.support.webaudio.use + '<br />');
+   $info.append('htmlaudio: ' + boombox.support.htmlaudio.use + '<br />');
+   $info.append('htmlvideo: ' + boombox.support.htmlvideo.use + '<br />');
+
+  </script>
+</body>
+</html>
