@@ -1658,7 +1658,9 @@
             delete this._timer;
 
             delete this.parent;
-            this.sprite.dispose && this.sprite.dispose();
+            if (this.sprite && this.sprite.dispose) {
+                this.sprite.dispose();
+            }
             delete this.sprite;
 
         };
@@ -2955,7 +2957,9 @@
             this.parent = null;
             delete this.parent;
 
-            this.sprite.dispose && this.sprite.dispose();
+            if (this.sprite && this.sprite.dispose) {
+                this.sprite.dispose();
+            }
             delete this.sprite;
 
             delete this.name;
