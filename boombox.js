@@ -122,10 +122,10 @@
 
 
     //////////////////////////////////
-    // BoomBox Class
+    // Boombox Class
 
-    var BoomBox = (function () {
-        function BoomBox() {
+    var Boombox = (function () {
+        function Boombox() {
 
             /**
              * Version
@@ -343,7 +343,7 @@
          * @name isWebAudio
          * @return {Boolean}
          */
-        BoomBox.prototype.isWebAudio = function () {
+        Boombox.prototype.isWebAudio = function () {
             return this.support.webaudio.use;
         };
 
@@ -354,7 +354,7 @@
          * @name isHTMLAudio
          * @return {Boolean}
          */
-        BoomBox.prototype.isHTMLAudio = function () {
+        Boombox.prototype.isHTMLAudio = function () {
             return this.support.htmlaudio.use;
         };
 
@@ -365,7 +365,7 @@
          * @name isHTMLVideo
          * @return {Boolean}
          */
-        BoomBox.prototype.isHTMLVideo = function () {
+        Boombox.prototype.isHTMLVideo = function () {
             return this.support.htmlvideo.use;
         };
 
@@ -376,7 +376,7 @@
          * @name isPlayback
          * @return {Boolean}
          */
-        BoomBox.prototype.isPlayback = function () {
+        Boombox.prototype.isPlayback = function () {
             var self = this;
             var res = false;
 
@@ -405,7 +405,7 @@
          * }
          *
          */
-        BoomBox.prototype.setup = function setup(options) {
+        Boombox.prototype.setup = function setup(options) {
             var self = this;
 
             options = options || {};
@@ -414,7 +414,7 @@
                 LOG_LEVEL = options.loglevel;
             }
 
-            this.logger = new Logger('BoomBox '); // log
+            this.logger = new Logger('Boombox '); // log
 
             if (this.setuped) {
                 this.logger.warn('"setup" already, are running.');
@@ -482,7 +482,7 @@
          * @param {String} name audio name
          * @return {WebAudio|HTMLAudio|HTMLVideo}
          */
-        BoomBox.prototype.get = function (name) {
+        Boombox.prototype.get = function (name) {
             return this.pool[name];
         };
 
@@ -508,7 +508,7 @@
          * }
          *
          */
-        BoomBox.prototype.load = function (name, options, useHTMLVideo, callback) {
+        Boombox.prototype.load = function (name, options, useHTMLVideo, callback) {
             if (typeof arguments[2] === 'function') {
                 callback = useHTMLVideo;
                 useHTMLVideo = null;
@@ -595,7 +595,7 @@
          * @param {String} name
          * @return {Boombox}
          */
-        BoomBox.prototype.remove = function (name) {
+        Boombox.prototype.remove = function (name) {
             if (this.pool[name]) { // change object
                 this.logger.trace('Remove Audio that is pooled. name', name);
                 this.pool[name].dispose && this.pool[name].dispose();
@@ -615,7 +615,7 @@
          * @param {WebAudio|HTMLAudio|HTMLVideo} Obj Boombox audio class
          * @return {Boombox}
          */
-        BoomBox.prototype.setPool = function (name, obj, Obj) {
+        Boombox.prototype.setPool = function (name, obj, Obj) {
             if (obj.isParentSprite()) {
                 for (var r in this.pool) {
                     if (!!~r.indexOf(name + SPRITE_SEPARATOR)) {
@@ -645,7 +645,7 @@
          * @param {Object} options
          * @return {Boolean}
          */
-        BoomBox.prototype.runfilter = function (audio, options) {
+        Boombox.prototype.runfilter = function (audio, options) {
             var hit;
 
             var list = options.filter || [];
@@ -684,7 +684,7 @@
          * @param {Array} src audio file data
          * @return {Object|undefined}
          */
-        BoomBox.prototype.useMediaType = function (src) {
+        Boombox.prototype.useMediaType = function (src) {
             for (var i = 0; i < src.length; i++) {
                 var t = src[i];
                 if (this._audio.canPlayType(t.media)) {
@@ -704,7 +704,7 @@
          * @name pause
          * @return {boombox}
          */
-        BoomBox.prototype.pause = function () {
+        Boombox.prototype.pause = function () {
             var self = this;
             this.logger.trace('pause');
 
@@ -724,7 +724,7 @@
          * @name resume
          * @return {Boombox}
          */
-        BoomBox.prototype.resume = function () {
+        Boombox.prototype.resume = function () {
             this.logger.trace('resume');
             var name = this.waits.shift();
             if (name && this.pool[name]) {
@@ -744,7 +744,7 @@
          * @param {Boolean} p power on/off. boombox.(POWER_ON|POWER_OFF)
          * @return {Boombox}
          */
-        BoomBox.prototype.power = function (p) {
+        Boombox.prototype.power = function (p) {
             var self = this;
             this.logger.trace('power:', this.name, 'flag:', p);
 
@@ -766,7 +766,7 @@
          * @param {Interger} v volume
          * @return {Boombox}
          */
-        BoomBox.prototype.volume = function (v) {
+        Boombox.prototype.volume = function (v) {
             var self = this;
             this.logger.trace('volume:', this.name, 'volume:', v);
 
@@ -785,7 +785,7 @@
          * @name onVisibilityChange
          * @param {Event} e event
          */
-        BoomBox.prototype.onVisibilityChange = function (e) {
+        Boombox.prototype.onVisibilityChange = function (e) {
             this.logger.trace('onVisibilityChange');
             if (document[this.visibility.hidden]) {
                 this.pause();
@@ -801,7 +801,7 @@
          * @name onFocus
          * @param {Event} e event
          */
-        BoomBox.prototype.onFocus = function (e) {
+        Boombox.prototype.onFocus = function (e) {
             this.logger.trace('onFocus');
             this.resume();
         };
@@ -813,7 +813,7 @@
          * @name onBlur
          * @param {Event} e event
          */
-        BoomBox.prototype.onBlur = function (e) {
+        Boombox.prototype.onBlur = function (e) {
             this.logger.trace('onBlur');
             this.pause();
         };
@@ -825,7 +825,7 @@
          * @name onPageShow
          * @param {Event} e event
          */
-        BoomBox.prototype.onPageShow = function (e) {
+        Boombox.prototype.onPageShow = function (e) {
             this.logger.trace('onPageShow');
             this.resume();
         };
@@ -837,7 +837,7 @@
          * @name onPageHide
          * @param {Event} e event
          */
-        BoomBox.prototype.onPageHide = function (e) {
+        Boombox.prototype.onPageHide = function (e) {
             this.logger.trace('onPageHide');
             this.pause();
         };
@@ -849,7 +849,7 @@
          * @name _browserControl
          * @return {Boombox}
          */
-        BoomBox.prototype._browserControl = function () {
+        Boombox.prototype._browserControl = function () {
             var self = this;
             if (typeof document.hidden !== "undefined") {
                 this.visibility.hidden = "hidden";
@@ -910,7 +910,7 @@
          * @param {Function} filter function
          * @return {Boombox}
          */
-        BoomBox.prototype.addFilter = function (name, fn) {
+        Boombox.prototype.addFilter = function (name, fn) {
             this.filter[name] = fn;
             return this;
         };
@@ -921,7 +921,7 @@
          * @memberof Boombox
          * @name dispose
          */
-        BoomBox.prototype.dispose = function () {
+        Boombox.prototype.dispose = function () {
             for (var name in this.pool) {
                 var audio = this.pool[name];
                 audio.dispose && audio.dispose();
@@ -951,13 +951,13 @@
             delete this.filter;
         };
 
-        return BoomBox;
+        return Boombox;
     })();
 
 
     //////////////////////////////////
     // New!!!!
-    var boombox = new BoomBox();
+    var boombox = new Boombox();
 
 
     //////////////////////////////////
