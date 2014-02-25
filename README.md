@@ -55,7 +55,6 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 
 |OS/Browser|HTMLAudio or HTMLVideo load event|
-
 |:------------:|:------------:|
 |IOS 5: Safari|suspend|
 |IOS 6, 7: Safari|suspend|
