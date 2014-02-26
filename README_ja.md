@@ -52,6 +52,10 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
     - crossOrigin、サウンドファイル配信サーバー・ロードオプションを適切に設定すれば[CORS](https://developer.mozilla.org/ja/docs/HTTP_access_control)を回避可能です。
 - Filterings
     - 環境ごとに音の出し分けを行うフィルタリングをサポート
+- audiospriteが使用可能
+    - 生成コマンドサポート ([boombox-audiosprite](https://github.com/fkei/boombox-audiosprite))
+    - HTMLAudio/HTMLVideo/WebAudio サポート
+
 - gzipped 6kb filesize
 
 
