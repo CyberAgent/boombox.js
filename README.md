@@ -49,6 +49,8 @@ However `boombox.js` doesn't restrict these features, you can extend `boombox.js
     - `boombox.js` has several configurations to observe [CORS](https://developer.mozilla.org/ja/docs/HTTP_access_control) specifications.
 - Filterings
     - `boombox.js` divided out sound souces based on browser detection.
+- audiosprite is available and generation command.([boombox-audiosprite](https://github.com/fkei/boombox-audiosprite))
+    - HTMLAudio/HTMLVideo/WebAudio support
 - File size is small(6kb at gzipped).
 
 ## Reference information
