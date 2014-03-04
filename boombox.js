@@ -45,7 +45,6 @@
     };
 
     /**
-     * off:
      * trace: 1
      * debug: 2
      * info:  3
@@ -401,7 +400,7 @@
          *     webaudio: {use: Boolean},
          *     htmlaudio: {use: Boolean},
          *     htmlvideo: {use: Boolean},
-         *     loglevel: Number, ) trace:5, debug:4, info:3, warn:2, error:1
+         *     loglevel: Number, ) trace:1, debug:2, info:3, warn:4, error:5
          * }
          *
          */
