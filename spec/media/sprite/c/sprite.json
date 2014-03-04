@@ -2,7 +2,8 @@
   "resources": [
     "sprite.ac3",
     "sprite.mp3",
-    "sprite.m4a"
+    "sprite.m4a",
+    "sprite.ogg"
   ],
   "spritemap": {
     "c5c": {

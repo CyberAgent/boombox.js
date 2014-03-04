@@ -162,16 +162,20 @@
         },
         "src": [
             {
-                "media": "audio/ac3",
-                "path": "./media/sprite/a/sprite.ac3"
-            },
-            {
                 "media": "audio/mpeg",
                 "path": "./media/sprite/a/sprite.mp3"
             },
             {
                 "media": "audio/mp4",
                 "path": "./media/sprite/a/sprite.m4a"
+            },
+            {
+                "media": "audio/ac3",
+                "path": "./media/sprite/a/sprite.ac3"
+            },
+            {
+                media: 'audio/ogg',
+                "path": "./media/sprite/a/sprite.ogg"
             }
         ]
     };
@@ -195,16 +199,20 @@
         },
         "src": [
             {
-                "media": "audio/ac3",
-                "path": "./media/sprite/b/sprite.ac3"
-            },
-            {
                 "media": "audio/mpeg",
                 "path": "./media/sprite/b/sprite.mp3"
             },
             {
                 "media": "audio/mp4",
                 "path": "./media/sprite/b/sprite.m4a"
+            },
+            {
+                "media": "audio/ac3",
+                "path": "./media/sprite/b/sprite.ac3"
+            },
+            {
+                media: 'audio/ogg',
+                "path": "./media/sprite/b/sprite.ogg"
             }
         ]
     };

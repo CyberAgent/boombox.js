@@ -11,9 +11,9 @@ define(['boombox'], function(boombox) {
         window.boombox = boombox;
     }
 
-    var sound = ["sound", "./media/sound.m4a"];
-    var bgm1 = ["bgm1", "./media/sound.wav"];
-    var bgm2 = ["bgm2", "./media/sound.m4a"];
+    var sound = ["sound", "./media/sound.m4a", "./media/sound.ogg"];
+    var bgm1 = ["bgm1", "./media/sound.wav", "./media/sound.ogg"];
+    var bgm2 = ["bgm2", "./media/sound.m4a", "./media/sound.ogg"];
 
     var _ = window._;
 
@@ -127,6 +127,10 @@ define(['boombox'], function(boombox) {
                         {
                             media: 'audio/mp4',
                             path: bgm1[1]
+                        },
+                        {
+                            media: 'audio/ogg',
+                            path: bgm1[2]
                         }
                     ]
                 };
@@ -135,6 +139,10 @@ define(['boombox'], function(boombox) {
                         {
                             media: 'audio/mp4',
                             path: sound[1]
+                        },
+                        {
+                            media: 'audio/ogg',
+                            path: sound[2]
                         }
                     ]
                 };
@@ -143,7 +151,12 @@ define(['boombox'], function(boombox) {
                         {
                             media: 'audio/mp4',
                             path: bgm2[1]
+                        },
+                        {
+                            media: 'audio/ogg',
+                            path: bgm2[2]
                         }
+
                     ]
                 };
                 boombox.load(bgm1[0], bgm1_options, function (err, htmlaudio) {

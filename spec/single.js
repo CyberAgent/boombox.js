@@ -11,7 +11,7 @@ define(['boombox'], function(boombox) {
         window.boombox = boombox;
     }
 
-    var bgm = ["bgm", "./media/sound.m4a"];
+    var bgm = ["bgm", "./media/sound.m4a", "./media/sound.ogg"];
     var _ = window._;
 
     return function() {
@@ -58,7 +58,12 @@ define(['boombox'], function(boombox) {
                         {
                             media: 'audio/mp4',
                             path: bgm[1]
+                        },
+                        {
+                            media: 'audio/ogg',
+                            path: bgm[2]
                         }
+
                     ]
                 };
                 boombox.load(bgm[0], options, function (err, htmlaudio) {

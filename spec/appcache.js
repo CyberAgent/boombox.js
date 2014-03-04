@@ -79,6 +79,10 @@
                         {
                             media: 'audio/mp4',
                             path: bgm[1]
+                        },
+                        {
+                            media: 'audio/ogg',
+                            path: bgm[2]
                         }
                     ]
                 };
@@ -110,7 +114,7 @@
 
 
     // index.js
-    var bgm = ["bgm", "./media/sound.m4a"];
+    var bgm = ["bgm", "./media/sound.m4a", "./media/sound.ogg"];
 
 
 })(this);

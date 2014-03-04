@@ -25,6 +25,10 @@
     {
       "media": "audio/mp4",
       "path": "sprite.m4a"
+    },
+    {
+      "media": "audio/ogg",
+      "path": "sprite.ogg"
     }
   ]
 }

@@ -127,6 +127,10 @@
         },
         "src": [
             {
+                "media": "audio/mp4",
+                "path": "./media/sprite/a/sprite.m4a"
+            },
+            {
                 "media": "audio/ac3",
                 "path": "./media/sprite/a/sprite.ac3"
             },
@@ -135,8 +139,8 @@
                 "path": "./media/sprite/a/sprite.mp3"
             },
             {
-                "media": "audio/mp4",
-                "path": "./media/sprite/a/sprite.m4a"
+                media: 'audio/ogg',
+                "path": "./media/sprite/a/sprite.ogg"
             }
         ]
     };
