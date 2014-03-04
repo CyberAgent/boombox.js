@@ -1106,6 +1106,8 @@
                 this.$el[k] = v;
             }
 
+            var self = this;
+
             // Debug log
             /**
             ["loadstart",
@@ -1130,8 +1132,8 @@
              "ended",
              "ratechange",
              "durationchange",
-             "volumechange"].forEach(function(eventName) {
-                 self.$el.addEventListener(eventName, function() {
+             "volumechange"].forEach(function (eventName) {
+                 self.$el.addEventListener(eventName, function () {
                      console.log('audio: ' + eventName);
                  }, true);
              });
@@ -1145,14 +1147,13 @@
 
             this.logger.trace('hook event name:', hookEventName);
 
-            var self = this;
 
-            this.$el.addEventListener(hookEventName, function (e) {
+            this.$el.addEventListener(hookEventName, function _canplay(e) {
                 self.logger.trace('processEvent ' + e.target.id + ' : ' + e.type, 'event');
 
                 self.state.loaded = true;
 
-                self.$el.removeEventListener(hookEventName, e, false);
+                self.$el.removeEventListener(hookEventName, _canplay, false);
 
                 return cb(null, self);
             });
@@ -1841,8 +1842,8 @@
              "ended",
              "ratechange",
              "durationchange",
-             "volumechange"].forEach(function(eventName) {
-                 self.$el.addEventListener(eventName, function() {
+             "volumechange"].forEach(function (eventName) {
+                 self.$el.addEventListener(eventName, function () {
                      console.log('audio: ' + eventName);
                  }, true);
              });
@@ -1860,12 +1861,12 @@
 
             self.logger.trace('hook event name:', hookEventName);
 
-            this.$el.addEventListener(hookEventName, function (e) {
+            this.$el.addEventListener(hookEventName, function _canplay(e) {
                 self.logger.trace('processEvent ' + e.target.id + ' : ' + e.type, 'event');
 
                 self.state.loaded = true;
 
-                self.$el.removeEventListener(hookEventName, e, false);
+                self.$el.removeEventListener(hookEventName, _canplay, false);
 
                 return cb(null, self);
             });
@@ -2392,6 +2393,11 @@
                 delete options.spritemap;
             }
 
+            for (var k in options) {
+                var v = options[k];
+                this.logger.trace('WebAudio attribute:', k, v);
+            }
+
 
             var http = new XMLHttpRequest();
             http.onload = function (e) {
@@ -2689,7 +2695,6 @@
             if (this.source.start) {
                 this.logger.debug('use source.start()', this.name);
                 this.source.start(0, start || 0, this.buffer.duration);
-                //this.source.start(0, start);
             } else {
                 if (this.isSprite()) { // iOS 6 Safari support
                     this.logger.debug('use source.noteGrainOn()', this.name);
