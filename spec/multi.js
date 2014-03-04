@@ -114,6 +114,10 @@ define(['boombox'], function(boombox) {
                         //use: true // force override
                     }
                 });
+                $("#info").append('<hr /State of boombox.js<br />');
+                $("#info").append('[boombox] webaudio  :' + boombox.isWebAudio() + '<br />');
+                $("#info").append('[boombox] audio     :' + boombox.isHTMLAudio() + '<br />');
+                $("#info").append('[boombox] video     :' + boombox.isHTMLVideo() + '<br />');
             });
 
             it('load()', function(done) {

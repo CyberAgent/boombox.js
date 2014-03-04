@@ -5,10 +5,10 @@
         // Display Browser Infomation
         var info = document.getElementById('info');
         var infodata = [
-            'useragent:' + window.navigator.userAgent,
-            'webaudio:' + !!window.webkitAudioContext,
-            'audio:' +  !!window.Audio,
-            'video:' +  !!document.createElement('video')
+            '[browser] useragent :' + window.navigator.userAgent,
+            '[browser] webaudio  :' + !!window.webkitAudioContext,
+            '[browser] audio     :' + !!window.Audio,
+            '[browser] video     :' + !!document.createElement('video')
         ];
 
         for (var i = 0; i < infodata.length; i++) {
