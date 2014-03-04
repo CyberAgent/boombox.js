@@ -4,7 +4,7 @@
         var info = document.getElementById('info');
         var infodata = [
             'useragent:' + window.navigator.userAgent,
-            'webaudio:' + !!window.webkitAudioContext,
+            'webaudio:' + !!(window.webkitAudioContext || window.AudioContext),
             'audio:' +  !!window.Audio,
             'video:' +  !!document.createElement('video')
         ];
@@ -77,12 +77,16 @@
                 var options = {
                     src: [
                         {
-                            media: 'audio/mp4',
+                            media: 'audio/mp3',
                             path: bgm[1]
                         },
                         {
                             media: 'audio/ogg',
                             path: bgm[2]
+                        },
+                        {
+                            media: 'audio/wav',
+                            path: bgm[3]
                         }
                     ]
                 };
@@ -114,7 +118,7 @@
 
 
     // index.js
-    var bgm = ["bgm", "./media/sound.m4a", "./media/sound.ogg"];
+    var bgm = ["bgm", "./media/sound.mp3", "./media/sound.ogg", "./media/sound.wav"];
 
 
 })(this);
