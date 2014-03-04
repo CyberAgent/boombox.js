@@ -215,6 +215,14 @@
             this.setuped = false;
 
             /**
+             * AudioContext
+             * @memberof Boombox
+             * @name AudioContext
+             * @type {AudioContext}
+             */
+            this.AudioContext = w.webkitAudioContext || w.AudioContext;
+
+            /**
              * Environmental support information
              *
              * @memberof Boombox
@@ -224,7 +232,7 @@
             this.support = {
                 mimes: [],
                 webaudio: {
-                    use: !!w.webkitAudioContext
+                    use: !!this.AudioContext
                 },
                 htmlaudio: {
                     use: false
@@ -242,7 +250,7 @@
                  * @name WEB_AUDIO_CONTEXT
                  * @type {AudioContext}
                  */
-                this.WEB_AUDIO_CONTEXT = new w.webkitAudioContext();
+                this.WEB_AUDIO_CONTEXT = new this.AudioContext();
                 if (!this.WEB_AUDIO_CONTEXT.createGain) {
                     this.WEB_AUDIO_CONTEXT.createGain = this.WEB_AUDIO_CONTEXT.createGainNode;
                 }
@@ -2680,7 +2688,8 @@
 
             if (this.source.start) {
                 this.logger.debug('use source.start()', this.name);
-                this.source.start(0, start);
+                this.source.start(0, start || 0, this.buffer.duration);
+                //this.source.start(0, start);
             } else {
                 if (this.isSprite()) { // iOS 6 Safari support
                     this.logger.debug('use source.noteGrainOn()', this.name);
@@ -2715,10 +2724,10 @@
 
             if (this.source) {
                 if (this.source.stop) {
-                    this.logger.debug('use source.stop()', this.name);
+                    this.logger.debug('stop: use source.stop()', this.name);
                     this.source.stop(0);
                 } else {
-                    this.logger.debug('use source.noteOff()', this.name);
+                    this.logger.debug('stop: use source.noteOff()', this.name);
                     this.source.noteOff(0);
                 }
             }
@@ -2760,7 +2769,15 @@
             this.logger.debug('pause:', this.name);
             this.clearTimer('play');
 
-            this.source.noteOff(0);
+            if (this.source) {
+                if (this.source.stop) {
+                    this.logger.debug('pause: use source.stop()', this.name);
+                    this.source.stop(0);
+                } else {
+                    this.logger.debug('pause: use source.noteOff()', this.name);
+                    this.source.noteOff(0);
+                }
+            }
 
             return this;
         };
