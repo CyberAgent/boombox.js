@@ -68,7 +68,8 @@
                     },
                     htmlvideo: {
                         //use: true // force override
-                    }
+                    },
+                    loglevel: 1
                 });
             });
 

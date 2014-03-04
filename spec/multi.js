@@ -112,7 +112,8 @@ define(['boombox'], function(boombox) {
                     },
                     htmlvideo: {
                         //use: true // force override
-                    }
+                    },
+                    loglevel: 1
                 });
                 $("#info").append('<hr /State of boombox.js<br />');
                 $("#info").append('[boombox] webaudio  :' + boombox.isWebAudio() + '<br />');

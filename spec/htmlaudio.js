@@ -54,7 +54,8 @@ define(['boombox'], function(boombox) {
                     // default
                     //htmlvideo: {
                     //    use: true
-                    //}
+                    //},
+                    loglevel: 1
                 });
                 $("#info").append('<hr /State of boombox.js<br />');
                 $("#info").append('[boombox] webaudio  :' + boombox.isWebAudio() + '<br />');
