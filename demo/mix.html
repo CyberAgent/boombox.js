@@ -192,11 +192,16 @@
    info += 'WebAudio  [OFF]' + '\n';
    info += 'HTMLAudio [ON ]' + '\n';
    info += 'HTMLVideo [ON ]' + '\n';
+   info += '\nState of boombox.js\n';
+   info += '\twebaudio : '  + boombox.isWebAudio() + '\n';
+   info += '\thtmlaudio: ' + boombox.isHTMLAudio() + '\n';
+   info += '\thtmlvideo: ' + boombox.isHTMLVideo() + '\n';
    info += '\n';
    info += 'Browser Support\n';
-   info += '\twebaudio: ' + boombox.support.webaudio.use + '\n';
-   info += '\thtmlaudio: ' + boombox.support.htmlaudio.use + '\n';
-   info += '\thtmlvideo: ' + boombox.support.htmlvideo.use + '\n';
+   info += '\twebaudio : ' + !!window.webkitAudioContext + '\n';
+   info += '\thtmlaudio: ' + !!window.Audio + '\n';
+   info += '\thtmlvideo: ' + !!document.createElement + '\n';
+
 
    $("#info pre").text(info)
 

@@ -227,10 +227,17 @@
      });
    });
 
+   $info.append('<hr />');
+   $info.append('State of boombox.js<br />');
+   $info.append('webaudio: '  + boombox.isWebAudio() + '<br />');
+   $info.append('htmlaudio: ' + boombox.isHTMLAudio() + '<br />');
+   $info.append('htmlvideo: ' + boombox.isHTMLVideo() + '<br />');
+
+   $info.append('<hr />');
    $info.append('Browser Support<br />');
-   $info.append('webaudio: ' + boombox.support.webaudio.use + '<br />');
-   $info.append('htmlaudio: ' + boombox.support.htmlaudio.use + '<br />');
-   $info.append('htmlvideo: ' + boombox.support.htmlvideo.use + '<br />');
+   $info.append('webaudio: ' + !!window.webkitAudioContext + '<br />');
+   $info.append('htmlaudio: ' + !!window.Audio + '<br />');
+   $info.append('htmlvideo: ' + !!document.createElement('video') + '<br />');
 
   </script>
 </body>
