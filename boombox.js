@@ -67,7 +67,11 @@
          */
         Logger.prototype.trace = function () {
             if (LOG_LEVEL <= 1) {
-                console.debug('[TRACE]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
+                if (console.debug) {
+                    console.debug('[TRACE]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
+                } else {
+                    console.log('[TRACE]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
+                }
             }
         };
 
@@ -78,7 +82,11 @@
          */
         Logger.prototype.debug = function () {
             if (LOG_LEVEL <= 2) {
-                console.debug('[DEBUG]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
+                if (console.debug) {
+                    console.debug('[DEBUG]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
+                } else {
+                    console.log('[DEBUG]', this.prefix, Array.prototype.slice.call(arguments).join(' '));
+                }
             }
         };
 
