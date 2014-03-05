@@ -127,12 +127,12 @@
         },
         "src": [
             {
-                "media": "audio/mpeg",
-                "path": "./media/sprite/a/sprite.mp3"
-            },
-            {
                 "media": "audio/mp4",
                 "path": "./media/sprite/a/sprite.m4a"
+            },
+            {
+                "media": "audio/mpeg",
+                "path": "./media/sprite/a/sprite.mp3"
             },
             {
                 "media": "audio/ac3",
