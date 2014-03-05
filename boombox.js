@@ -70,7 +70,9 @@
          */
         Logger.prototype.trace = function () {
             if (LOG_LEVEL <= 1) {
-                if (console.debug) {
+                if (console.trace) {
+                    console.trace('[TRACE]', this.prefix, slice.call(arguments).join(' '));
+                } else if (console.debug) {
                     console.debug('[TRACE]', this.prefix, slice.call(arguments).join(' '));
                 } else {
                     console.log('[TRACE]', this.prefix, slice.call(arguments).join(' '));
@@ -100,7 +102,7 @@
          */
         Logger.prototype.info = function () {
             if (LOG_LEVEL <= 3) {
-                console.info('[INFO ]', this.prefix, slice.call(arguments).join(' '));
+                console.info('[INFO]', this.prefix, slice.call(arguments).join(' '));
             }
         };
 
@@ -111,7 +113,7 @@
          */
         Logger.prototype.warn = function () {
             if (LOG_LEVEL <= 4) {
-                console.warn('[WARN ]', this.prefix, slice.call(arguments).join(' '));
+                console.warn('[WARN]', this.prefix, slice.call(arguments).join(' '));
             }
         };
 
