@@ -2636,10 +2636,6 @@
 
             this.source = this.ctx.createBufferSource();
 
-            this.source.onended = function (e) {
-                self._onEnded(e);
-            };
-
             if (this.state.loop === boombox.LOOP_NATIVE) {
                 this.source.loop = this.state.loop;
             }
@@ -2651,7 +2647,7 @@
 
             var type = 'play';
             var fn = none;
-            var start;
+            var start = 0;
 
             this.state.time.playback = Date.now(); // Playback start time (ms)
 
@@ -2693,24 +2689,35 @@
 
                 }
 
-
             }
 
             this.logger.debug(type, this.name, 'offset:', start);
-
             fn();
 
-            if (this.source.start) {
-                this.logger.debug('use source.start()', this.name);
-                this.source.start(0, start || 0, this.buffer.duration);
-            } else {
-                if (this.isSprite()) { // iOS 6 Safari support
-                    this.logger.debug('use source.noteGrainOn()', this.name);
-                    this.source.noteGrainOn(0, start, self.sprite.current.term);
+            var duration = this.buffer.duration - start;
+            if (!this.isSprite()) {
+                if (this.source.hasOwnProperty('onended')) {
+                    this.source.onended = function (e) {
+                        self._onEnded(e);
+                    };
                 } else {
-                    this.logger.debug('use source.noteOn()', this.name);
-                    this.source.noteOn(0, start);
+                    var interval = Math.ceil(duration * 1000);
+                    this.setTimer('play', setTimeout(function () {
+                        self.stop();
+                        self._onEnded();
+                    }, interval));
                 }
+            }
+
+            if (this.source.start) {
+                this.logger.debug('use source.start()', this.name, start, duration);
+                this.source.start(0, start, this.buffer.duration);
+            } else {
+                if (this.isSprite()) {
+                    duration = self.sprite.current.term;
+                }
+                this.logger.debug('use source.noteGrainOn()', this.name, start, duration);
+                this.source.noteGrainOn(0, start, duration);
             }
 
             return this;
@@ -2871,7 +2878,6 @@
             }
 
             this.state.time.playback = undefined;
-
             this.onEnded(e); // fire user ended event!!
 
             if (this.state.loop && typeof this.state.time.pause === 'undefined') {
