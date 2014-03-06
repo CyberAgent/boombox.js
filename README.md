@@ -1,6 +1,10 @@
 boombox
 =======
 
+![logo](https://raw.github.com/CyberAgent/boombox.js/gh-pages/images/boombox-logo.png)
+
+---
+
 **日本語ドキュメントは[こちら](https://github.com/CyberAgent/boombox.js/blob/master/README_ja.md)**
 
 ---

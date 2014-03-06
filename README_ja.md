@@ -1,6 +1,10 @@
 boombox
 =======
 
+![logo](https://raw.github.com/CyberAgent/boombox.js/gh-pages/images/boombox-logo.png)
+
+---
+
 **English documents is [this](https://github.com/CyberAgent/boombox.js/blob/master/README.md)**
 
 ---
