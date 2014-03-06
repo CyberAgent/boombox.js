@@ -71,6 +71,13 @@ h1 {
   font-weight: 700;
 }
 
+h1 img {
+  border: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+}
 h2 {
   padding-bottom: 10px;
   font-size: 32px;
