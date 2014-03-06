@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-  <title>Single Sound - boombox.js</title>
+  <title>AudioSprite - boombox.js</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.css">
@@ -75,8 +75,8 @@
    // log
    var debug = function (msg) {
      $debug.append(msg + '\n');
-     $debug.scrollTop($debug[0].scrollHeight)
-   }
+     $debug.scrollTop($debug[0].scrollHeight);
+   };
 
    // Events 1
    $("#play1").click(function (e) {
@@ -147,7 +147,7 @@
      },
      htmlvideo: {
        //use: true // force override
-     },
+     }
      //loglevel: 1 // trace
    });
 

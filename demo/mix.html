@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-  <title>Single Sound - boombox.js</title>
+  <title>Mix Sound - boombox.js</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
   <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.css">
@@ -93,8 +93,8 @@
    // log
    var debug = function (msg, no) {
      $debug.append(no + ' : ' + msg + '\n');
-     $debug.scrollTop($debug[0].scrollHeight)
-   }
+     $debug.scrollTop($debug[0].scrollHeight);
+   };
 
    // boombox running
    boombox.setup({
@@ -203,7 +203,7 @@
    info += '\thtmlvideo: ' + !!document.createElement + '\n';
 
 
-   $("#info pre").text(info)
+   $("#info pre").text(info);
 
   </script>
 </body>
