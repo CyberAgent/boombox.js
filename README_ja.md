@@ -1,7 +1,7 @@
 boombox
 =======
 
-**English documents is [this](https://github.com/CyberAgent/boombox.js/blob/master/README.md)**
+**English documents is [here](https://github.com/CyberAgent/boombox.js/blob/master/README.md)**
 
 ---
 
