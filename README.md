@@ -13,7 +13,7 @@ boombox
 
 This library has simple API, like [_boombox_](http://en.wikipedia.org/wiki/Boombox).
 
-**The browser correspondence table is [here](https://github.com/CyberAgent/boombox.js/blob/master/correspondence_table.md)**
+**The browser correspondence table (2014-03-18) is [here](https://github.com/CyberAgent/boombox.js/blob/master/correspondence_table.md)** 
 
 ### Why you should use boombox?
 
