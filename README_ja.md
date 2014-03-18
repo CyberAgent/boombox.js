@@ -14,6 +14,8 @@ boombox
 
 Audio系APIを統一したインターフェースで提供し、ラジカセ([_boombox_](http://en.wikipedia.org/wiki/Boombox))のようなシンプルな操作で利用する事が可能です。
 
+**ブラウザ対応表は[こちら](https://github.com/CyberAgent/boombox.js/blob/master/correspondence_table.md)**
+
 ### Why you should use boombox?
 
 ブラウザでサウンドを鳴らすには、`HTMLAudio`/`WebAudio`/`HTMLVideo` が一般的に使われますが、APIの呼び出し方法やブラウザサポートなどがまちまちです。

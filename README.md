@@ -13,6 +13,8 @@ boombox
 
 This library has simple API, like [_boombox_](http://en.wikipedia.org/wiki/Boombox).
 
+**The browser correspondence table is [here](https://github.com/CyberAgent/boombox.js/blob/master/correspondence_table.md)**
+
 ### Why you should use boombox?
 
 Web browseres have `HTMLAudio` / `WebAudio` / `HTMLVideo` API for playing audio. However these API have diffrent way to use and browser have no compatibility.
