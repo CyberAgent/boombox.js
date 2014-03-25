@@ -71,18 +71,33 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 ====
 
+### Mobile
+
 |OS/Browser|Web Audio|HTML Audio|HTML Video|
 |:------------:|:------------:|:------------:|:------------:|
-|IOS 5: Safari|-|✔ |✔ \*1|
-|IOS 6, 7: Safari|✔|✔|✔ \*1|
-|Android 2.3: basic|-|✔|✔|
-|Android 4.0: basic|✔ \*2|✔|✔|
+|IOS     5   : Safari/chrome|-|✔ |✔ \*1|
+|IOS     6/7 : Safari/chrome|✔|✔|✔ \*1|
+|Android 2.3 : basic|-|✔|✔|
+|Android 4.0 : basic|✔ \*2|✔|✔|
+|Android 4.0 : chrome|✔ \*2|✔|✔|
+
+### PC
+
+|OS/Browser|Web Audio|HTML Audio|HTML Video|
+|:------------:|:------------:|:------------:|:------------:|
+|Windows: IE|-|✔|✔|
+|Windows: Chrome|✔|✔|✔|
+|Windows: Firefox|✔|✔|✔|
+|Windows: Opera|✔|✔|✔|
+|Mac OSX: Safari|✔|✔|✔|
 |Mac OSX: Chrome|✔|✔|✔|
+|Mac OSX: Firefox|✔|✔|✔|
+|Mac OSX: Opera|✔|✔|✔|
+
 
 > `*1` 別アプリ 起動 : NG
 >
 > `*2` 一部機種 対応
-> *HTMLVideo* : *DOMにElement追加 必須* + *DOMは、映像がないものを利用する場合は、表示領域外に指定すると良い*
 
 ====
 
