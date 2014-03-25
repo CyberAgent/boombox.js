@@ -220,6 +220,15 @@
             this.ERROR_HIT_FILTER = 1;
 
             /**
+             * Threshold to determine whether sound source is finished or not
+             *
+             * @memberof Boombox
+             * @name THRESHOLD
+             * @type {Interger}
+             */
+            this.THRESHOLD = 0.02;
+
+            /**
              * flag setup
              * @memberof Boombox
              * @name setuped
@@ -430,6 +439,10 @@
 
             options = options || {};
 
+            if (typeof options.threshold !== 'undefined') {
+                this.THRESHOLD = options.threshold;
+            }
+
             if (typeof options.loglevel !== 'undefined') {
                 LOG_LEVEL = options.loglevel;
             }
@@ -440,7 +453,6 @@
                 this.logger.warn('"setup" already, are running.');
                 return this;
             }
-            options = options || {};
 
             if (options.webaudio) {
                 if (typeof options.webaudio.use !== 'undefined') {
@@ -2874,11 +2886,11 @@
          */
         WebAudio.prototype._onEnded = function (e) {
             this.logger.trace('onended fire!', this.name);
-
+            var self = this;
             var now = Date.now();
             // skip if sounds is not ended
-            if (this.source && Math.abs(((now - this.state.time.playback + this.state.time.progress) / 1000) - this.source.buffer.duration) >= 0.01) {
-                this.logger.debug('skip if sounds is not ended', this.name);
+            if (self.source && Math.abs((now - self.state.time.playback + self.state.time.progress) / 1000 - self.source.buffer.duration) >= boombox.THRESHOLD) {
+                self.logger.debug('skip if sounds is not ended', self.name);
                 return;
             }
 
