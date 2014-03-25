@@ -1,6 +1,10 @@
 boombox
 =======
 
+![logo](https://raw.github.com/CyberAgent/boombox.js/gh-pages/images/boombox-logo.png)
+
+---
+
 **日本語ドキュメントは[こちら](https://github.com/CyberAgent/boombox.js/blob/master/README_ja.md)**
 
 ---
@@ -8,6 +12,8 @@ boombox
 "boombox.js" provides unified audio API for browser, such as [HTMLVideo](http://www.w3.org/TR/2009/WD-html5-20090825/video.html) / [HTMLAudio](http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element) / [WebAudio](http://www.w3.org/TR/webaudio/).
 
 This library has simple API, like [_boombox_](http://en.wikipedia.org/wiki/Boombox).
+
+**The browser correspondence table (2014-03-18) is [here](https://github.com/CyberAgent/boombox.js/blob/master/correspondence_table.md)** 
 
 ### Why you should use boombox?
 

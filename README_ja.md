@@ -1,6 +1,10 @@
 boombox
 =======
 
+![logo](https://raw.github.com/CyberAgent/boombox.js/gh-pages/images/boombox-logo.png)
+
+---
+
 **English documents is [here](https://github.com/CyberAgent/boombox.js/blob/master/README.md)**
 
 ---
@@ -9,6 +13,8 @@ boombox
 
 
 Audio系APIを統一したインターフェースで提供し、ラジカセ([_boombox_](http://en.wikipedia.org/wiki/Boombox))のようなシンプルな操作で利用する事が可能です。
+
+**ブラウザ対応表(2014-03-18)は[こちら](https://github.com/CyberAgent/boombox.js/blob/master/correspondence_table.md)**
 
 ### Why you should use boombox?
 

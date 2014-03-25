@@ -12,7 +12,7 @@ define(['boombox'], function(boombox) {
     }
 
     var sound = ["sound", "./media/sound.m4a", "./media/sound.ogg"];
-    var bgm1 = ["bgm1", "./media/sound.wav", "./media/sound.ogg"];
+    var bgm1 = ["bgm1", "./media/sound.m4a", "./media/sound.ogg"];
     var bgm2 = ["bgm2", "./media/sound.m4a", "./media/sound.ogg"];
 
     var _ = window._;

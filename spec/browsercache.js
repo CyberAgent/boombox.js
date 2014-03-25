@@ -1,39 +1,26 @@
-(function(global) {
-    onload = function() {
-        // Display Browser Infomation
-        var info = document.getElementById('info');
-        var infodata = [
-            'useragent:' + window.navigator.userAgent,
-            'webaudio:' + !!(window.webkitAudioContext || window.AudioContext),
-            'audio:' +  !!window.Audio,
-            'video:' +  !!document.createElement('video')
-        ];
+/**
+ * @name browsercache.js<spec>
+ * @author Kei Funagayama <funagayama_kei@cyberagent.co.jp>
+ * copyright (c) Cyberagent Inc.
+ * @overview TestCase
+ */
 
-        for (var i = 0; i < infodata.length; i++) {
-            var el = document.createElement("div");
-            var str = document.createTextNode(infodata[i]);
-            el.appendChild(str);
-            info.appendChild(el);
-        }
-    };
+define(['boombox'], function(boombox) {
 
-    global.assert = global.chai.assert;
-    global.expect = global.chai.expect;
+    if (!window.boombox) {
+        window.boombox = boombox;
+    }
 
-    // Mocha
-    global.mocha.setup({
-        ui: 'bdd',
-        timeout: 3 * 10 * 1000 // 30s
-    });
+    var bgm = ["bgm0", "bgm1", "bgm2", "./media/sound.m4a", "./media/sound.ogg"];
+    var _ = window._;
 
-    var suite = function () {
-        describe('boombox', function(){
+    return function() {
+        describe('boombox#browsercache', function(){
             before(function () {
                 // DOM
                 $("#w").children().each(function (idx, el) {
                     $(el).remove();
                 });
-                // sound
                 _.each(['play', 'stop', 'pause', 'resume', 'replay', 'loop', 'power'], function (type) {
                     if (type === 'loop') {
                         $("#w").append('<br>');
@@ -50,12 +37,9 @@
                     }
 
                     $("#w").append($('<button onclick="boombox.get(\'' + bgm[0] + '\').' + type + '()">' + type + '</button>'));
-                });
-                $("#w").append($('<button onclick="boombox.get(\'' + bgm[0] + '\').' + 'volume(0);">volume 0</button>'));
-                $("#w").append($('<button onclick="boombox.get(\'' + bgm[0] + '\').' + 'volume(1);">volume 1</button>'));
 
-                $("#w").append($('<button onclick="boombox.remove(\'' + bgm[0] + '\')">remove</button>'));
-                $("#w").append($('<button onclick="boombox.dispose()">dispose</button>'));
+                });
+                $("#w").append($('<input id="bgmrange" type="range" min="0" max="1" step="0.1" onchange="boombox.get(\'' + bgm[0] + '\').volume($(this).val())"></button>'));
             });
 
             it('setup()', function() {
@@ -75,21 +59,22 @@
 
             it('load()', function(done) {
                 var options = {
-                    src: [
-                        {
-                            media: 'audio/mp4',
-                            path: bgm[1]
-                        },
-                        {
-                            media: 'audio/ogg',
-                            path: bgm[2]
-                        }
-                    ]
-                };
+                        src: [
+                            {
+                                media: 'audio/mp4',
+                                path: bgm[3]
+                            }
+                        ]
+                    },
+                    options2 = _.clone(options)
+                ;
                 boombox.load(bgm[0], options, function (err, htmlaudio) {
-                    $("#info").append(htmlaudio.$el);
                     expect(err).not.be.ok;
-                    done();
+
+                    boombox.load(bgm[1], options2, function (err, htmlaudio) {
+                        expect(err).not.be.ok;
+                        done();
+                    });
                 });
             });
 
@@ -102,19 +87,4 @@
         });
     };
 
-
-    //global.mocha.suite.suites = []; // clear
-    suite();
-
-    var runner = global.mocha.run();
-
-    runner.globals([
-        '_zid' // Backbone.history
-    ]);
-
-
-    // index.js
-    var bgm = ["bgm", "./media/sound.m4a", "./media/sound.ogg"];
-
-
-})(this);
+});

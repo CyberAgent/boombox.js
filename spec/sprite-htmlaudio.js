@@ -4,7 +4,7 @@
         var info = document.getElementById('info');
         var infodata = [
             'useragent:' + window.navigator.userAgent,
-            'webaudio:' + !!window.webkitAudioContext,
+            'webaudio:' + !!(window.webkitAudioContext || window.AudioContext),
             'audio:' +  !!window.Audio,
             'video:' +  !!document.createElement('video')
         ];
@@ -127,12 +127,12 @@
         },
         "src": [
             {
-                "media": "audio/mpeg",
-                "path": "./media/sprite/a/sprite.mp3"
-            },
-            {
                 "media": "audio/mp4",
                 "path": "./media/sprite/a/sprite.m4a"
+            },
+            {
+                "media": "audio/mpeg",
+                "path": "./media/sprite/a/sprite.mp3"
             },
             {
                 "media": "audio/ac3",

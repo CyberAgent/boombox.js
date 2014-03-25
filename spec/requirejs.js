@@ -6,7 +6,7 @@
         var info = document.getElementById('info');
         var infodata = [
             '[browser] useragent :' + window.navigator.userAgent,
-            '[browser] webaudio  :' + !!window.webkitAudioContext,
+            '[browser] webaudio  :' + !!(window.webkitAudioContext || window.AudioContext),
             '[browser] audio     :' + !!window.Audio,
             '[browser] video     :' + !!document.createElement('video')
         ];

@@ -13,3 +13,8 @@ results
 
 npm-debug.log
 node_modules
+# Created by http://www.gitignore.io
+
+### Jekyll ###
+_site/
+
