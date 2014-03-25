@@ -71,18 +71,33 @@ However `boombox.js` doesn't restrict these features, you can extend `boombox.js
 
 ====
 
+### Mobile
+
 |OS/Browser|Web Audio|HTML Audio|HTML Video|
 |:------------:|:------------:|:------------:|:------------:|
-|IOS 5: Safari|-|✔ |✔ \*1|
-|IOS 6, 7: Safari|✔|✔|✔ \*1|
-|Android 2.3: basic|-|✔|✔|
-|Android 4.0: basic|✔ \*2|✔|✔|
+|IOS     5   : Safari/chrome|-|✔ |✔ \*1|
+|IOS     6/7 : Safari/chrome|✔|✔|✔ \*1|
+|Android 2.3 : basic|-|✔|✔|
+|Android 4.0 : basic|✔ \*2|✔|✔|
+|Android 4.0 : chrome|✔ \*2|✔|✔|
+
+### PC
+
+|OS/Browser|Web Audio|HTML Audio|HTML Video|
+|:------------:|:------------:|:------------:|:------------:|
+|Windows: IE|-|✔|✔|
+|Windows: Chrome|✔|✔|✔|
+|Windows: Firefox|✔|✔|✔|
+|Windows: Opera|✔|✔|✔|
+|Mac OSX: Safari|✔|✔|✔|
 |Mac OSX: Chrome|✔|✔|✔|
+|Mac OSX: Firefox|✔|✔|✔|
+|Mac OSX: Opera|✔|✔|✔|
+
 
 > `*1`Can't support for starting another application.
 >
 > `*2` Some smart phones are supported.
-> *HTMLVideo* : *You should append DOM elements. In case for no visual element, it's good idea to put DOM in outside display area.
 
 ====
 
