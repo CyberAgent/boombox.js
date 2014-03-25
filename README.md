@@ -107,7 +107,7 @@ However `boombox.js` doesn't restrict these features, you can extend `boombox.js
 |IOS 6, 7: Safari|✔|✔|✔|
 |Android 2.x: basic|✔|✔|✔|
 |Android 4.x: basic|✔|✔ \*1|-|
-|Mac OSX: Chrome|✔|✔|✔|
+|Android 4.x: chrome|✔|✔|✔|
 
 > `*1` HTMLAudio/HTMLVideo are used in combination.
 
