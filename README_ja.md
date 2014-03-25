@@ -113,7 +113,7 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 |IOS 6, 7: Safari|✔|✔|✔|
 |Android 2.x: basic|✔|✔|✔|
 |Android 4.x: basic|✔|✔ \*1|-|
-|Mac OSX: Chrome|✔|✔|✔|
+|Android 4.x: chrome|✔|✔|✔|
 
 > `*1` HTMLAudio/HTMLVideo 併用
 
