@@ -226,7 +226,7 @@
              * @name THRESHOLD
              * @type {Interger}
              */
-            this.THRESHOLD = 0.02;
+            this.THRESHOLD = 0.2;
 
             /**
              * flag setup
@@ -1580,6 +1580,10 @@
 
             this.onEnded(e); // fire user ended event!!
 
+            if (this.isDisposed()) { // check dispose
+                return;
+            }
+
             if (this.state.loop === boombox.LOOP_ORIGINAL && typeof this.state.time.pause === 'undefined') {
                 this.logger.trace('onended original loop play.', this.name);
                 this.play();
@@ -1661,6 +1665,17 @@
                 this.logger.error('Set currentTime.', e.message);
             }
             return this;
+        };
+
+        /**
+         * Check disposed
+         *
+         * @memberof HTMLAudio
+         * @method
+         * @name isDisposed
+         */
+        HTMLAudio.prototype.isDisposed = function () {
+            return WebAudio.prototype.isDisposed.apply(this, arguments);
         };
 
         //////////
@@ -2255,6 +2270,17 @@
          */
         HTMLVideo.prototype.setCurrentTime = function (t) {
             return boombox.HTMLAudio.prototype.setCurrentTime.apply(this, arguments);
+        };
+
+        /**
+         * Check disposed
+         *
+         * @memberof HTMLVideo
+         * @method
+         * @name isDisposed
+         */
+        HTMLVideo.prototype.isDisposed = function () {
+            return boombox.HTMLAudio.prototype.isDisposed.apply(this, arguments);
         };
 
         //////////
@@ -2897,6 +2923,10 @@
             this.state.time.playback = undefined;
             this.onEnded(e); // fire user ended event!!
 
+            if (this.isDisposed()) { // check dispose
+                return;
+            }
+
             if (this.state.loop && typeof this.state.time.pause === 'undefined') {
                 this.logger.trace('onended loop play.');
                 this.play();
@@ -2976,6 +3006,17 @@
             this.state.time.playback = undefined;
             this.state.time.pause = undefined;
             this.state.time.progress = 0;
+        };
+
+        /**
+         * Check disposed
+         * @memberof WebAudio
+         * @method
+         * @name isDisposed
+         */
+        WebAudio.prototype.isDisposed = function () {
+            this.logger.trace('check dispose flag', !!this.state);
+            return !this.state;
         };
 
         /**
