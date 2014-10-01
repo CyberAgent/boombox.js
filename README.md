@@ -301,6 +301,7 @@ boombox.get('name').onEnded = function () {
 
 - You can choose which web broswers and smart phones to play sounds
 - You can specify multiple filters, but if any filter is NG, boombox quit evaluation immediately
+- The callback which is set in `boombox.load()` will be called immediately if filters are NG.
 
 ```javascript
 boombox.addFilter('chrome', function filter() {
