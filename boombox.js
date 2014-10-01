@@ -573,6 +573,8 @@
 
                 if (typeof htmlvideo.state.error === 'undefined' && !this.runfilter(htmlvideo, options)) {
                     htmlvideo.load(options, callback);
+                } else {
+                    return callback && callback(new Error(htmlvideo.state.error), htmlvideo);
                 }
 
                 this.setPool(name, htmlvideo, boombox.HTMLVideo);
@@ -592,6 +594,8 @@
 
                 if (typeof webaudio.state.error === 'undefined' && !this.runfilter(webaudio, options)) {
                     webaudio.load(options, callback);
+                } else {
+                    return callback && callback(new Error(webaudio.state.error), webaudio);
                 }
 
                 this.setPool(name, webaudio, boombox.WebAudio);
@@ -606,6 +610,8 @@
 
                 if (typeof htmlaudio.state.error === 'undefined' && !this.runfilter(htmlaudio, options)) {
                     htmlaudio.load(options, callback);
+                } else {
+                    return callback && callback(new Error(htmlaudio.state.error), htmlaudio);
                 }
 
 

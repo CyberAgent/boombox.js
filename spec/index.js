@@ -48,13 +48,13 @@ define(['boombox'], function(boombox) {
             it('setup()', function() {
                 boombox.setup({
                     webaudio: {
-                        //use: false // force override
+                        // use: false // force override
                     },
                     htmlaudio: {
-                        //use: true // force override
+                        // use: true // force override
                     },
                     htmlvideo: {
-                        //use: true // force override
+                        // use: true // force override
                     },
                     loglevel: 1
                 });
@@ -63,6 +63,31 @@ define(['boombox'], function(boombox) {
                 $("#info").append('[boombox] audio     :' + boombox.isHTMLAudio() + '<br />');
                 $("#info").append('[boombox] video     :' + boombox.isHTMLVideo() + '<br />');
 
+            });
+
+            var any = function any() {
+                return true;
+            };
+            boombox.addFilter('any', any);
+            it('should fail to load', function (done) {
+                var options = {
+                    filter: ['any'],
+                    src: [
+                        {
+                            media: 'audio/mp4',
+                            path: bgm[1]
+                        },
+                        {
+                            media: 'audio/ogg',
+                            path: bgm[2]
+                        }
+                    ]
+                };
+                boombox.load(bgm[0], options, function (err, htmlaudio) {
+                    expect(err).be.ok;
+                    expect(err.message).eq('1');
+                    done();
+                });
             });
 
             it('load()', function(done) {
