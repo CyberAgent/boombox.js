@@ -305,6 +305,7 @@ boombox.get('name').onEnded = function () {
 
 サウンドファイルをロードする前に、フィルタをいれて、端末やブラウザ毎に再生するサウンドを選ぶことができます。
 複数フィルタを設定することが出来ますが、一つでも **NG** であれば残りのフィルタは処理されません。
+また**NG**の場合、`boombox.load()`で設定したコールバックが即座に呼ばれます。
 
 ```javascript
 boombox.addFilter('chrome', function filter() {
