@@ -1566,7 +1566,7 @@
          */
         HTMLAudio.prototype.volume = function (v) {
             this.logger.trace('volume:', this.name, 'volume:', v);
-            this.$el.volume = v;
+            this.$el.volume = Math.max(0, Math.min(1, v));
         };
 
         //////////
