@@ -1198,7 +1198,7 @@
 
             // communication time-out
             setTimeout(function () {
-                if (self.$el.readyState !== 4) {
+                if (self.$el && self.$el.readyState !== 4) {
                     self.$el.src = '';
                     cb(new Error('load of html audio file has timed out. timeout:' + timeout), self);
                     cb = function () {};
