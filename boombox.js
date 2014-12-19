@@ -1580,15 +1580,14 @@
          * @param {Event} e event
          */
         HTMLAudio.prototype._onEnded = function (e) {
+            if (this.isDisposed()) { // check dispose
+                return;
+            }
             this.logger.trace('onended fire! name:', this.name);
             this.state.time.playback = undefined;
             this.state.time.name = undefined;
 
             this.onEnded(e); // fire user ended event!!
-
-            if (this.isDisposed()) { // check dispose
-                return;
-            }
 
             if (this.state.loop === boombox.LOOP_ORIGINAL && typeof this.state.time.pause === 'undefined') {
                 this.logger.trace('onended original loop play.', this.name);
