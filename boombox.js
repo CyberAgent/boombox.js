@@ -2916,6 +2916,10 @@
          * @param {Event} e event
          */
         WebAudio.prototype._onEnded = function (e) {
+            if (this.isDisposed()) { // check dispose
+                return;
+            }
+
             this.logger.trace('onended fire!', this.name);
             var self = this;
             var now = Date.now();
@@ -2927,10 +2931,6 @@
 
             this.state.time.playback = undefined;
             this.onEnded(e); // fire user ended event!!
-
-            if (this.isDisposed()) { // check dispose
-                return;
-            }
 
             if (this.state.loop && typeof this.state.time.pause === 'undefined') {
                 this.logger.trace('onended loop play.');
