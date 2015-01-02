@@ -2916,21 +2916,28 @@
          * @param {Event} e event
          */
         WebAudio.prototype._onEnded = function (e) {
-            if (this.isDisposed()) { // check dispose
+            // check dispose
+            if (this.isDisposed()) {
                 return;
             }
 
-            this.logger.trace('onended fire!', this.name);
             var self = this;
             var now = Date.now();
+
             // skip if sounds is not ended
             if (self.source && Math.abs((now - self.state.time.playback + self.state.time.progress) / 1000 - self.source.buffer.duration) >= boombox.THRESHOLD) {
                 self.logger.debug('skip if sounds is not ended', self.name);
                 return;
             }
 
+            this.logger.trace('onended fire!', this.name);
             this.state.time.playback = undefined;
             this.onEnded(e); // fire user ended event!!
+
+            // check dispose
+            if (this.isDisposed()) {
+                return;
+            }
 
             if (this.state.loop && typeof this.state.time.pause === 'undefined') {
                 this.logger.trace('onended loop play.');
