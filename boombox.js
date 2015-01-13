@@ -1589,6 +1589,9 @@
 
             this.onEnded(e); // fire user ended event!!
 
+            if (this.isDisposed()) { // check dispose
+                return;
+            }
             if (this.state.loop === boombox.LOOP_ORIGINAL && typeof this.state.time.pause === 'undefined') {
                 this.logger.trace('onended original loop play.', this.name);
                 this.play();
