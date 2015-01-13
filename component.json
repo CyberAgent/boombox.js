@@ -2,7 +2,7 @@
   "name": "boombox.js",
   "repo": "CyberAgent/boombox.js",
   "description": "Browser sound library which blended HTMLVideo and HTMLAudio and WebAudio",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "keywords": [
     "webaudio",
     "htmlaudio",
