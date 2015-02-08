@@ -32,15 +32,15 @@ Audio系APIを統一したインターフェースで提供し、ラジカセ([_
 
 [**Single Sound**](http://cyberagent.github.io/boombox.js/demo/single.html)
 
-[![](https://raw2.github.com/CyberAgent/boombox.js/gh-pages/screenshots/demo-single.png)](http://cyberagent.github.io/boombox.js/demo/single.html)
+[![](https://raw.githubusercontent.com/CyberAgent/boombox.js/gh-pages/screenshots/demo-single.png)](http://cyberagent.github.io/boombox.js/demo/single.html)
 
 [**Mix Sound**](http://cyberagent.github.io/boombox.js/demo/mix.html)
 
-[![](https://raw2.github.com/CyberAgent/boombox.js/gh-pages/screenshots/demo-mix.png)](http://cyberagent.github.io/boombox.js/demo/mix.html)
+[![](https://raw.githubusercontent.com/CyberAgent/boombox.js/gh-pages/screenshots/demo-mix.png)](http://cyberagent.github.io/boombox.js/demo/mix.html)
 
 [**Sprite Sound**](http://cyberagent.github.io/boombox.js/demo/sprite.html)
 
-[![](https://raw2.github.com/CyberAgent/boombox.js/gh-pages/screenshots/demo-sprite.png)](http://cyberagent.github.io/boombox.js/demo/sprite.html)
+[![](https://raw.githubusercontent.com/CyberAgent/boombox.js/gh-pages/screenshots/demo-sprite.png)](http://cyberagent.github.io/boombox.js/demo/sprite.html)
 
 ## Features
 
