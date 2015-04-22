@@ -70,12 +70,14 @@
          */
         Logger.prototype.trace = function () {
             if (LOG_LEVEL <= 1) {
-                if (console.trace) {
-                    console.trace('[TRACE]', this.prefix, slice.call(arguments).join(' '));
-                } else if (console.debug) {
-                    console.debug('[TRACE]', this.prefix, slice.call(arguments).join(' '));
+                if (!w.console) {
+                }
+                if (w.console.trace) {
+                    w.console.trace('[TRACE]', this.prefix, slice.call(arguments).join(' '));
+                } else if (w.console.debug) {
+                    w.console.debug('[TRACE]', this.prefix, slice.call(arguments).join(' '));
                 } else {
-                    console.log('[TRACE]', this.prefix, slice.call(arguments).join(' '));
+                    w.console.log('[TRACE]', this.prefix, slice.call(arguments).join(' '));
                 }
             }
         };
@@ -87,10 +89,12 @@
          */
         Logger.prototype.debug = function () {
             if (LOG_LEVEL <= 2) {
-                if (console.debug) {
-                    console.debug('[DEBUG]', this.prefix, slice.call(arguments).join(' '));
+                if (!w.console) {
+                }
+                if (w.console.debug) {
+                    w.console.debug('[DEBUG]', this.prefix, slice.call(arguments).join(' '));
                 } else {
-                    console.log('[DEBUG]', this.prefix, slice.call(arguments).join(' '));
+                    w.console.log('[DEBUG]', this.prefix, slice.call(arguments).join(' '));
                 }
             }
         };
@@ -102,7 +106,7 @@
          */
         Logger.prototype.info = function () {
             if (LOG_LEVEL <= 3) {
-                console.info('[INFO]', this.prefix, slice.call(arguments).join(' '));
+                w.console && w.console.info('[INFO]', this.prefix, slice.call(arguments).join(' '));
             }
         };
 
@@ -113,7 +117,7 @@
          */
         Logger.prototype.warn = function () {
             if (LOG_LEVEL <= 4) {
-                console.warn('[WARN]', this.prefix, slice.call(arguments).join(' '));
+                w.console && w.console.warn('[WARN]', this.prefix, slice.call(arguments).join(' '));
             }
         };
 
@@ -124,7 +128,7 @@
          */
         Logger.prototype.error = function () {
             if (LOG_LEVEL <= 5) {
-                console.error('[ERROR]', this.prefix, slice.call(arguments).join(' '));
+                w.console && w.console.error('[ERROR]', this.prefix, slice.call(arguments).join(' '));
             }
         };
 
