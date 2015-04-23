@@ -14,7 +14,7 @@
         grunt.initConfig({
             pkg: grunt.file.readJSON('package.json'),
             clean: {
-                src: ['docs']
+                src: ['docs', 'report']
             },
             exec: {
                 spec_foundation: {
@@ -60,6 +60,13 @@
                         'boombox.min.js': ['boombox.js']
                     }
                 }
+            },
+            plato: {
+                default: {
+                    files: {
+                        'report': ['boombox.js']
+                    }
+                }
             }
         });
 
@@ -80,12 +87,14 @@
         // task: docs
         grunt.registerTask('docs', [
             'mkdir:docs',
+            'plato',
             'jsdoc'
         ]);
 
         // task: defulat
         grunt.registerTask('default', [
             'clean',
+            'docs',
             'build'
         ]);
 
