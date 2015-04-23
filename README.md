@@ -158,7 +158,7 @@ $ git clone https://github.com/CyberAgent/boombox.js.git
 $ cd boombox
 $ npm install -g grunt-cli # If you haven't already installed grunt-cli.
 $ npm install . # If you haven't already installed local npm.
-$ grunt
+$ npm run build
 ```
 
 ## Browser Test
@@ -169,7 +169,7 @@ You can test `boombox.js` using [Grunt](http://gruntjs.com/) & [beez-foundation]
 $ npm install -g beez-foundation # If you haven't already installed beez-foundation that is web server.
 $ cd boombox
 $ npm install . # Once at first if you don't install local npm.
-$ grunt foundation # Starting local server.
+$ npm run start # Starting local server.
 ```
 
 @see [beez](https://github.com/CyberAgent/beez)

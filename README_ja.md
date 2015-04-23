@@ -164,7 +164,7 @@ $ git clone https://github.com/CyberAgent/boombox.js.git
 $ cd boombox
 $ npm install -g grunt-cli # 初回のみ
 $ npm install . # 初回のみ
-$ grunt
+$ npm run build
 ```
 
 ## Browser Test
@@ -175,7 +175,7 @@ $ grunt
 $ npm install -g beez-foundation # テスト用のWebサーバをインストール(初回のみ)
 $ cd boombox
 $ npm install . # 初回のみ
-$ grunt foundation # ローカルサーバ起動
+$ npm run start # ローカルサーバ起動
 ```
 
 @see [beez](https://github.com/CyberAgent/beez)
