@@ -146,7 +146,7 @@
              * @memberof Boombox
              * @name VERSION
              */
-            this.VERSION = '1.0.7';
+            this.VERSION = '1.0.8';
 
 
             /**
