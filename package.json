@@ -40,6 +40,11 @@
       "url": "https://github.com/Layzie"
     }
   ],
+  "scripts": {
+    "start": "grunt foundation",
+    "build": "grunt clean && grunt build",
+    "docs": "grunt docs"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/CyberAgent/boombox.js.git"
