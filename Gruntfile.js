@@ -46,7 +46,7 @@
                         recurse: true,
                         private: true,
                         destination: 'docs',
-                        configure: '.jsdoc.json'
+                        configure: '.jsdoc3.json'
                     }
                 }
             },
