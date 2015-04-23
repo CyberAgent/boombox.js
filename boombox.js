@@ -71,8 +71,7 @@
         Logger.prototype.trace = function () {
             if (LOG_LEVEL <= 1) {
                 if (!w.console) {
-                }
-                if (w.console.trace) {
+                } else if (w.console.trace) {
                     w.console.trace('[TRACE]', this.prefix, slice.call(arguments).join(' '));
                 } else if (w.console.debug) {
                     w.console.debug('[TRACE]', this.prefix, slice.call(arguments).join(' '));
@@ -90,8 +89,7 @@
         Logger.prototype.debug = function () {
             if (LOG_LEVEL <= 2) {
                 if (!w.console) {
-                }
-                if (w.console.debug) {
+                } else if (w.console.debug) {
                     w.console.debug('[DEBUG]', this.prefix, slice.call(arguments).join(' '));
                 } else {
                     w.console.log('[DEBUG]', this.prefix, slice.call(arguments).join(' '));
