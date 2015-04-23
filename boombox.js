@@ -242,7 +242,7 @@
              * @name AudioContext
              * @type {AudioContext}
              */
-            this.AudioContext = w.webkitAudioContext || w.AudioContext;
+            this.AudioContext = w.AudioContext || w.webkitAudioContext;
 
             /**
              * Environmental support information
