@@ -288,8 +288,7 @@
                  * @name _audio
                  * @type {HTMLAudioElement}
                  */
-                this._audio = new w.Audio();
-                if (this._audio.canPlayType) {
+                if (new w.Audio().canPlayType) {
                     this.support.htmlaudio.use = true;
                 } else {
                     this.support.htmlaudio.use = false;
@@ -306,8 +305,7 @@
                  * @name _video
                  * @type {HTMLVideoElement}
                  */
-                this._video = document.createElement('video');
-                if (this._video.canPlayType) {
+                if (document.createElement('video').canPlayType) {
                     this.support.htmlvideo.use = true;
                 } else {
                     this.support.htmlvideo.use = false;
@@ -727,7 +725,7 @@
         Boombox.prototype.useMediaType = function (src) {
             for (var i = 0; i < src.length; i++) {
                 var t = src[i];
-                if (this._audio.canPlayType(t.media)) {
+                if (new w.Audio().canPlayType(t.media)) {
                     return t;
                 } else {
                     this.logger.warn('skip audio type.', t.media);
@@ -986,8 +984,6 @@
             delete this.visibility;
             delete this.state.power;
             delete this.state;
-            delete this._audio;
-            delete this._video;
             delete this.filter;
         };
 
