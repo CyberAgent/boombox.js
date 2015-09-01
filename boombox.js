@@ -3,7 +3,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 CyberAgent, Inc.
+ * Copyright (c) 2014-2015 CyberAgent, Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -146,7 +146,7 @@
              * @memberof Boombox
              * @name VERSION
              */
-            this.VERSION = '1.0.8';
+            this.VERSION = '1.0.9';
 
 
             /**
