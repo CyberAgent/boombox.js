@@ -3,7 +3,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 CyberAgent, Inc.
+ * Copyright (c) 2014-2015 CyberAgent, Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -70,12 +70,13 @@
          */
         Logger.prototype.trace = function () {
             if (LOG_LEVEL <= 1) {
-                if (console.trace) {
-                    console.trace('[TRACE]', this.prefix, slice.call(arguments).join(' '));
-                } else if (console.debug) {
-                    console.debug('[TRACE]', this.prefix, slice.call(arguments).join(' '));
+                if (!w.console) {
+                } else if (w.console.trace) {
+                    w.console.trace('[TRACE]', this.prefix, slice.call(arguments).join(' '));
+                } else if (w.console.debug) {
+                    w.console.debug('[TRACE]', this.prefix, slice.call(arguments).join(' '));
                 } else {
-                    console.log('[TRACE]', this.prefix, slice.call(arguments).join(' '));
+                    w.console.log('[TRACE]', this.prefix, slice.call(arguments).join(' '));
                 }
             }
         };
@@ -87,10 +88,11 @@
          */
         Logger.prototype.debug = function () {
             if (LOG_LEVEL <= 2) {
-                if (console.debug) {
-                    console.debug('[DEBUG]', this.prefix, slice.call(arguments).join(' '));
+                if (!w.console) {
+                } else if (w.console.debug) {
+                    w.console.debug('[DEBUG]', this.prefix, slice.call(arguments).join(' '));
                 } else {
-                    console.log('[DEBUG]', this.prefix, slice.call(arguments).join(' '));
+                    w.console.log('[DEBUG]', this.prefix, slice.call(arguments).join(' '));
                 }
             }
         };
@@ -102,7 +104,7 @@
          */
         Logger.prototype.info = function () {
             if (LOG_LEVEL <= 3) {
-                console.info('[INFO]', this.prefix, slice.call(arguments).join(' '));
+                w.console && w.console.info('[INFO]', this.prefix, slice.call(arguments).join(' '));
             }
         };
 
@@ -113,7 +115,7 @@
          */
         Logger.prototype.warn = function () {
             if (LOG_LEVEL <= 4) {
-                console.warn('[WARN]', this.prefix, slice.call(arguments).join(' '));
+                w.console && w.console.warn('[WARN]', this.prefix, slice.call(arguments).join(' '));
             }
         };
 
@@ -124,7 +126,7 @@
          */
         Logger.prototype.error = function () {
             if (LOG_LEVEL <= 5) {
-                console.error('[ERROR]', this.prefix, slice.call(arguments).join(' '));
+                w.console && w.console.error('[ERROR]', this.prefix, slice.call(arguments).join(' '));
             }
         };
 
@@ -144,7 +146,7 @@
              * @memberof Boombox
              * @name VERSION
              */
-            this.VERSION = '1.0.0';
+            this.VERSION = '1.0.9';
 
 
             /**
@@ -226,7 +228,7 @@
              * @name THRESHOLD
              * @type {Interger}
              */
-            this.THRESHOLD = 0.02;
+            this.THRESHOLD = 0.2;
 
             /**
              * flag setup
@@ -242,7 +244,7 @@
              * @name AudioContext
              * @type {AudioContext}
              */
-            this.AudioContext = w.webkitAudioContext || w.AudioContext;
+            this.AudioContext = w.AudioContext || w.webkitAudioContext;
 
             /**
              * Environmental support information
@@ -286,8 +288,7 @@
                  * @name _audio
                  * @type {HTMLAudioElement}
                  */
-                this._audio = new w.Audio();
-                if (this._audio.canPlayType) {
+                if (new w.Audio().canPlayType) {
                     this.support.htmlaudio.use = true;
                 } else {
                     this.support.htmlaudio.use = false;
@@ -304,8 +305,7 @@
                  * @name _video
                  * @type {HTMLVideoElement}
                  */
-                this._video = document.createElement('video');
-                if (this._video.canPlayType) {
+                if (document.createElement('video').canPlayType) {
                     this.support.htmlvideo.use = true;
                 } else {
                     this.support.htmlvideo.use = false;
@@ -573,6 +573,8 @@
 
                 if (typeof htmlvideo.state.error === 'undefined' && !this.runfilter(htmlvideo, options)) {
                     htmlvideo.load(options, callback);
+                } else {
+                    return callback && callback(new Error(htmlvideo.state.error), htmlvideo);
                 }
 
                 this.setPool(name, htmlvideo, boombox.HTMLVideo);
@@ -592,6 +594,8 @@
 
                 if (typeof webaudio.state.error === 'undefined' && !this.runfilter(webaudio, options)) {
                     webaudio.load(options, callback);
+                } else {
+                    return callback && callback(new Error(webaudio.state.error), webaudio);
                 }
 
                 this.setPool(name, webaudio, boombox.WebAudio);
@@ -606,6 +610,8 @@
 
                 if (typeof htmlaudio.state.error === 'undefined' && !this.runfilter(htmlaudio, options)) {
                     htmlaudio.load(options, callback);
+                } else {
+                    return callback && callback(new Error(htmlaudio.state.error), htmlaudio);
                 }
 
 
@@ -719,7 +725,7 @@
         Boombox.prototype.useMediaType = function (src) {
             for (var i = 0; i < src.length; i++) {
                 var t = src[i];
-                if (this._audio.canPlayType(t.media)) {
+                if (new w.Audio().canPlayType(t.media)) {
                     return t;
                 } else {
                     this.logger.warn('skip audio type.', t.media);
@@ -978,8 +984,6 @@
             delete this.visibility;
             delete this.state.power;
             delete this.state;
-            delete this._audio;
-            delete this._video;
             delete this.filter;
         };
 
@@ -1192,7 +1196,7 @@
 
             // communication time-out
             setTimeout(function () {
-                if (self.$el.readyState !== 4) {
+                if (self.$el && self.$el.readyState !== 4) {
                     self.$el.src = '';
                     cb(new Error('load of html audio file has timed out. timeout:' + timeout), self);
                     cb = function () {};
@@ -1560,7 +1564,7 @@
          */
         HTMLAudio.prototype.volume = function (v) {
             this.logger.trace('volume:', this.name, 'volume:', v);
-            this.$el.volume = v;
+            this.$el.volume = Math.max(0, Math.min(1, v));
         };
 
         //////////
@@ -1574,12 +1578,18 @@
          * @param {Event} e event
          */
         HTMLAudio.prototype._onEnded = function (e) {
+            if (this.isDisposed()) { // check dispose
+                return;
+            }
             this.logger.trace('onended fire! name:', this.name);
             this.state.time.playback = undefined;
             this.state.time.name = undefined;
 
             this.onEnded(e); // fire user ended event!!
 
+            if (this.isDisposed()) { // check dispose
+                return;
+            }
             if (this.state.loop === boombox.LOOP_ORIGINAL && typeof this.state.time.pause === 'undefined') {
                 this.logger.trace('onended original loop play.', this.name);
                 this.play();
@@ -1661,6 +1671,17 @@
                 this.logger.error('Set currentTime.', e.message);
             }
             return this;
+        };
+
+        /**
+         * Check disposed
+         *
+         * @memberof HTMLAudio
+         * @method
+         * @name isDisposed
+         */
+        HTMLAudio.prototype.isDisposed = function () {
+            return WebAudio.prototype.isDisposed.apply(this, arguments);
         };
 
         //////////
@@ -2255,6 +2276,17 @@
          */
         HTMLVideo.prototype.setCurrentTime = function (t) {
             return boombox.HTMLAudio.prototype.setCurrentTime.apply(this, arguments);
+        };
+
+        /**
+         * Check disposed
+         *
+         * @memberof HTMLVideo
+         * @method
+         * @name isDisposed
+         */
+        HTMLVideo.prototype.isDisposed = function () {
+            return boombox.HTMLAudio.prototype.isDisposed.apply(this, arguments);
         };
 
         //////////
@@ -2885,17 +2917,28 @@
          * @param {Event} e event
          */
         WebAudio.prototype._onEnded = function (e) {
-            this.logger.trace('onended fire!', this.name);
+            // check dispose
+            if (this.isDisposed()) {
+                return;
+            }
+
             var self = this;
             var now = Date.now();
+
             // skip if sounds is not ended
             if (self.source && Math.abs((now - self.state.time.playback + self.state.time.progress) / 1000 - self.source.buffer.duration) >= boombox.THRESHOLD) {
                 self.logger.debug('skip if sounds is not ended', self.name);
                 return;
             }
 
+            this.logger.trace('onended fire!', this.name);
             this.state.time.playback = undefined;
             this.onEnded(e); // fire user ended event!!
+
+            // check dispose
+            if (this.isDisposed()) {
+                return;
+            }
 
             if (this.state.loop && typeof this.state.time.pause === 'undefined') {
                 this.logger.trace('onended loop play.');
@@ -2976,6 +3019,17 @@
             this.state.time.playback = undefined;
             this.state.time.pause = undefined;
             this.state.time.progress = 0;
+        };
+
+        /**
+         * Check disposed
+         * @memberof WebAudio
+         * @method
+         * @name isDisposed
+         */
+        WebAudio.prototype.isDisposed = function () {
+            this.logger.trace('check dispose flag', !!this.state);
+            return !this.state;
         };
 
         /**
