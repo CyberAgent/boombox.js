@@ -17,8 +17,8 @@ This library has simple API, like [_boombox_](http://en.wikipedia.org/wiki/Boomb
 
 ### Why you should use boombox?
 
-Web browseres have `HTMLAudio` / `WebAudio` / `HTMLVideo` API for playing audio. However these API have diffrent way to use and browser have no compatibility.
-`boombox.js` provides unified API and solves diffrence enviroment between web browser.
+Web browseres have `HTMLAudio` / `WebAudio` / `HTMLVideo` API for playing audio. However these API have different way to use and browser have no compatibility.
+`boombox.js` provides unified API and solves diffrence environment between web browser.
 
 In addition to this library has function for mobile web browser support, eg: stop to play sound when a web browser is inactive, handle multiple audio source.
 
@@ -255,7 +255,7 @@ boombox.get('sound').volume(0.5) // Specified sound. Argument takes between 0 to
 
 ### Turn off sounds
 
-Turn off sounds whenever playing sound. (like actualy _boombox_ :p)
+Turn off sounds whenever playing sound. (like actually _boombox_ :p)
 
 #### Specified sounds
 
@@ -353,7 +353,7 @@ boombox.load('sound', options, true, function (err, audio) {
 
 `boombox.pool` cache the sound source when loaded.
 
-Web browseres have diffrent behaviour about cache, so this functioin is very effective especially in SPA.
+Web browseres have different behaviour about cache, so this functioin is very effective especially in SPA.
 
 ### Priority
 
